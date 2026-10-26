@@ -1,0 +1,76 @@
+<!doctype html>
+<!--
+  Šablóna obrázka pre náhľad na sociálnych sieťach (og:image), 1200 x 630.
+  Nie je súčasťou webu, Netlify ju vracia ako 404.
+
+  Prekreslenie po zmene textu:
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+      --headless --disable-gpu --hide-scrollbars \
+      --window-size=1200,630 \
+      --screenshot="$PWD/assets/img/og-tache.png" \
+      "file://$PWD/tools/og-obrazok.html"
+-->
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  font-weight: 400 700;
+  src: url('../assets/fonts/schibsted-grotesk-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC;
+}
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  font-weight: 400 700;
+  src: url('../assets/fonts/schibsted-grotesk-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+1E00-1E9F;
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  width: 1200px;
+  height: 630px;
+  padding: 72px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #6A00F4;
+  font-family: 'Schibsted Grotesk', system-ui, sans-serif;
+  overflow: hidden;
+}
+.logo {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #FFD6A5;
+}
+h1 {
+  max-width: 1000px;
+  font-size: 76px;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  color: #FFD6A5;
+}
+.spodok {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding-top: 28px;
+  border-top: 2px solid #9B5CF7;
+  font-size: 24px;
+  font-weight: 500;
+  color: #EBDDFF;
+}
+</style>
+</head>
+<body>
+<p class="logo">Tache</p>
+<h1>Web, ktorý vám povie, odkiaľ prišiel každý zákazník.</h1>
+<div class="spodok">
+<span>Predajné stránky s meraním pre malé firmy</span>
+<span>tache.sk</span>
+</div>
+</body>
+</html>

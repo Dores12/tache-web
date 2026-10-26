@@ -1,0 +1,14 @@
+# Tache – robots.txt
+# Blokujú sa len interné cesty, ktoré na webe nemajú čo robiť.
+# Stránky /dakujem a /dotaznik sa tu zámerne neblokujú: majú meta robots
+# noindex a vyhľadávač ho musí vedieť prečítať.
+
+User-agent: *
+Allow: /
+Disallow: /docs/
+Disallow: /design/
+Disallow: /google-apps-script/
+Disallow: /tools/
+Disallow: /_input/
+
+Sitemap: https://tache.netlify.app/sitemap.xml

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Len indexované stránky. Pri každom kroku, ktorý pridá verejnú stránku,
+     sem pridaj jej URL. Zástupné stránky s meta robots noindex tu nesmú byť.
+     Pri pripojení domény prepíš hostiteľa aj v canonical a og:url. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://tache.netlify.app/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <priority>1.0</priority>
+  </url>
+</urlset>
