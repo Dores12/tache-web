@@ -1,0 +1,6 @@
+# Výskyty, ktoré kontrola-textov.sh našla a Daniel ich schválil.
+# Jeden presný úryvok na riadok. Riadky so # sú poznámky.
+#
+# CLAUDE.md sekcia 4 priamo hovorí, že táto veta je v poriadku:
+# ide o opis problému, nie o ponuku telefonátu.
+kontakt, ktorý nezdvihne telefón

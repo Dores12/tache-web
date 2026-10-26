@@ -25,6 +25,59 @@
 <meta property="og:title" content="Web, ktorý vám povie, odkiaľ prišiel každý zákazník.">
 <meta property="og:description" content="Postavím vám web, nastavím meranie a spustím reklamu. Pri každej rezervácii uvidíte, ktorá reklama ju priniesla a koľko vás stála.">
 <meta property="og:url" content="https://tache.netlify.app/">
+<!-- Štruktúrované dáta. Musia byť statické, lebo ich vyhľadávač číta
+     z HTML. Adresa, IČO a e-mail sa doplnia, keď budú v config.js. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://tache.netlify.app/#daniel",
+      "name": "Daniel Tache",
+      "jobTitle": "Tvorca predajných stránok a správca reklamy",
+      "url": "https://danieltache.com",
+      "knowsAbout": [
+        "predajné stránky",
+        "meranie konverzií",
+        "Google Analytics 4",
+        "Google Tag Manager",
+        "Meta Ads",
+        "Google Ads"
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://tache.netlify.app/#sluzba",
+      "name": "Tache",
+      "url": "https://tache.netlify.app/",
+      "description": "Predajné stránky s meraním pre malé firmy a voliteľná správa reklamy na Mete a Googli.",
+      "founder": { "@id": "https://tache.netlify.app/#daniel" },
+      "areaServed": { "@type": "Country", "name": "Slovensko" },
+      "availableLanguage": "sk",
+      "priceRange": "249 € – 790 €"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://tache.netlify.app/#otazky",
+      "mainEntity": [
+        { "@type": "Question", "name": "Musím si potom platiť mesačnú správu?", "acceptedAnswer": { "@type": "Answer", "text": "Nie. Web je po spustení váš a funguje aj bez mňa. Správu webu za 29 € alebo reklamy od 149 € mesačne si môžete objednať neskôr, alebo nikdy." } },
+        { "@type": "Question", "name": "Čo ak meranie nebude fungovať?", "acceptedAnswer": { "@type": "Answer", "text": "Pred odovzdaním ho overím skúšobným dopytom. Ak niečo nefunguje, opravím to zadarmo." } },
+        { "@type": "Question", "name": "Web už mám. Oplatí sa nový?", "acceptedAnswer": { "@type": "Answer", "text": "Pošlite mi odkaz a e-mailom vám napíšem, čo by som na ňom zmenil. Zvyčajne ide o rýchlosť na mobile, meranie dopytov a cenu, ktorú treba hľadať. Ak stačí opraviť meranie na starom webe, poviem vám to." } },
+        { "@type": "Question", "name": "Ako spolu budeme komunikovať?", "acceptedAnswer": { "@type": "Answer", "text": "E-mailom, od objednávky až po spustenie. Máte všetko písomne a odpíšem vám do 24 hodín v pracovné dni." } },
+        { "@type": "Question", "name": "Koľko ma bude stáť reklama?", "acceptedAnswer": { "@type": "Answer", "text": "Rozpočet si určíte sami a platíte ho priamo Mete alebo Googlu, nie mne. Odporučím vám ho podľa odvetvia a toho, koľko zákazníkov potrebujete." } },
+        { "@type": "Question", "name": "Naozaj neplatím za hosting?", "acceptedAnswer": { "@type": "Answer", "text": "Web beží na Netlify vo vašom vlastnom účte. Pri bežnej návštevnosti malej firmy stačí bezplatný plán. Platíte len doménu." } },
+        { "@type": "Question", "name": "Čo musím dodať?", "acceptedAnswer": { "@type": "Answer", "text": "Vyplníte dotazník o firme, službách a cenách a pošlete fotky a logo. Texty napíšem ja." } },
+        { "@type": "Question", "name": "Čo ak sa mi návrh nepáči?", "acceptedAnswer": { "@type": "Answer", "text": "Návrh uvidíte ako obrázok skôr, ako začnem programovať. V cene sú 2 alebo 3 kolá úprav podľa balíka." } },
+        { "@type": "Question", "name": "Ako rýchlo to bude?", "acceptedAnswer": { "@type": "Answer", "text": "Štart do 3 dní, Lead systém do 7 dní a Na kľúč do 14 dní od vyplnenia dotazníka a dodania podkladov." } },
+        { "@type": "Question", "name": "Ako sa platí?", "acceptedAnswer": { "@type": "Answer", "text": "50 % po objednávke a 50 % pred spustením na vašej doméne. Faktúru dostanete vždy." } },
+        { "@type": "Question", "name": "Môžem si reklamu dokúpiť neskôr?", "acceptedAnswer": { "@type": "Answer", "text": "Áno. Správa reklamy na Mete alebo Googli stojí 149 € mesačne, na oboch 249 €." } },
+        { "@type": "Question", "name": "Robíte aj e-shopy?", "acceptedAnswer": { "@type": "Answer", "text": "Nie. Robím predajné stránky a jednoduché weby, ktoré zbierajú dopyty a rezervácie." } }
+      ]
+    }
+  ]
+}
+</script>
 <!-- #meranie:start -->
 <!-- Consent Mode v2: predvolene je všetko zamietnuté a uložená voľba sa
      aplikuje ešte pred načítaním GTM. Nič tu nepridávaj, meranie sa riadi
@@ -67,6 +120,10 @@
 <script src="/assets/js/config.js"></script>
 <script>
 (function () {
+  // Trieda js hovorí CSS, že skripty bežia. Bez nej sa obsah nikdy
+  // neskrýva, takže návštevník bez JavaScriptu vidí celú stránku.
+  document.documentElement.classList.add('js');
+
   // O testovacom režime sa rozhoduje ešte pred prvým vykreslením, aby si
   // CSS stihlo rezervovať miesto na žltý pruh a nevznikol posun obsahu.
   if (!window.TACHE.config.formEndpoint) {
@@ -120,27 +177,536 @@
 </div>
 <!-- #hlavicka:end -->
 
-<main id="obsah" tabindex="-1" data-page="domov">
+<main id="obsah" tabindex="-1" data-page="domov" data-skript="domov">
 
-<section class="na-fialovej hero hero--domov" aria-label="Úvod">
+<!-- Úvod ------------------------------------------------------------- -->
+<section class="na-fialovej hero hero--domov" aria-label="Úvod" data-section="hero">
 <div class="obsah">
 <h1 class="hero__nadpis">Web, ktorý vám povie, odkiaľ prišiel každý zákazník.</h1>
 <div class="hero__spodok">
 <p class="hero__podtext">Postavím vám web, nastavím meranie a spustím reklamu. Pri každej rezervácii uvidíte, ktorá reklama ju priniesla a koľko vás stála.</p>
 <div class="hero__vyzva">
 <div class="hero__vyzvy">
-<a class="tlacidlo tlacidlo--marhulove tlacidlo--vyzva" href="/cennik" data-track="package_cta" data-track-link_location="hero">Vybrať balík</a>
+<a class="tlacidlo tlacidlo--marhulove tlacidlo--vyzva" href="/cennik" data-hero-vyzva data-track="package_cta" data-track-link_location="hero">Vybrať balík</a>
 <a class="odkaz-vedla" href="/" data-mailto data-track="email_click" data-track-link_location="hero">Napísať mi e-mail</a>
 </div>
 <p class="hero__poznamka">Od <span data-price="start.regular">249 €</span>, hotové za 3 až 14 dní. Mesačne neplatíte nič, ak nechcete.</p>
 </div>
 </div>
+
+<div class="cesta">
+<div class="cesta__ciara" aria-hidden="true"></div>
+<ol class="cesta__zoznam" aria-label="Cesta jednej zákazníčky od reklamy po platbu">
+<li class="cesta__krok">
+<span class="cesta__bod" aria-hidden="true"></span>
+<span class="cesta__nazov">Klikla na reklamu</span>
+<span class="cesta__detail">Instagram, kampaň Jar</span>
+</li>
+<li class="cesta__krok">
+<span class="cesta__bod" aria-hidden="true"></span>
+<span class="cesta__nazov">Pozrela si cenník</span>
+<span class="cesta__detail">1 min 40 s na webe</span>
+</li>
+<li class="cesta__krok">
+<span class="cesta__bod" aria-hidden="true"></span>
+<span class="cesta__nazov">Rezervovala termín</span>
+<span class="cesta__detail">Formulár, pondelok 18:46</span>
+</li>
+<li class="cesta__krok">
+<span class="cesta__bod" aria-hidden="true"></span>
+<span class="cesta__nazov">Prišla a zaplatila 45 €</span>
+<span class="cesta__detail">Zapísané späť do reklamy</span>
+</li>
+</ol>
+<p class="cesta__poznamka">Ilustračný príklad. Takúto cestu uvidíte pri každom zákazníkovi, ktorý príde z webu.</p>
+</div>
 </div>
 </section>
 
-<!-- Zvyšok domova (cesta zákazníčky, Problém, Postup, Ukážka, Pre koho,
-     Balíky, Reklama, Kontrola webu, O mne, Vaše, Časté otázky, Záverečná
-     výzva) a lišta s výzvou na mobile pribudnú v kroku 2. -->
+<!-- Problém ---------------------------------------------------------- -->
+<section class="sekcia sekcia--marhulova objavit" aria-labelledby="problem-nadpis" data-section="problem">
+<div class="obsah">
+<h2 class="h2--velky" id="problem-nadpis">Platíte za web aj reklamu <span class="nadpis-tlmeny">a neviete, koľko zákazníkov vám priniesli.</span></h2>
+<div class="trojica trojica--problem">
+<div class="dlazdica">
+<h3>Web vám ukáže návštevy. Zákazníkov nespočíta.</h3>
+<p>Koľko ľudí sa cez web objednalo, viete len odhadom. Preto sa ťažko rozhoduje, či doň ďalej investovať.</p>
+</div>
+<div class="dlazdica">
+<h3>Reklama nosí kontakty, ktoré neprídu.</h3>
+<p>Lacný kontakt, ktorý nezdvihne telefón, je ten najdrahší. Reklama sa navyše naučí hľadať ďalších takých.</p>
+</div>
+<div class="dlazdica">
+<h3>Web robí jeden, reklamu druhý.</h3>
+<p>Keď zákazníci nechodia, každý ukazuje na toho druhého. U mňa za web aj reklamu zodpovedá jeden človek.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Riešenie --------------------------------------------------------- -->
+<section class="sekcia objavit" aria-labelledby="riesenie-nadpis" data-section="riesenie">
+<div class="obsah pas">
+<div class="pas__text">
+<h2 id="riesenie-nadpis">Ráno otvoríte tabuľku a viete, ktorá reklama zarobila.</h2>
+<p class="perex">Každý dopyt z webu sa zapíše aj s tým, odkiaľ prišiel. Či sa reklama oplatí, uvidíte na menách konkrétnych ľudí.</p>
+<div class="vypis">
+<div class="dlazdica dlazdica--fialova">
+<h3>Každý dopyt má zdroj.</h3>
+<p>Pri každom mene vidíte reklamu, kampaň alebo hľadané slovo, z ktorého prišiel.</p>
+</div>
+<div class="dlazdica dlazdica--fialova">
+<h3>Dopyt nezapadne v Messengeri.</h3>
+<p>Príde vám e-mailom a zapíše sa do tabuľky. Zákazník hneď dostane potvrdenie, že ste jeho správu dostali.</p>
+</div>
+<div class="dlazdica dlazdica--fialova">
+<h3>Reklama sa učí na tých, čo prišli.</h3>
+<p>Keď v tabuľke označíte, kto prišiel a zaplatil, pošlem to späť do Mety. Reklama potom hľadá ďalších podobných ľudí. Platí pre balík Na kľúč.</p>
+</div>
+</div>
+</div>
+
+<figure class="pas__obrazok">
+<div class="tabulka-obal">
+<table class="tabulka">
+<caption>Dopyty z webu, tento týždeň</caption>
+<thead>
+<tr>
+<th scope="col">Kedy</th>
+<th scope="col">Kto</th>
+<th scope="col">Odkiaľ prišiel</th>
+<th scope="col">Stav</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Po 18:46</td>
+<td>Jana K.</td>
+<td>Instagram, kampaň Jar</td>
+<td><span class="stav stav--prisiel">Prišla, 45 €</span></td>
+</tr>
+<tr>
+<td>Po 20:12</td>
+<td>Martin S.</td>
+<td>Google, „masáž Prešov“</td>
+<td><span class="stav stav--caka">Rezervované</span></td>
+</tr>
+<tr>
+<td>Ut 09:05</td>
+<td>Eva M.</td>
+<td>Instagram, kampaň Jar</td>
+<td><span class="stav stav--neprisiel">Neprišla</span></td>
+</tr>
+<tr>
+<td>Ut 11:30</td>
+<td>Peter D.</td>
+<td>Odporúčanie od známej</td>
+<td><span class="stav stav--prisiel">Prišiel, 60 €</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption class="popis-pod">Ilustračný príklad. Takúto tabuľku dostanete v balíkoch Lead systém a Na kľúč.</figcaption>
+</figure>
+</div>
+</section>
+
+<!-- Postup ----------------------------------------------------------- -->
+<section class="sekcia sekcia--fialova-svetla objavit" aria-labelledby="postup-nadpis" data-section="postup">
+<div class="obsah">
+<div class="pas__hlavica">
+<h2 id="postup-nadpis">Od objednávky po spustenie</h2>
+<p class="pas__perex">Väčšinu práce urobím ja. Od vás potrebujem asi 30 minút na dotazník a názor na návrh. Všetko ostatné vybavíme e-mailom.</p>
+</div>
+<ol class="kroky kroky--pod-nadpisom">
+<li class="krok">
+<span class="krok__cislo" aria-hidden="true">1</span>
+<div>
+<h3>Vyberiete balík</h3>
+<p>Hneď vám príde zálohová faktúra s QR kódom.</p>
+<p class="krok__cas">2 minúty</p>
+</div>
+</li>
+<li class="krok">
+<span class="krok__cislo" aria-hidden="true">2</span>
+<div>
+<h3>Záloha a dotazník</h3>
+<p>Zaplatíte polovicu a v dotazníku mi napíšete o firme, službách a cenách.</p>
+<p class="krok__cas">asi 30 minút</p>
+</div>
+</li>
+<li class="krok">
+<span class="krok__cislo" aria-hidden="true">3</span>
+<div>
+<h3>Návrh</h3>
+<p>Celý web uvidíte ako obrázok skôr, ako ho naprogramujem.</p>
+<p class="krok__cas">2 alebo 3 kolá úprav</p>
+</div>
+</li>
+<li class="krok">
+<span class="krok__cislo" aria-hidden="true">4</span>
+<div>
+<h3>Web a meranie</h3>
+<p>Pred odovzdaním skúšobne odošlem formulár a overím, že sa dopyt zapíše všade, kde má.</p>
+<p class="krok__cas">3 až 14 dní podľa balíka</p>
+</div>
+</li>
+<li class="krok">
+<span class="krok__cislo" aria-hidden="true">5</span>
+<div>
+<h3>Spustenie</h3>
+<p>Po doplatku presuniem web na vašu doménu a odovzdám vám všetky účty.</p>
+<p class="krok__cas">v deň doplatku</p>
+</div>
+</li>
+</ol>
+</div>
+</section>
+
+<!-- Ukážka: klinika --------------------------------------------------- -->
+<section class="sekcia sekcia--marhulova-svetla objavit" id="ukazky" aria-labelledby="dokaz-nadpis" data-section="ukazka">
+<div class="obsah pas pas--stred">
+<div class="pas__text">
+<p class="oznacenie">Recovery IV Clinic, klinika infúznej terapie v Bratislave</p>
+<h2 id="dokaz-nadpis">Cena za dopyt z Mety klesla z 20 € na 11 €.</h2>
+<p class="perex">Klinika nemala Tag Manager a zákazníkov viedla v Exceli. Meranie som postavil od nuly vrátane rezervačného systému. Pri spustení reklamy stál dopyt 20 € a ladením reklamy klesol na 15 €. Potom som klinike postavil nový web a prvý týždeň na ňom stojí dopyt 11 €.</p>
+<p class="odkazy-vedla-seba">
+<a class="odkaz-silny" href="/ukazky/recovery-iv-clinic">Prečítať celý postup</a>
+<a class="odkaz-silny odkaz-silny--atrament" href="https://recoverybratislava.sk/?utm_source=tache&amp;utm_medium=referral&amp;utm_campaign=ukazka" target="_blank" rel="noopener" data-track="live_site_click" data-track-site="recovery-iv-clinic">Pozrieť web naživo</a>
+</p>
+</div>
+<figure class="pas__obrazok--graf">
+<figcaption class="graf__nazov">Cena za dopyt na Mete</figcaption>
+<div class="graf__riadky">
+<div>
+<div class="graf__popis"><span>Spustenie reklamy</span><span>20 €</span></div>
+<div class="graf__stlpec graf__stlpec--start"></div>
+</div>
+<div>
+<div class="graf__popis"><span>Po ladení reklamy</span><span>15 €</span></div>
+<div class="graf__stlpec graf__stlpec--ladenie"></div>
+</div>
+<div>
+<div class="graf__popis graf__popis--vysledok"><span>Nový web, prvý týždeň</span><span>11 €</span></div>
+<div class="graf__stlpec graf__stlpec--web"></div>
+</div>
+</div>
+<p class="poznamka">Za posledné 3 mesiace. Číslo za nový web aktualizujem, keď bude mať za sebou celý mesiac.</p>
+</figure>
+</div>
+</section>
+
+<!-- Pre koho ---------------------------------------------------------- -->
+<section class="sekcia sekcia--marhulova objavit" aria-labelledby="prekoho-nadpis" data-section="pre-koho">
+<div class="obsah pas pas--rozdeleny">
+<div class="stlpec-uzky">
+<h2 id="prekoho-nadpis">Pre koho to robím</h2>
+<p class="perex perex--maly">Pre malé firmy, u ktorých si ľudia rezervujú termín alebo pýtajú cenu. Najčastejšie salóny, kliniky, fitness a remeselníci.</p>
+</div>
+<div class="dvojica dvojica--v-pase">
+<div class="dlazdica">
+<h3>Hodí sa vám, ak</h3>
+<ul class="zoznam-odrazky zoznam-odrazky--tesny">
+<li>ľudia si u vás objednávajú termín alebo cenovú ponuku,</li>
+<li>chcete spustiť reklamu a vedieť, koľko vás stojí jeden zákazník,</li>
+<li>starý web vám nič neprináša alebo žiadny nemáte.</li>
+</ul>
+</div>
+<div class="dlazdica">
+<h3>Nehodí sa, ak</h3>
+<ul class="zoznam-odrazky zoznam-odrazky--tesny">
+<li>potrebujete e-shop,</li>
+<li>chcete web s desiatkami podstránok a vlastnou administráciou,</li>
+<li>čakáte, že vám niekto vopred zaručí počet zákazníkov.</li>
+</ul>
+</div>
+<p class="dvojica__pod">Neviete, či ste ten prípad? <a class="odkaz-v-texte--atrament" href="/" data-mailto data-track="email_click" data-track-link_location="pre-koho">Napíšte mi pár viet o firme</a> a odpíšem vám <span data-config="replyTime">do 24 hodín v pracovné dni</span>.</p>
+</div>
+</div>
+</section>
+
+<!-- Balíky ------------------------------------------------------------ -->
+<section class="sekcia objavit" id="cennik" aria-labelledby="balicky-nadpis" data-section="cennik">
+<div class="obsah">
+<div class="pas__hlavica">
+<div class="stlpec-siroky">
+<h2 id="balicky-nadpis">Tri balíky, konečné ceny</h2>
+<p class="perex perex--tesny">Nie som platca DPH.</p>
+</div>
+<p class="ramik-zakladatelsky" data-zakladatelska>Prvých <span data-text="slots-celkom">5</span> klientov dostane zakladateľskú cenu výmenou za referenciu. <strong data-text="slots-veta">Zostávajú 4 miesta.</strong></p>
+</div>
+
+<div class="balicky">
+<div class="balik">
+<h3>Štart</h3>
+<p class="balik__cena" data-price="start.regular">249 €</p>
+<p class="balik__pod-cenou"><span data-zakladatelska>Prvých <span data-text="slots-celkom">5</span> klientov: <span data-price="start.founder">149 €</span>. </span>Hotové do 3 dní.</p>
+<ul class="zoznam-odrazky">
+<li>Predajná stránka z overeného rozloženia</li>
+<li>Vidíte, koľko ľudí sa ozvalo a odkiaľ</li>
+<li>Cookie lišta podľa GDPR</li>
+<li>14 dní podpory po spustení</li>
+</ul>
+<p class="balik__tlacidlo"><a class="tlacidlo tlacidlo--obrysove" href="/cennik?balik=start" data-track="package_select" data-track-package_id="start">Vybrať Štart</a></p>
+</div>
+
+<div class="balik balik--odporucany">
+<p class="balik__stitok">Odporúčaný</p>
+<h3>Lead systém</h3>
+<p class="balik__cena" data-price="lead.regular">449 €</p>
+<p class="balik__pod-cenou"><span data-zakladatelska>Prvých <span data-text="slots-celkom">5</span> klientov: <span data-price="lead.founder">269 €</span>. </span>Hotové do 7 dní.</p>
+<ul class="zoznam-odrazky">
+<li>Všetko zo Štartu</li>
+<li>Dizajn na mieru</li>
+<li>Každý dopyt v tabuľke, zákazník dostane potvrdenie</li>
+<li>Meta a Google vedia, kto sa ozval, a reklama sa podľa toho učí</li>
+<li>30 dní podpory</li>
+</ul>
+<p class="balik__tlacidlo"><a class="tlacidlo tlacidlo--hlavne" href="/cennik?balik=lead" data-track="package_select" data-track-package_id="lead">Vybrať Lead systém</a></p>
+</div>
+
+<div class="balik">
+<h3>Na kľúč</h3>
+<p class="balik__cena" data-price="kluc.regular">790 €</p>
+<p class="balik__pod-cenou"><span data-zakladatelska>Prvých <span data-text="slots-celkom">5</span> klientov: <span data-price="kluc.founder">479 €</span>. </span>Hotové do 14 dní.</p>
+<ul class="zoznam-odrazky">
+<li>Všetko z Lead systému</li>
+<li>Spustím vám reklamu na Mete alebo Googli</li>
+<li>Texty a 3 obrázky do reklamy</li>
+<li>Prvý mesiac reklamu spravujem a pošlem report</li>
+<li>60 dní podpory</li>
+</ul>
+<p class="balik__tlacidlo"><a class="tlacidlo tlacidlo--obrysove" href="/cennik?balik=kluc" data-track="package_select" data-track-package_id="kluc">Vybrať Na kľúč</a></p>
+</div>
+</div>
+
+<div class="pas-dobrovolny">
+<div class="pas-dobrovolny__text">
+<h3>Za web zaplatíte raz. Mesačné platby sú dobrovoľné.</h3>
+<p>Po spustení web funguje aj bez mňa a nič sa automaticky nezapína ani nepredlžuje. Správu webu alebo reklamy si môžete objednať neskôr a ukončiť ju k prvému dňu ďalšieho mesiaca. Ďalej platíte len doménu, raz ročne.</p>
+</div>
+<a class="odkaz-silny" href="/cennik">Porovnať balíky a pridať doplnky</a>
+</div>
+</div>
+</section>
+
+<!-- Reklama ----------------------------------------------------------- -->
+<section class="sekcia sekcia--fialova-svetla objavit" aria-labelledby="reklama-nadpis" data-section="reklama">
+<div class="obsah pas pas--stred">
+<div class="pas__text--uzsi">
+<h2 id="reklama-nadpis">Reklamu zapnete, keď budete chcieť.</h2>
+<p class="perex perex--maly">Najprv postavím web, ktorý meria. Potom vám môžem spravovať aj reklamu na Mete, Googli alebo na oboch, mesačne a bez viazanosti. Rozpočet na reklamu platíte priamo platforme.</p>
+<p class="odkaz-pod"><a class="odkaz-silny" href="/reklama">Pozrieť správu reklamy</a></p>
+</div>
+<div class="pausaly">
+<div class="pausal">
+<h3>Meta</h3>
+<p class="pausal__popis">Facebook a Instagram</p>
+<p class="pausal__cena"><span data-price="pausal.meta">149 €</span> <span>mesačne</span></p>
+</div>
+<div class="pausal">
+<h3>Google</h3>
+<p class="pausal__popis">Vyhľadávanie Google</p>
+<p class="pausal__cena"><span data-price="pausal.google">149 €</span> <span>mesačne</span></p>
+</div>
+<div class="pausal pausal--zvyrazneny">
+<h3>Meta a Google</h3>
+<p class="pausal__popis">O 49 € menej ako zvlášť</p>
+<p class="pausal__cena"><span data-price="pausal.obe">249 €</span> <span>mesačne</span></p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Kontrola webu zadarmo --------------------------------------------- -->
+<section class="sekcia objavit" id="kontrola" aria-labelledby="kontrola-nadpis" data-section="kontrola">
+<div class="obsah pas pas--rozdeleny">
+<div class="pas__text--siroky">
+<h2 id="kontrola-nadpis">Máte web, ktorý vám nenosí dopyty? Pošlite mi naň odkaz.</h2>
+<p class="perex"><span data-config="auditTime">Do 2 pracovných dní</span> vám e-mailom napíšem tri veci, ktoré by som na ňom zmenil, aby sa z rovnakej návštevnosti ozvalo viac ľudí. Pozriem sa na rýchlosť na mobile, na to, či web meria dopyty, a na miesta, kde zákazník nevie, čo urobiť ďalej.</p>
+</div>
+
+<div class="kontrola__formular">
+<form class="karta" id="formular-audit" novalidate>
+<p class="formular__suhrn" data-suhrn role="status" aria-live="polite"></p>
+<div class="formular__polia">
+<label class="pole">Odkaz na váš web
+<input type="url" name="web" autocomplete="url" required>
+</label>
+<label class="pole">Váš e-mail
+<input type="email" name="email" autocomplete="email" required>
+</label>
+</div>
+<div class="pole--past" aria-hidden="true">
+<label>Nevypĺňajte<input type="text" name="t_hp" tabindex="-1" autocomplete="off"></label>
+</div>
+<button class="tlacidlo tlacidlo--hlavne tlacidlo--vyzva tlacidlo--cela-sirka formular__tlacidlo" type="submit">Poslať web na kontrolu</button>
+<p class="formular__pod-tlacidlom">Zadarmo. Ak stačí opraviť meranie, poviem vám to.</p>
+<noscript>
+<p class="formular__pod-tlacidlom">Formulár potrebuje zapnutý JavaScript. Pošlite mi odkaz na web e-mailom na <a href="/" data-mailto data-config="email">e-mail</a>.</p>
+</noscript>
+</form>
+
+<div class="formular__hotovo" data-hotovo="audit" hidden>
+<h3>Odkaz mi prišiel, ďakujem.</h3>
+<p>Web si prejdem a <span data-config="auditTime">do 2 pracovných dní</span> vám napíšem e-mailom tri veci, ktoré by som na ňom zmenil.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- O mne -------------------------------------------------------------- -->
+<section class="sekcia sekcia--marhulova objavit" id="o-mne" aria-labelledby="kto-nadpis" data-section="o-mne">
+<div class="obsah pas pas--o-mne">
+<!-- Portrét doplníme, keď bude fotka v assets/img/daniel.webp. -->
+<div class="portret" aria-hidden="true">Miesto na portrét</div>
+<div class="o-mne__text">
+<h2 id="kto-nadpis">Robím to sám, od webu po reklamu.</h2>
+<p>Som Daniel Tache z Prešova. Šesť rokov som predával elektroniku a naučil som sa, prečo človek váha, čo ho presvedčí a prečo sa už nevráti.</p>
+<p>Na webe robím to isté, čo som robil pri pulte. Odpoviem na otázku skôr, ako ju zákazník položí, a cenu ukážem bez hľadania. Reklamu potom meriam na ľuďoch, ktorí naozaj prišli.</p>
+<p>Celý projekt vybavíme e-mailom. Máte všetko písomne a odpisujete, keď máte čas, aj večer po zatvorení.</p>
+<ul class="o-mne__zoznam">
+<li>PPC Masterclass, Digitálna univerzita, 2026</li>
+<li>Meranie postavené od nuly pre kliniku v Bratislave</li>
+<li>Weby v čistom HTML, CSS a JavaScripte</li>
+</ul>
+<p class="odkaz-pod"><a class="odkaz-silny odkaz-silny--atrament" href="https://danieltache.com" target="_blank" rel="noopener">Viac o mne na danieltache.com</a></p>
+</div>
+</div>
+</section>
+
+<!-- Všetko ostáva vaše -------------------------------------------------- -->
+<section class="sekcia sekcia--bez-spodku objavit" aria-labelledby="vase-nadpis" data-section="vase">
+<div class="obsah">
+<h2 id="vase-nadpis">Všetko ostáva vaše.</h2>
+<div class="trojica trojica--pod-nadpisom">
+<div class="dlazdica dlazdica--fialova">
+<h3>Doména a účty</h3>
+<p>Doména, Netlify, GA4, GTM aj reklamné účty sú na vaše meno. Ja mám len prístup.</p>
+</div>
+<div class="dlazdica dlazdica--fialova">
+<h3>Žiadny poplatok za hosting</h3>
+<p>Web beží na vašom bezplatnom účte Netlify. Platíte len doménu, raz ročne.</p>
+</div>
+<div class="dlazdica dlazdica--fialova">
+<h3>Kód je váš</h3>
+<p>Web je obyčajné HTML bez zložitého zostavovania, ktoré potrebujú weby na moderných frameworkoch. Text alebo cenu zmení aj človek so základmi a nie ste odkázaní na mňa.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Blog, kým je blogEnabled false, sa nevykreslí ----------------------- -->
+<section class="sekcia sekcia--marhulova-svetla sekcia--odsadena objavit" id="blog" aria-labelledby="blog-nadpis" data-section="blog" data-if="blogEnabled" hidden>
+<div class="obsah">
+<div class="pas__hlavica">
+<div class="stlpec-siroky">
+<h2 id="blog-nadpis">Z blogu</h2>
+<p class="perex perex--tesny">Píšem o veciach, ktoré riešim na reálnych projektoch.</p>
+</div>
+<a class="odkaz-silny" href="/blog">Všetky články</a>
+</div>
+<div class="trojica trojica--pod-nadpisom">
+<article class="clanok dlazdica dlazdica--fialova">
+<p class="clanok__rubrika">Reklama</p>
+<h3><a href="/blog">Prečo vám Facebook reklama nosí dopyty, ktoré neprídu</a></h3>
+<p>Lacný dopyt vyzerá v reporte dobre, kým ho nespočítate s tými, čo na termín neprišli. Postup na príklade depilačného štúdia.</p>
+</article>
+<article class="clanok dlazdica dlazdica--fialova">
+<p class="clanok__rubrika">Ceny</p>
+<h3><a href="/blog">Koľko stojí landing page v roku 2026 a čo do ceny patrí</a></h3>
+<p>Porovnal som ceny slovenských tvorcov webov. Meranie konverzií v cene neuvádzal ani jeden z nich.</p>
+</article>
+<article class="clanok dlazdica dlazdica--fialova">
+<p class="clanok__rubrika">Meranie</p>
+<h3><a href="/blog">Prečo GA4 ukazuje menej návštev než reklama</a></h3>
+<p>42 klikov v Google Ads a nula návštev v GA4. Odkiaľ sa rozdiel berie a ako ho opraviť.</p>
+</article>
+</div>
+</div>
+</section>
+
+<!-- Časté otázky -------------------------------------------------------- -->
+<section class="sekcia objavit" aria-labelledby="faq-nadpis" data-section="faq">
+<div class="obsah pas pas--rozdeleny">
+<div class="stlpec-uzky">
+<h2 id="faq-nadpis">Časté otázky</h2>
+<p class="perex perex--maly">Nenašli ste odpoveď? <a class="odkaz-v-texte" href="/" data-mailto data-track="email_click" data-track-link_location="faq">Napíšte mi.</a> Odpíšem <span data-config="replyTime">do 24 hodín v pracovné dni</span>.</p>
+</div>
+<div class="otazky">
+<details class="otazka" data-faq-index="1" open>
+<summary>Musím si potom platiť mesačnú správu?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Nie. Web je po spustení váš a funguje aj bez mňa. Správu webu za <span data-price="pausal.web">29 €</span> alebo reklamy od <span data-price="pausal.meta">149 €</span> mesačne si môžete objednať neskôr, alebo nikdy.</p>
+</details>
+<details class="otazka" data-faq-index="2">
+<summary>Čo ak meranie nebude fungovať?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Pred odovzdaním ho overím skúšobným dopytom. Ak niečo nefunguje, opravím to zadarmo.</p>
+</details>
+<details class="otazka" data-faq-index="3">
+<summary>Web už mám. Oplatí sa nový?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Pošlite mi odkaz a e-mailom vám napíšem, čo by som na ňom zmenil. Zvyčajne ide o rýchlosť na mobile, meranie dopytov a cenu, ktorú treba hľadať. Pred odovzdaním každý web otestujem v PageSpeed od Googlu a výsledok vám pošlem. Ak stačí opraviť meranie na starom webe, poviem vám to. <a class="odkaz-v-texte" href="#kontrola">Poslať web na kontrolu.</a></p>
+</details>
+<details class="otazka" data-faq-index="4">
+<summary>Ako spolu budeme komunikovať?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>E-mailom, od objednávky až po spustenie. Máte všetko písomne a odpíšem vám <span data-config="replyTime">do 24 hodín v pracovné dni</span>.</p>
+</details>
+<details class="otazka" data-faq-index="5">
+<summary>Koľko ma bude stáť reklama?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Rozpočet si určíte sami a platíte ho priamo Mete alebo Googlu, nie mne. Odporučím vám ho podľa odvetvia a toho, koľko zákazníkov potrebujete.</p>
+</details>
+<details class="otazka" data-faq-index="6">
+<summary>Naozaj neplatím za hosting?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Web beží na Netlify vo vašom vlastnom účte. Pri bežnej návštevnosti malej firmy stačí bezplatný plán. Platíte len doménu.</p>
+</details>
+<details class="otazka" data-faq-index="7">
+<summary>Čo musím dodať?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Vyplníte dotazník o firme, službách a cenách a pošlete fotky a logo. Texty napíšem ja.</p>
+</details>
+<details class="otazka" data-faq-index="8">
+<summary>Čo ak sa mi návrh nepáči?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Návrh uvidíte ako obrázok skôr, ako začnem programovať. V cene sú 2 alebo 3 kolá úprav podľa balíka.</p>
+</details>
+<details class="otazka" data-faq-index="9">
+<summary>Ako rýchlo to bude?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Štart do 3 dní, Lead systém do 7 dní a Na kľúč do 14 dní od vyplnenia dotazníka a dodania podkladov.</p>
+</details>
+<details class="otazka" data-faq-index="10">
+<summary>Ako sa platí?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>50 % po objednávke a 50 % pred spustením na vašej doméne. Faktúru dostanete vždy.</p>
+</details>
+<details class="otazka" data-faq-index="11">
+<summary>Môžem si reklamu dokúpiť neskôr?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Áno. Správa reklamy na Mete alebo Googli stojí <span data-price="pausal.meta">149 €</span> mesačne, na oboch <span data-price="pausal.obe">249 €</span>. <a class="odkaz-v-texte" href="/reklama">Pozrieť, čo obsahuje.</a></p>
+</details>
+<details class="otazka" data-faq-index="12">
+<summary>Robíte aj e-shopy?<svg class="otazka__znak" aria-hidden="true" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 4v12M4 10h12"></path></svg></summary>
+<p>Nie. Robím predajné stránky a jednoduché weby, ktoré zbierajú dopyty a rezervácie.</p>
+</details>
+</div>
+</div>
+</section>
+
+<!-- Záverečná výzva ------------------------------------------------------ -->
+<section class="sekcia na-fialovej vyzva" id="kontakt" aria-labelledby="vyzva-nadpis" data-section="vyzva">
+<div class="obsah">
+<h2 class="vyzva__nadpis" id="vyzva-nadpis" data-zakladatelska>Prvých <span data-text="slots-celkom">5</span> klientov dostane zakladateľskú cenu.</h2>
+<h2 class="vyzva__nadpis" data-bez-zakladatelskej hidden>Začnite webom, ktorý meria.</h2>
+<p data-zakladatelska><span data-text="slots-veta">Zostávajú 4 miesta</span>. Výmenou vás poprosím o referenciu, keď bude web hotový.</p>
+<p>Meranie pred odovzdaním overím, a ak nefunguje, opravím ho zadarmo.</p>
+<div class="vyzva__tlacidla">
+<a class="tlacidlo tlacidlo--marhulove tlacidlo--vyzva" href="/cennik" data-track="package_cta" data-track-link_location="zaverecna-vyzva">Vybrať balík</a>
+<a class="odkaz-vedla" href="/" data-mailto data-track="email_click" data-track-link_location="zaverecna-vyzva">Napísať mi e-mail</a>
+</div>
+<p class="vyzva__poznamka">Odpíšem <span data-config="replyTime">do 24 hodín v pracovné dni</span>.</p>
+</div>
+</section>
+
+<!-- Lišta s výzvou pri spodnom okraji, len na mobile. V návrhoch nie je,
+     ukazuje sa, keď tlačidlo v hero zmizne, a skrýva sa pri balíkoch
+     a pri záverečnej výzve. Obsluhuje ju domov.js. -->
+<div class="lista-mobil" data-lista-vyzva data-videt="nie">
+<a class="tlacidlo tlacidlo--hlavne tlacidlo--vyzva tlacidlo--cela-sirka" href="/cennik" data-track="package_cta" data-track-link_location="lista-mobil">Vybrať balík</a>
+</div>
 
 </main>
 
@@ -174,13 +740,15 @@
 
 <!-- #skripty:start -->
 <!-- Poradie je dôležité: consent.js používa track.js, source.js používa
-     consent.js, nav.js používa obal.js aj track.js. Atribút defer poradie
-     zachová. config.js je už v bloku merania v hlavičke. -->
+     consent.js, forms.js používa source.js a nav.js používa obal.js aj
+     track.js. Atribút defer poradie zachová. config.js je už v bloku
+     merania v hlavičke. -->
 <script src="/assets/js/packages.js" defer></script>
 <script src="/assets/js/obal.js" defer></script>
 <script src="/assets/js/track.js" defer></script>
 <script src="/assets/js/consent.js" defer></script>
 <script src="/assets/js/source.js" defer></script>
+<script src="/assets/js/forms.js" defer></script>
 <script src="/assets/js/nav.js" defer></script>
 <!-- #skripty:end -->
 

@@ -514,7 +514,7 @@ nav.pata__blok {
   z-index: var(--vrstva-test);
   height: 30px;
   margin: 0;
-  padding: 6px var(--padding-bok);
+  padding: 6px 12px;
   white-space: nowrap;
   overflow: hidden;
   background: #FFE9A8;
@@ -522,6 +522,12 @@ nav.pata__blok {
   font-size: var(--text-drobny);
   font-weight: var(--vaha-polotucna);
   text-align: center;
+}
+
+@media (max-width: 420px) {
+  .pruh-test {
+    font-size: 12px;
+  }
 }
 
 /* --- Dotykové plochy --------------------------------------------------

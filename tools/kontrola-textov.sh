@@ -21,6 +21,17 @@ done < <(find . \( -name '*.html' -o -name '*.js' \) \
   -not -path './design/*' -not -path './docs/*' -not -path './.git/*' \
   -not -path './assets/vendor/*' -not -path './tools/*' | sort)
 
+# Schválené výskyty, ktoré sa už nehlásia. Zoznam je v overene-texty.txt.
+POVOLENE=tools/overene-texty.txt
+
+odfiltruj() {
+  if [ ! -f "$POVOLENE" ]; then
+    cat
+    return
+  fi
+  grep -vFf <(grep -v '^#' "$POVOLENE" | grep -v '^[[:space:]]*$') || true
+}
+
 najdene=0
 
 hladaj() {
@@ -30,9 +41,9 @@ hladaj() {
 
   local vysledok
   if [ -n "$vynimka" ]; then
-    vysledok=$(grep -niE "$vzor" "${SUBORY[@]}" | grep -viE "$vynimka" || true)
+    vysledok=$(grep -niE "$vzor" "${SUBORY[@]}" | grep -viE "$vynimka" | odfiltruj)
   else
-    vysledok=$(grep -niE "$vzor" "${SUBORY[@]}" || true)
+    vysledok=$(grep -niE "$vzor" "${SUBORY[@]}" | odfiltruj)
   fi
 
   if [ -n "$vysledok" ]; then
