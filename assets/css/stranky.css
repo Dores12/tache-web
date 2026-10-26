@@ -918,15 +918,12 @@
 }
 
 .pas__text--siroky {
-  flex: 1 1 440px;
   max-width: 620px;
-  min-width: 0;
 }
 
 .pas__text--uzsi {
-  flex: 1 1 400px;
+  flex-basis: 400px;
   max-width: 520px;
-  min-width: 0;
 }
 
 /* min-width: 0 je nutné. Bez neho sa flex prvok odmietne zmenšiť pod
@@ -1063,4 +1060,539 @@
 .o-mne__text {
   flex: 1 1 460px;
   max-width: 640px;
+}
+
+/* ==========================================================================
+   CENNÍK
+   Konfigurátor podľa design/Cennik.dc.html: krok 1 balík, krok 2 doplnky,
+   krok 3 objednávka, súhrn vpravo. Na mobile ide súhrn pod formulár
+   a nad tlačidlo sa pridá mini súhrn so sumou.
+   ========================================================================== */
+
+/* --- Box „Ktorý balík si vybrať“ v hero ------------------------------ */
+.rada {
+  margin-top: 40px;
+  max-width: 760px;
+  padding-top: 24px;
+  border-top: 1px solid var(--okraj-na-fialovej);
+}
+
+.rada h2 {
+  font-size: 20px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--marhulova);
+}
+
+.rada ul {
+  margin-top: 16px;
+  padding-left: 20px;
+  font-size: var(--text-velky);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rada strong {
+  color: var(--marhulova);
+  font-weight: var(--vaha-polotucna);
+}
+
+.rada__pod {
+  margin-top: 16px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* --- Rozloženie konfigurátora ---------------------------------------- */
+.konfigurator {
+  padding: 96px 0 var(--padding-sekcia);
+}
+
+.konfigurator__obsah {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 56px 80px;
+}
+
+.konfigurator__kroky {
+  flex: 1 1 620px;
+  min-width: 0;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+.konfigurator h2 {
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.konfigurator__popis {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-tlmeny);
+}
+
+/* --- Krok 1: výber balíka --------------------------------------------
+   Sú to prepínače (radio), nie tlačidlá ako v návrhu. Vizuálne je to
+   rovnaké, ale čítačka aj klávesnica dostanú skupinu s jedinou voľbou.
+   Samotný prepínač je skrytý, vybratý stav nesie atribút data-vybrane.
+   -------------------------------------------------------------------- */
+.baliky-volba {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.volba-balika {
+  display: block;
+  padding: 21px 23px;
+  border: 1px solid var(--okraj);
+  border-radius: var(--roh-karta);
+  background: var(--biela);
+  cursor: pointer;
+}
+
+.volba-balika[data-vybrane='ano'] {
+  padding: 20px 22px;
+  border: 2px solid var(--fialova);
+  background: var(--marhulova-svetla);
+}
+
+.volba-balika:focus-within {
+  outline: 3px solid var(--fialova);
+  outline-offset: 3px;
+}
+
+.volba-balika__stitok {
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--text-drobny);
+  font-weight: var(--vaha-polotucna);
+  color: var(--fialova);
+}
+
+.volba-balika__riadok {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.volba-balika__nazov {
+  font-size: 20px;
+  font-weight: var(--vaha-tucna);
+}
+
+.volba-balika__cena {
+  font-size: 26px;
+  font-weight: var(--vaha-tucna);
+  letter-spacing: -0.01em;
+}
+
+.volba-balika__popis {
+  margin-top: 6px;
+  font-size: var(--text-maly);
+  line-height: 1.45;
+  color: var(--text-tlmeny);
+}
+
+.volba-balika__povodna {
+  white-space: nowrap;
+  text-decoration: line-through;
+}
+
+.volba-balika__dni {
+  display: block;
+  margin-top: 10px;
+  font-size: var(--text-drobny);
+  font-weight: var(--vaha-polotucna);
+  color: var(--fialova);
+}
+
+/* --- Krok 2: doplnky -------------------------------------------------- */
+.doplnky {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.doplnok {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--okraj);
+  border-radius: 10px;
+  background: var(--biela);
+  cursor: pointer;
+}
+
+.doplnok[data-vybrane='ano'] {
+  border-color: var(--fialova);
+  background: var(--marhulova-svetla);
+}
+
+.doplnok input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--fialova);
+}
+
+.doplnok__nazov {
+  flex: 1 1 auto;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.doplnok__cena {
+  flex: 0 0 auto;
+  font-size: 16px;
+  font-weight: var(--vaha-polotucna);
+}
+
+/* --- Ponuka vyššieho balíka ------------------------------------------ */
+.upsell {
+  margin-top: 16px;
+  padding: 18px 20px;
+  border-radius: 10px;
+  background: var(--fialova-svetla);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+
+.upsell p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* --- Krok 3: objednávka ----------------------------------------------- */
+.objednavka__polia {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.objednavka__suhlas {
+  margin-top: 24px;
+}
+
+.objednavka__spotrebitel {
+  margin-top: 12px;
+  font-size: var(--text-drobny);
+  line-height: 1.5;
+  color: var(--text-tlmeny);
+}
+
+/* Mini súhrn nad tlačidlom, ukazuje sa len na mobile. */
+.suhrn-mini {
+  display: none;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--okraj);
+  font-size: var(--text);
+  font-weight: var(--vaha-polotucna);
+}
+
+.suhrn-mini__suma {
+  font-size: 24px;
+  font-weight: var(--vaha-tucna);
+  letter-spacing: -0.01em;
+}
+
+/* --- Súhrn objednávky ------------------------------------------------- */
+.suhrn {
+  flex: 0 1 400px;
+  box-sizing: border-box;
+  padding: 32px 28px;
+  border-radius: var(--roh-karta);
+  background: var(--marhulova-svetla);
+}
+
+.suhrn h2 {
+  font-size: 22px;
+}
+
+.suhrn__riadok {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 16px;
+}
+
+.suhrn__cena {
+  font-weight: var(--vaha-polotucna);
+}
+
+.suhrn__doplnok {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: var(--text-maly);
+  color: var(--text-tlmeny);
+}
+
+.suhrn__spolu {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--okraj);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.suhrn__spolu dt {
+  font-size: var(--text);
+  font-weight: var(--vaha-polotucna);
+}
+
+.suhrn__spolu dd {
+  margin: 0;
+  font-size: 32px;
+  font-weight: var(--vaha-tucna);
+  letter-spacing: -0.01em;
+}
+
+.suhrn__platba {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: var(--text-maly);
+  color: var(--text-tlmeny);
+}
+
+.suhrn__platba + .suhrn__platba {
+  margin-top: 4px;
+}
+
+.suhrn__dni {
+  margin-top: 20px;
+  font-size: var(--text-maly);
+  font-weight: var(--vaha-polotucna);
+  color: var(--fialova);
+}
+
+.suhrn__poznamka {
+  margin-top: 8px;
+  font-size: var(--text-drobny);
+  line-height: 1.5;
+  color: var(--text-tlmeny);
+}
+
+@media (max-width: 980px) {
+  /* Súhrn ide pod formulár a nad tlačidlo pribudne mini súhrn. */
+  .konfigurator__obsah {
+    flex-direction: column;
+  }
+
+  .konfigurator__kroky,
+  .suhrn {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: none;
+  }
+
+  .suhrn-mini {
+    display: flex;
+  }
+}
+
+/* --- Čo presne dostanete ---------------------------------------------- */
+.obsah-balikov {
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Karta bez okraja, používa sa na podfarbenej sekcii. */
+.karta--bez-okraja {
+  border: 0;
+}
+
+.obsah-balika {
+  flex: 1 1 320px;
+}
+
+.obsah-balika--odporucany {
+  padding-top: 29px;
+  border-top: 3px solid var(--fialova);
+}
+
+.obsah-balika h3 {
+  font-size: 24px;
+}
+
+.obsah-balika__komu {
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-tlmeny);
+}
+
+.obsah-balika__skupina {
+  margin-top: 24px;
+  font-size: var(--text-drobny);
+  font-weight: var(--vaha-polotucna);
+  color: var(--fialova);
+}
+
+.obsah-balika__skupina--prva {
+  margin-top: 28px;
+}
+
+.obsah-balika ul {
+  margin-top: 8px;
+  padding-left: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.obsah-balika__odovzdanie {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.dve-kolonky {
+  margin-top: 72px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 64px;
+}
+
+.dve-kolonky > div {
+  flex: 1 1 400px;
+  min-width: 0;
+}
+
+/* --- Porovnávacia tabuľka ---------------------------------------------
+   Na mobile je v posuvnom boxe. Box je zaostriteľný, aby sa dal posúvať
+   aj klávesnicou.
+   -------------------------------------------------------------------- */
+.porovnanie {
+  margin-top: 48px;
+  overflow-x: auto;
+  border: 1px solid var(--okraj);
+  border-radius: var(--roh-karta);
+  background: var(--biela);
+}
+
+.porovnanie table {
+  width: 100%;
+  min-width: 880px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.porovnanie th,
+.porovnanie td {
+  padding: 14px 24px;
+  text-align: left;
+  border-top: 1px solid var(--okraj-jemny);
+}
+
+.porovnanie thead th {
+  padding: 24px;
+  font-size: 18px;
+  font-weight: var(--vaha-tucna);
+  border-top: 0;
+}
+
+.porovnanie thead th:first-child {
+  width: 34%;
+  padding-left: 28px;
+  font-size: var(--text-maly);
+  font-weight: var(--vaha-stredna);
+  color: var(--text-tlmeny);
+}
+
+.porovnanie__cena {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--text-maly);
+  font-weight: var(--vaha-stredna);
+  color: var(--text-tlmeny);
+}
+
+.porovnanie tbody th {
+  padding-left: 28px;
+  font-weight: var(--vaha-normal);
+}
+
+.porovnanie__skupina th,
+.porovnanie__skupina td {
+  padding: 28px 28px 10px;
+  font-size: var(--text-drobny);
+  font-weight: var(--vaha-polotucna);
+  color: var(--text-tlmeny);
+  border-top: 1px solid var(--okraj);
+}
+
+/* Odporúčaný stĺpec je podfarbený po celej výške. */
+.porovnanie thead th:nth-child(3) {
+  padding-top: 21px;
+  background: var(--marhulova-svetla);
+  border-top: 3px solid var(--fialova);
+}
+
+.porovnanie tbody td:nth-of-type(2) {
+  background: var(--marhulova-svetla);
+}
+
+.porovnanie__nie {
+  color: var(--text-tlmeny-2);
+}
+
+/* --- Paušály ----------------------------------------------------------- */
+.pausaly-radok {
+  flex: 1 1 520px;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+/* Paušály používajú tvar dlaždice z domova, pribúda len cena. */
+.pausal-stlpec {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.pausal-stlpec__cena {
+  margin-top: 8px;
+  font-size: 32px;
+  font-weight: var(--vaha-tucna);
+  letter-spacing: -0.01em;
+}
+
+.pausal-stlpec__cena span {
+  font-size: 16px;
+  font-weight: var(--vaha-stredna);
+  color: var(--text-tlmeny);
 }

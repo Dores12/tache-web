@@ -20,12 +20,58 @@
 <meta name="twitter:card" content="summary_large_image">
 <!-- #hlava:end -->
 <title>Balíky a ceny | Tache</title>
-<meta name="description" content="Tri balíky s konečnými cenami od 249 €. Vyberte balík, pridajte doplnky a pošlite objednávku. Nie som platca DPH.">
-<meta name="robots" content="noindex">
+<meta name="description" content="Tri balíky s konečnými cenami od 249 €. Vyberte balík, pridajte doplnky a pošlite objednávku. Zálohová faktúra s QR kódom príde hneď e-mailom.">
 <link rel="canonical" href="https://tache.netlify.app/cennik">
 <meta property="og:title" content="Balíky a ceny">
-<meta property="og:description" content="Tri balíky s konečnými cenami. Vyberte balík, pridajte doplnky a pošlite objednávku.">
+<meta property="og:description" content="Tri balíky s konečnými cenami. Vyberte balík, pridajte doplnky a pošlite objednávku. Nie som platca DPH.">
 <meta property="og:url" content="https://tache.netlify.app/cennik">
+<!-- Štruktúrované dáta s cenami. Musia byť statické, lebo ich vyhľadávač
+     číta z HTML. Pri zmene packages.js ich treba prepísať aj tu,
+     stráži to tools/kontrola-cien.py. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Predajná stránka s meraním",
+  "serviceType": "Tvorba predajných stránok s meraním konverzií",
+  "provider": {
+    "@type": "Person",
+    "name": "Daniel Tache",
+    "url": "https://danieltache.com"
+  },
+  "areaServed": { "@type": "Country", "name": "Slovensko" },
+  "url": "https://tache.netlify.app/cennik",
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Štart",
+      "description": "Predajná stránka z overeného rozloženia. Uvidíte, koľko ľudí sa ozvalo a odkiaľ.",
+      "price": "249",
+      "priceCurrency": "EUR",
+      "url": "https://tache.netlify.app/cennik?balik=start",
+      "availability": "https://schema.org/InStock"
+    },
+    {
+      "@type": "Offer",
+      "name": "Lead systém",
+      "description": "Dizajn na mieru, každý dopyt v tabuľke a reklama, ktorá vie, kto sa ozval.",
+      "price": "449",
+      "priceCurrency": "EUR",
+      "url": "https://tache.netlify.app/cennik?balik=lead",
+      "availability": "https://schema.org/InStock"
+    },
+    {
+      "@type": "Offer",
+      "name": "Na kľúč",
+      "description": "Web, reklama a prvý mesiac jej správy od jedného človeka.",
+      "price": "790",
+      "priceCurrency": "EUR",
+      "url": "https://tache.netlify.app/cennik?balik=kluc",
+      "availability": "https://schema.org/InStock"
+    }
+  ]
+}
+</script>
 <!-- #meranie:start -->
 <!-- Consent Mode v2: predvolene je všetko zamietnuté a uložená voľba sa
      aplikuje ešte pred načítaním GTM. Nič tu nepridávaj, meranie sa riadi
@@ -125,21 +171,404 @@
 </div>
 <!-- #hlavicka:end -->
 
-<main id="obsah" tabindex="-1" data-page="cennik" data-nav-active="cennik">
+<main id="obsah" tabindex="-1" data-page="cennik" data-skript="cennik" data-nav-active="cennik">
 
-<section class="na-fialovej hero" aria-labelledby="cennik-h1">
+<!-- Úvod ------------------------------------------------------------- -->
+<section class="na-fialovej hero" aria-labelledby="cennik-h1" data-section="hero">
 <div class="obsah">
 <h1 id="cennik-h1" class="hero__nadpis">Balíky a ceny</h1>
 <p class="hero__podtext hero__podtext--samostatny">Vyberte balík, pridajte doplnky a pošlite objednávku. Hneď potom vám e-mailom príde zálohová faktúra na 50 % s QR kódom pre aplikáciu banky. Nie som platca DPH.</p>
+
+<div class="rada">
+<h2>Ktorý balík si vybrať</h2>
+<ul>
+<li>Potrebujete stránku pre jednu službu a reklamu zatiaľ neplánujete: <strong>Štart</strong>.</li>
+<li>Chcete spustiť reklamu alebo už beží: <strong>Lead systém</strong>. Bez neho reklama nevie, kto sa ozval, a učí sa na klikoch.</li>
+<li>Nechcete riešiť ani web, ani reklamu: <strong>Na kľúč</strong>.</li>
+</ul>
+<p class="rada__pod">Balík môžete neskôr rozšíriť a doplatíte len rozdiel v cene.</p>
+</div>
 </div>
 </section>
 
-<!-- Zástupná stránka z kroku 1, slúži na test navigácie. Konfigurátor,
-     porovnávacia tabuľka a objednávka prídu v kroku 3. Dovtedy je
-     stránka noindex. -->
-<section class="pripravujeme">
+<!-- Konfigurátor a objednávka ---------------------------------------- -->
+<section class="konfigurator" id="konfigurator" aria-label="Objednávka" data-section="konfigurator">
+<div class="obsah konfigurator__obsah">
+
+<div class="konfigurator__kroky">
+
+<!-- Krok 1 -->
+<div>
+<h2 id="krok-balik">1. Vyberte balík</h2>
+<div class="baliky-volba" role="radiogroup" aria-labelledby="krok-balik">
+
+<label class="volba-balika" data-balik="start">
+<input class="len-pre-citacku" type="radio" name="balik" value="start">
+<span class="volba-balika__riadok">
+<span class="volba-balika__nazov">Štart</span>
+<span class="volba-balika__cena" data-price="start.aktualna">149 €</span>
+</span>
+<span class="volba-balika__riadok volba-balika__popis">
+<span>Predajná stránka z overeného rozloženia. Uvidíte, koľko ľudí sa ozvalo a odkiaľ.</span>
+<span class="volba-balika__povodna" data-price="start.regular" data-zakladatelska>249 €</span>
+</span>
+<span class="volba-balika__dni">Hotové do 3 dní</span>
+</label>
+
+<label class="volba-balika" data-balik="lead">
+<input class="len-pre-citacku" type="radio" name="balik" value="lead" checked>
+<span class="volba-balika__stitok">Odporúčaný</span>
+<span class="volba-balika__riadok">
+<span class="volba-balika__nazov">Lead systém</span>
+<span class="volba-balika__cena" data-price="lead.aktualna">269 €</span>
+</span>
+<span class="volba-balika__riadok volba-balika__popis">
+<span>Dizajn na mieru, každý dopyt v tabuľke a reklama, ktorá vie, kto sa ozval.</span>
+<span class="volba-balika__povodna" data-price="lead.regular" data-zakladatelska>449 €</span>
+</span>
+<span class="volba-balika__dni">Hotové do 7 dní</span>
+</label>
+
+<label class="volba-balika" data-balik="kluc">
+<input class="len-pre-citacku" type="radio" name="balik" value="kluc">
+<span class="volba-balika__riadok">
+<span class="volba-balika__nazov">Na kľúč</span>
+<span class="volba-balika__cena" data-price="kluc.aktualna">479 €</span>
+</span>
+<span class="volba-balika__riadok volba-balika__popis">
+<span>Web, reklama a prvý mesiac jej správy od jedného človeka.</span>
+<span class="volba-balika__povodna" data-price="kluc.regular" data-zakladatelska>790 €</span>
+</span>
+<span class="volba-balika__dni">Hotové do 14 dní</span>
+</label>
+
+</div>
+<p class="poznamka" data-zakladatelska>Zakladateľská cena platí pre prvých <span data-text="slots-celkom">5</span> klientov výmenou za referenciu. <span data-text="slots-veta">Zostávajú 4 miesta</span>. Prečiarknutá je bežná cena.</p>
+</div>
+
+<!-- Krok 2 -->
+<div>
+<h2 id="krok-doplnky">2. Pridajte doplnky</h2>
+<p class="konfigurator__popis">Nepovinné. Pri každom balíku vidíte len tie, ktoré k nemu dávajú zmysel.</p>
+<div class="doplnky" aria-labelledby="krok-doplnky">
+
+<label class="doplnok" data-doplnok="pixel" data-only="start">
+<input type="checkbox" name="doplnok-pixel" value="pixel">
+<span class="doplnok__nazov">Meranie pre reklamu na Mete a Googli</span>
+<span class="doplnok__cena">+ <span data-price="pixel">79 €</span></span>
+</label>
+
+<label class="doplnok" data-doplnok="auto" data-only="start">
+<input type="checkbox" name="doplnok-auto" value="auto">
+<span class="doplnok__nazov">Dopyty do tabuľky a potvrdenie zákazníkovi</span>
+<span class="doplnok__cena">+ <span data-price="auto">99 €</span></span>
+</label>
+
+<label class="doplnok" data-doplnok="dizajn" data-only="start">
+<input type="checkbox" name="doplnok-dizajn" value="dizajn">
+<span class="doplnok__nazov">Dizajn na mieru</span>
+<span class="doplnok__cena">+ <span data-price="dizajn">99 €</span></span>
+</label>
+
+<label class="doplnok" data-doplnok="kampan" data-only="lead">
+<input type="checkbox" name="doplnok-kampan" value="kampan">
+<span class="doplnok__nazov">Spustenie reklamy na Mete alebo Googli</span>
+<span class="doplnok__cena">+ <span data-price="kampan">149 €</span></span>
+</label>
+
+<label class="doplnok" data-doplnok="kreativy" data-only="lead">
+<input type="checkbox" name="doplnok-kreativy" value="kreativy">
+<span class="doplnok__nazov">Texty a 3 obrázky do reklamy</span>
+<span class="doplnok__cena">+ <span data-price="kreativy">99 €</span></span>
+</label>
+
+<label class="doplnok" data-doplnok="druha" data-only="kluc">
+<input type="checkbox" name="doplnok-druha" value="druha">
+<span class="doplnok__nazov">Reklama aj na druhej platforme</span>
+<span class="doplnok__cena">+ <span data-price="druha">149 €</span></span>
+</label>
+
+<label class="doplnok" data-doplnok="podstranka" data-only="">
+<input type="checkbox" name="doplnok-podstranka" value="podstranka">
+<span class="doplnok__nazov">Ďalšia podstránka</span>
+<span class="doplnok__cena">+ <span data-price="podstranka">49 €</span></span>
+</label>
+
+<label class="doplnok" data-doplnok="kolo" data-only="">
+<input type="checkbox" name="doplnok-kolo" value="kolo">
+<span class="doplnok__nazov">Ďalšie kolo úprav</span>
+<span class="doplnok__cena">+ <span data-price="kolo">39 €</span></span>
+</label>
+
+<label class="doplnok" data-doplnok="clanok" data-only="">
+<input type="checkbox" name="doplnok-clanok" value="clanok">
+<span class="doplnok__nazov">Článok na blog napísaný pre Google</span>
+<span class="doplnok__cena">+ <span data-price="clanok">59 €</span></span>
+</label>
+
+</div>
+
+<div class="upsell" data-upsell hidden>
+<p data-upsell-text></p>
+<button class="tlacidlo tlacidlo--hlavne" type="button" data-upsell-tlacidlo></button>
+</div>
+</div>
+
+<!-- Krok 3 -->
+<div>
+<h2>3. Kam pošlem potvrdenie</h2>
+<p class="konfigurator__popis">Teraz nič neplatíte. Zálohovú faktúru s QR kódom vám pošlem e-mailom hneď po odoslaní.</p>
+
+<form id="formular-objednavka" novalidate>
+<p class="formular__suhrn" data-suhrn role="status" aria-live="polite"></p>
+
+<div class="objednavka__polia">
+<label class="pole">Meno a priezvisko
+<input type="text" name="meno" autocomplete="name" required>
+</label>
+<label class="pole">E-mail
+<input type="email" name="email" autocomplete="email" required>
+</label>
+<label class="pole"><span>Firma alebo IČO <span class="pole__nepovinne">nepovinné</span></span>
+<input type="text" name="firma" autocomplete="organization">
+</label>
+<label class="pole">Odvetvie
+<select name="odvetvie" required>
+<option value="">Vyberte odvetvie</option>
+<option>Salón alebo kozmetika</option>
+<option>Klinika alebo zdravie</option>
+<option>Fitness</option>
+<option>Remeslo a služby</option>
+<option>Iné</option>
+</select>
+</label>
+</div>
+
+<label class="pole pole--zaskrtavacie objednavka__suhlas">
+<input type="checkbox" name="podmienky" required data-chyba="Bez súhlasu s obchodnými podmienkami objednávku odoslať neviem.">
+<span>Súhlasím s <a class="odkaz-v-texte" href="/obchodne-podmienky">obchodnými podmienkami</a>.</span>
+</label>
+
+<!-- Pre objednávku bez IČO. Zobrazí sa, keď je pole Firma alebo IČO
+     prázdne. Znenie treba dať skontrolovať právnikovi. -->
+<div data-spotrebitel hidden>
+<label class="pole pole--zaskrtavacie objednavka__suhlas">
+<input type="checkbox" name="lehota" data-chyba="Bez tohto potvrdenia neviem začať skôr ako o 14 dní.">
+<span>Žiadam, aby ste s prácou začali pred uplynutím 14-dňovej lehoty na odstúpenie od zmluvy. Beriem na vedomie, že po úplnom poskytnutí služby právo na odstúpenie stratím.</span>
+</label>
+</div>
+
+<p class="objednavka__spotrebitel">Objednávate ako súkromná osoba bez IČO? Pri odoslaní potvrdíte, že s prácou môžem začať pred uplynutím 14-dňovej lehoty na odstúpenie.</p>
+
+<div class="pole--past" aria-hidden="true">
+<label>Nevypĺňajte<input type="text" name="t_hp" tabindex="-1" autocomplete="off"></label>
+</div>
+
+<div class="suhrn-mini">
+<span>Spolu</span>
+<span class="suhrn-mini__suma" data-suhrn-mini>269 €</span>
+</div>
+
+<button class="tlacidlo tlacidlo--hlavne tlacidlo--vyzva formular__tlacidlo" type="submit">Objednať balík <span data-nazov-balika>Lead systém</span></button>
+
+<noscript>
+<p class="formular__pod-tlacidlom">Objednávka potrebuje zapnutý JavaScript. Napíšte mi, ktorý balík chcete, na <a href="/" data-mailto data-config="email">e-mail</a> a pošlem vám zálohovú faktúru.</p>
+</noscript>
+</form>
+
+<div class="formular__hotovo" data-hotovo="order" hidden>
+<h3>Objednávka prišla, ďakujem.</h3>
+<p>Toto je testovací režim, takže sa nič neodoslalo. Po spustení vám na zadaný e-mail odíde zálohová faktúra s QR kódom a presmerujem vás na stránku s poďakovaním.</p>
+</div>
+</div>
+
+</div>
+
+<!-- Súhrn objednávky -->
+<aside class="suhrn" aria-label="Súhrn objednávky">
+<h2>Vaša objednávka</h2>
+<dl>
+<div class="suhrn__riadok">
+<dt>Balík <span data-nazov-balika>Lead systém</span></dt>
+<dd class="suhrn__cena" data-suhrn-balik>269 €</dd>
+</div>
+<div data-suhrn-doplnky></div>
+<div class="suhrn__spolu">
+<dt>Spolu</dt>
+<dd data-suhrn-spolu>269 €</dd>
+</div>
+<div class="suhrn__platba">
+<dt>Záloha 50 % po objednávke</dt>
+<dd data-suhrn-zaloha>134,50 €</dd>
+</div>
+<div class="suhrn__platba">
+<dt>Doplatok pred spustením</dt>
+<dd data-suhrn-doplatok>134,50 €</dd>
+</div>
+</dl>
+<p class="suhrn__dni" data-suhrn-dni>Hotové do 7 dní</p>
+<p class="suhrn__poznamka">Termín plynie od vyplnenia dotazníka a dodania podkladov. Rozpočet na reklamu platíte priamo platforme.</p>
+</aside>
+
+</div>
+</section>
+
+<!-- Čo presne dostanete ----------------------------------------------- -->
+<section class="sekcia sekcia--fialova-svetla objavit" aria-labelledby="obsah-nadpis" data-section="obsah-balikov">
 <div class="obsah">
-<p class="pripravujeme__text">Konfigurátor a objednávka pribudnú v kroku 3.</p>
+<h2 id="obsah-nadpis">Čo presne dostanete</h2>
+<p class="perex">Každý balík je jedna predajná stránka, na ktorú posielate ľudí z reklamy, z Googlu alebo zo sociálnych sietí. Ďalšiu podstránku pridáte za <span data-price="podstranka">49 €</span>.</p>
+
+<div class="obsah-balikov">
+
+<article class="karta karta--bez-okraja obsah-balika">
+<h3>Štart</h3>
+<p class="obsah-balika__komu">Hodí sa, ak potrebujete rýchlo stránku pre jednu službu a reklamu zatiaľ neplánujete.</p>
+<p class="obsah-balika__skupina obsah-balika__skupina--prva">Web</p>
+<ul>
+<li>1 predajná stránka so 6 sekciami v overenom poradí</li>
+<li>Vaše farby, logo a fotky</li>
+<li>Formulár s notifikáciou na váš e-mail</li>
+<li>Ďakovacia stránka, 404 a právne stránky</li>
+</ul>
+<p class="obsah-balika__skupina">Meranie</p>
+<ul>
+<li>Meranie dopytov v Google Analytics (GA4 cez Tag Manager)</li>
+<li>Cookie lišta podľa GDPR (Consent Mode v2)</li>
+</ul>
+<p class="obsah-balika__skupina">Odovzdanie</p>
+<p class="obsah-balika__odovzdanie">Web na vašej doméne, účty na vaše meno, 2 kolá úprav a 14 dní podpory.</p>
+</article>
+
+<article class="karta karta--bez-okraja obsah-balika obsah-balika--odporucany">
+<h3>Lead systém</h3>
+<p class="obsah-balika__komu">Hodí sa, ak chcete spustiť reklamu a mať každý dopyt v tabuľke aj so zdrojom.</p>
+<p class="obsah-balika__skupina obsah-balika__skupina--prva">Web</p>
+<ul>
+<li>1 predajná stránka do 8 sekcií</li>
+<li>Dizajn na mieru</li>
+<li>Formulár, ďakovacia stránka, 404 a právne stránky</li>
+</ul>
+<p class="obsah-balika__skupina">Meranie</p>
+<ul>
+<li>Všetko zo Štartu</li>
+<li>Meta a Google vedia, kto sa ozval (Meta Pixel a konverzie Google Ads, overené pred odovzdaním)</li>
+<li>Dopyty v tabuľke, potvrdenie zákazníkovi, notifikácia vám</li>
+</ul>
+<p class="obsah-balika__skupina">Odovzdanie</p>
+<p class="obsah-balika__odovzdanie">Web na vašej doméne, účty na vaše meno, 3 kolá úprav a 30 dní podpory.</p>
+</article>
+
+<article class="karta karta--bez-okraja obsah-balika">
+<h3>Na kľúč</h3>
+<p class="obsah-balika__komu">Hodí sa, ak chcete web aj reklamu od jedného človeka a prvý mesiac nič neriešiť.</p>
+<p class="obsah-balika__skupina obsah-balika__skupina--prva">Web a meranie</p>
+<ul>
+<li>Všetko z Lead systému</li>
+<li>Do Mety posielam, kto prišiel a zaplatil, aby sa reklama učila na zákazníkoch</li>
+</ul>
+<p class="obsah-balika__skupina">Reklama</p>
+<ul>
+<li>Kampaň na Mete alebo Googli</li>
+<li>Texty a 3 obrázky do reklamy z vašich fotiek</li>
+<li>Prvý mesiac správy a report</li>
+</ul>
+<p class="obsah-balika__skupina">Odovzdanie</p>
+<p class="obsah-balika__odovzdanie">Web na vašej doméne, účty na vaše meno, 3 kolá úprav a 60 dní podpory.</p>
+</article>
+</div>
+
+<div class="dve-kolonky">
+<div class="dlazdica">
+<h3>Od vás potrebujem</h3>
+<ul class="zoznam-odrazky zoznam-odrazky--tesny">
+<li>vyplnený dotazník, asi 30 minút,</li>
+<li>logo a fotky, ak ich máte,</li>
+<li>doménu, alebo ju spolu kúpime na vaše meno,</li>
+<li>názor na návrh.</li>
+</ul>
+</div>
+<div class="dlazdica">
+<h3>Čo nerobím</h3>
+<ul class="zoznam-odrazky zoznam-odrazky--tesny">
+<li>e-shopy,</li>
+<li>natáčanie a fotenie,</li>
+<li>logo a vizuálnu identitu (textové logo v rámci webu áno),</li>
+<li>platenie reklamného rozpočtu za vás.</li>
+</ul>
+<p class="poznamka">Napojenie na CRM a jazykové verzie urobím na dopyt.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Porovnanie balíkov -------------------------------------------------- -->
+<section class="sekcia sekcia--marhulova-svetla objavit" aria-labelledby="porovnanie-nadpis" data-section="porovnanie">
+<div class="obsah">
+<h2 id="porovnanie-nadpis">Porovnanie balíkov</h2>
+<div class="tabulka-obal porovnanie" tabindex="0" role="region" aria-label="Porovnanie balíkov, tabuľka sa dá posúvať do strán">
+<table>
+<caption class="len-pre-citacku">Porovnanie balíkov Štart, Lead systém a Na kľúč</caption>
+<thead>
+<tr>
+<th scope="col">Čo dostanete</th>
+<th scope="col">Štart <span class="porovnanie__cena" data-price="start.regular">249 €</span></th>
+<th scope="col">Lead systém <span class="porovnanie__cena" data-price="lead.regular">449 €</span></th>
+<th scope="col">Na kľúč <span class="porovnanie__cena" data-price="kluc.regular">790 €</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="porovnanie__skupina"><th scope="rowgroup">Web</th><td></td><td></td><td></td></tr>
+<tr><th scope="row">Predajná stránka, rýchla na mobile, so základným SEO</th><td>áno</td><td>áno</td><td>áno</td></tr>
+<tr><th scope="row">Počet stránok</th><td>1 predajná stránka</td><td>1 predajná stránka</td><td>1 predajná stránka</td></tr>
+<tr><th scope="row">Sekcie na stránke</th><td>6, pevné poradie</td><td>do 8, na mieru</td><td>do 8, na mieru</td></tr>
+<tr><th scope="row">Ďakovacia stránka, 404 a právne stránky</th><td>áno</td><td>áno</td><td>áno</td></tr>
+<tr><th scope="row">Ďalšia podstránka</th><td class="porovnanie__nie">doplnok <span data-price="podstranka">49 €</span></td><td class="porovnanie__nie">doplnok <span data-price="podstranka">49 €</span></td><td class="porovnanie__nie">doplnok <span data-price="podstranka">49 €</span></td></tr>
+<tr><th scope="row">Dizajn vo Figme</th><td>z overenej štruktúry, vaše farby a logo</td><td>na mieru</td><td>na mieru</td></tr>
+<tr><th scope="row">Texty a poradie sekcií píšem ja</th><td>áno</td><td>áno</td><td>áno</td></tr>
+<tr><th scope="row">Spustenie na vašej doméne so zabezpečením (SSL)</th><td>áno</td><td>áno</td><td>áno</td></tr>
+<tr><th scope="row">Formulár a notifikácia e-mailom</th><td>áno</td><td>áno</td><td>áno</td></tr>
+<tr class="porovnanie__skupina"><th scope="rowgroup">Meranie</th><td></td><td></td><td></td></tr>
+<tr><th scope="row">Cookie lišta podľa GDPR (Consent Mode v2)</th><td>áno</td><td>áno</td><td>áno</td></tr>
+<tr><th scope="row">Meranie dopytov (GA4 cez Tag Manager)</th><td>áno</td><td>áno</td><td>áno</td></tr>
+<tr><th scope="row">Meta a Google vedia, kto sa ozval</th><td class="porovnanie__nie">doplnok <span data-price="pixel">79 €</span></td><td>áno</td><td>áno</td></tr>
+<tr><th scope="row">Dopyty v tabuľke a potvrdenie zákazníkovi</th><td class="porovnanie__nie">doplnok <span data-price="auto">99 €</span></td><td>áno</td><td>áno</td></tr>
+<tr><th scope="row">Do Mety posielam, kto prišiel a zaplatil</th><td class="porovnanie__nie">nie</td><td class="porovnanie__nie">nie</td><td>áno</td></tr>
+<tr class="porovnanie__skupina"><th scope="rowgroup">Reklama</th><td></td><td></td><td></td></tr>
+<tr><th scope="row">Spustenie reklamy</th><td class="porovnanie__nie">nie</td><td class="porovnanie__nie">doplnok <span data-price="kampan">149 €</span></td><td>Meta alebo Google</td></tr>
+<tr><th scope="row">Texty a 3 obrázky do reklamy</th><td class="porovnanie__nie">nie</td><td class="porovnanie__nie">doplnok <span data-price="kreativy">99 €</span></td><td>áno</td></tr>
+<tr><th scope="row">Prvý mesiac správy reklamy a report</th><td class="porovnanie__nie">nie</td><td class="porovnanie__nie">nie</td><td>áno</td></tr>
+<tr class="porovnanie__skupina"><th scope="rowgroup">Spolupráca</th><td></td><td></td><td></td></tr>
+<tr><th scope="row">Kolá úprav</th><td>2</td><td>3</td><td>3</td></tr>
+<tr><th scope="row">Podpora po spustení</th><td>14 dní</td><td>30 dní</td><td>60 dní</td></tr>
+<tr><th scope="row">Dodanie od vyplneného dotazníka</th><td>3 dni</td><td>7 dní</td><td>14 dní</td></tr>
+<tr><th scope="row">Mesačný poplatok za hosting pri bežnej návštevnosti</th><td>0 €</td><td>0 €</td><td>0 €</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<!-- Paušály ------------------------------------------------------------- -->
+<section class="sekcia objavit" aria-labelledby="pausaly-nadpis" data-section="pausaly">
+<div class="obsah pas pas--rozdeleny">
+<div class="stlpec-uzky">
+<h2 id="pausaly-nadpis">Po spustení nič povinné</h2>
+<p class="perex perex--maly">Web funguje aj bez mesačnej správy a po skončení podpory sa nič samo nepredĺži. Ak ju budete chcieť, platí sa mesačne vopred, bez viazanosti, s výpoveďou k prvému dňu ďalšieho mesiaca.</p>
+</div>
+<div class="pausaly-radok">
+<div class="dlazdica dlazdica--fialova pausal-stlpec">
+<h3>Správa webu</h3>
+<p class="pausal-stlpec__cena"><span data-price="pausal.web">29 €</span> <span>mesačne</span></p>
+<p>Hodina práce mesačne na úpravy textov, nový obsah, technickú kontrolu a nasadenie.</p>
+</div>
+<div class="dlazdica dlazdica--fialova pausal-stlpec">
+<h3>Správa reklamy</h3>
+<p class="pausal-stlpec__cena">od <span data-price="pausal.meta">149 €</span> <span>mesačne</span></p>
+<p>Meta alebo Google za <span data-price="pausal.meta">149 €</span>, obe platformy za <span data-price="pausal.obe">249 €</span> mesačne. Rozpočet na reklamu platíte priamo platforme.</p>
+<p class="odkaz-pod"><a class="odkaz-silny" href="/reklama">Čo obsahuje správa reklamy</a></p>
+</div>
+</div>
 </div>
 </section>
 
