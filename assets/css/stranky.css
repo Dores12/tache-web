@@ -1596,3 +1596,449 @@
   font-weight: var(--vaha-stredna);
   color: var(--text-tlmeny);
 }
+
+/* ==========================================================================
+   SPRÁVA REKLAMY
+   Podľa design/Reklama.dc.html. Karty plánov majú rovnaký tvar ako karty
+   balíkov, formulár stojí na fialovom pozadí.
+   ========================================================================== */
+
+.plany {
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.plan {
+  flex: 1 1 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.plan--zvyrazneny {
+  padding-top: 29px;
+  border: 0;
+  border-top: 3px solid var(--fialova);
+  background: var(--marhulova-svetla);
+}
+
+.plan h3 {
+  font-size: 24px;
+}
+
+.plan__kde {
+  margin-top: 4px;
+  font-size: 16px;
+  color: var(--text-tlmeny);
+}
+
+.plan__komu {
+  margin-top: 14px;
+  font-size: var(--text-maly);
+  line-height: 1.5;
+}
+
+.plan__cena {
+  margin-top: 24px;
+  font-size: 44px;
+  line-height: 1;
+  font-weight: var(--vaha-tucna);
+  letter-spacing: -0.02em;
+}
+
+.plan__cena span {
+  font-size: 16px;
+  font-weight: var(--vaha-stredna);
+  color: var(--text-tlmeny);
+}
+
+.plan ul {
+  margin-top: 28px;
+  padding-left: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.plan__tlacidlo {
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.pod-planmi {
+  margin-top: 24px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--text-tlmeny);
+}
+
+.pod-planmi + .pod-planmi {
+  margin-top: 8px;
+}
+
+/* --- Dve karty, kde web je a kde nie je ------------------------------- */
+.dvojkarty {
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.dvojkarty > .karta {
+  flex: 1 1 400px;
+  min-width: 0;
+}
+
+.dvojkarty h3 {
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.dvojkarty p {
+  margin-top: 12px;
+  font-size: var(--text);
+  line-height: 1.55;
+  color: var(--text-tlmeny);
+}
+
+/* --- Štyri dlaždice o rozpočte a účtoch -------------------------------- */
+.styri-dlazdice {
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.styri-dlazdice > .dlazdica {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.zaver-sekcie {
+  margin-top: 56px;
+  max-width: 760px;
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+/* --- Pás s výsledkom kliniky ------------------------------------------ */
+.pas-vysledok {
+  padding: 96px 0;
+}
+
+.pas-vysledok .obsah {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px 80px;
+}
+
+.pas-vysledok h2 {
+  margin-top: 12px;
+  font-size: var(--h2-mensi);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.pas-vysledok p:last-of-type {
+  margin-top: 16px;
+  font-size: var(--text);
+  line-height: 1.55;
+  color: var(--text-tlmeny);
+}
+
+/* --- Formulár na fialovom pozadí --------------------------------------
+   Polia sú tu bez okraja, odlišuje ich biele pozadie.
+   -------------------------------------------------------------------- */
+.pole--na-fialovej {
+  color: var(--marhulova);
+}
+
+.pole--na-fialovej input,
+.pole--na-fialovej select,
+.pole--na-fialovej textarea {
+  border: 0;
+}
+
+.pole--na-fialovej .pole__nepovinne {
+  color: var(--na-fialovej);
+}
+
+.formular-na-fialovej {
+  flex: 1 1 480px;
+  min-width: 0;
+  max-width: 640px;
+}
+
+.formular-na-fialovej .formular__polia {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.formular-na-fialovej .pole--cela-sirka {
+  grid-column: 1 / -1;
+}
+
+.formular-na-fialovej .formular__pod-tlacidlom {
+  color: var(--na-fialovej);
+}
+
+.formular-na-fialovej .pole__chyba {
+  color: #FFD2CC;
+}
+
+.formular-na-fialovej .formular__suhrn:not(:empty) {
+  background: #5200C2;
+  color: #FFD2CC;
+}
+
+.formular-na-fialovej .napoveda {
+  color: var(--na-fialovej);
+}
+
+.formular-na-fialovej .napoveda button {
+  color: var(--marhulova);
+}
+
+.formular-na-fialovej .formular__hotovo {
+  background: #5200C2;
+}
+
+.formular-na-fialovej .formular__hotovo h3 {
+  color: var(--marhulova);
+}
+
+.formular-na-fialovej .formular__hotovo p {
+  color: var(--na-fialovej);
+}
+
+/* ==========================================================================
+   UKÁŽKA: CASE STUDY KLINIKY
+   Podľa design/Ukazka-klinika.dc.html.
+   ========================================================================== */
+
+.cisla {
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px 72px;
+}
+
+.cisla dt {
+  font-size: var(--text-maly);
+}
+
+.cisla dd {
+  margin: 6px 0 0;
+  font-size: 44px;
+  font-weight: var(--vaha-tucna);
+  letter-spacing: -0.02em;
+  color: var(--marhulova);
+}
+
+/* --- Zoznam východiskového stavu -------------------------------------- */
+.zoznam-liniek {
+  flex: 1 1 520px;
+  min-width: 0;
+  list-style: none;
+  font-size: var(--text-velky);
+  line-height: 1.5;
+}
+
+.zoznam-liniek li {
+  padding: 20px 0;
+  border-top: 1px solid var(--okraj);
+}
+
+.zoznam-liniek li:first-child {
+  border-top: 2px solid var(--atrament);
+}
+
+.zoznam-liniek li:last-child {
+  border-bottom: 1px solid var(--okraj);
+}
+
+/* --- Číslované kroky postupu ------------------------------------------- */
+.postup {
+  list-style: none;
+  margin-top: 56px;
+  max-width: 980px;
+}
+
+.postup li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  padding: 32px 0;
+  border-top: 1px solid var(--okraj);
+}
+
+.postup li:first-child {
+  border-top: 2px solid var(--fialova);
+}
+
+.postup li:last-child {
+  border-bottom: 1px solid var(--okraj);
+}
+
+.postup__cislo {
+  flex: 0 0 56px;
+  font-size: 44px;
+  line-height: 1;
+  font-weight: var(--vaha-tucna);
+  color: var(--fialova);
+}
+
+.postup__text {
+  flex: 1 1 520px;
+  min-width: 0;
+}
+
+.postup__text h3 {
+  font-size: 24px;
+  line-height: 1.25;
+}
+
+.postup__text p {
+  margin-top: 10px;
+  font-size: var(--text);
+  line-height: 1.6;
+  color: var(--text-tlmeny);
+}
+
+/* --- Rámčeky so screenshotmi -------------------------------------------
+   Obrázky sú z reálneho webu klienta, preto majú pevné rozmery a lazy.
+   -------------------------------------------------------------------- */
+.ukazky-obrazky {
+  margin-top: 56px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 40px;
+}
+
+.ramik-prehliadac {
+  flex: 1 1 640px;
+  min-width: 0;
+  margin: 0;
+}
+
+.ramik-prehliadac__okno {
+  border: 1px solid var(--okraj);
+  border-radius: var(--roh-karta);
+  overflow: hidden;
+  background: var(--biela);
+}
+
+.ramik-prehliadac__lista {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  background: var(--okraj-jemny);
+}
+
+.ramik-prehliadac__bodka {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--marhulova-tmava);
+}
+
+.ramik-prehliadac__adresa {
+  margin-left: 16px;
+  font-size: 13px;
+  color: var(--text-tlmeny);
+}
+
+.ramik-mobil {
+  flex: 0 0 240px;
+  margin: 0;
+}
+
+.ramik-mobil__telo {
+  width: 240px;
+  box-sizing: border-box;
+  border: 10px solid var(--atrament);
+  border-radius: 36px;
+  overflow: hidden;
+  background: var(--biela);
+}
+
+.ramik-prehliadac img,
+.ramik-mobil img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ramik-prehliadac figcaption,
+.ramik-mobil figcaption {
+  margin-top: 12px;
+  font-size: var(--text-maly);
+  color: var(--text-tlmeny);
+}
+
+/* --- Malý náhľad na domove ---------------------------------------------- */
+.nahlad-webu {
+  margin-top: 28px;
+  max-width: 420px;
+}
+
+.nahlad-webu .ramik-prehliadac__okno {
+  border-color: var(--okraj);
+}
+
+/* --- Zoznam ukážok -----------------------------------------------------
+   Stránka /ukazky nemá návrh, je poskladaná z prvkov, ktoré už na webe sú:
+   karta, rámček prehliadača a popisný stĺpec ako v sekcii s výsledkom
+   kliniky na domove.
+   -------------------------------------------------------------------- */
+.ukazky-zoznam {
+  margin-top: 56px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ukazka-karta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px 48px;
+}
+
+.ukazka-karta__nahlad {
+  flex: 1 1 380px;
+  min-width: 0;
+  margin: 0;
+}
+
+.ukazka-karta__text {
+  flex: 1 1 360px;
+  min-width: 0;
+}
+
+.ukazka-karta h2 {
+  margin-top: 12px;
+  font-size: var(--h2-mensi);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.ukazka-karta p {
+  margin-top: 16px;
+  font-size: var(--text);
+  line-height: 1.55;
+  color: var(--text-tlmeny);
+}
+
+.ukazka-karta .oznacenie {
+  margin-top: 0;
+}

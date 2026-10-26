@@ -19,13 +19,56 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <!-- #hlava:end -->
-<title>Správa reklamy | Tache</title>
-<meta name="description" content="Správa reklamy na Mete, Googli alebo na oboch. Mesačne, bez viazanosti. Každý mesiac uvidíte, koľko vás stál jeden dopyt a koľko jeden zákazník.">
-<meta name="robots" content="noindex">
+<title>Správa reklamy na Mete a Googli | Tache</title>
+<meta name="description" content="Správa reklamy na Mete, Googli alebo na oboch. Mesačne, bez viazanosti, od 149 €. Každý mesiac uvidíte, koľko vás stál jeden dopyt a koľko jeden zákazník.">
 <link rel="canonical" href="https://tache.netlify.app/reklama">
 <meta property="og:title" content="Správa reklamy">
 <meta property="og:description" content="Meta, Google alebo obe naraz. Každý mesiac uvidíte, koľko vás stál jeden dopyt a koľko jeden zákazník.">
 <meta property="og:url" content="https://tache.netlify.app/reklama">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Správa reklamy na Mete a Googli",
+  "serviceType": "Správa platenej reklamy",
+  "provider": {
+    "@type": "Person",
+    "name": "Daniel Tache",
+    "url": "https://danieltache.com"
+  },
+  "areaServed": { "@type": "Country", "name": "Slovensko" },
+  "url": "https://tache.netlify.app/reklama",
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Meta",
+      "description": "Správa reklamy na Facebooku a Instagrame.",
+      "price": "149",
+      "priceCurrency": "EUR",
+      "url": "https://tache.netlify.app/reklama",
+      "availability": "https://schema.org/InStock"
+    },
+    {
+      "@type": "Offer",
+      "name": "Google",
+      "description": "Správa vyhľadávacej reklamy v Googli.",
+      "price": "149",
+      "priceCurrency": "EUR",
+      "url": "https://tache.netlify.app/reklama",
+      "availability": "https://schema.org/InStock"
+    },
+    {
+      "@type": "Offer",
+      "name": "Meta a Google",
+      "description": "Správa reklamy na oboch platformách s jedným reportom.",
+      "price": "249",
+      "priceCurrency": "EUR",
+      "url": "https://tache.netlify.app/reklama",
+      "availability": "https://schema.org/InStock"
+    }
+  ]
+}
+</script>
 <!-- #meranie:start -->
 <!-- Consent Mode v2: predvolene je všetko zamietnuté a uložená voľba sa
      aplikuje ešte pred načítaním GTM. Nič tu nepridávaj, meranie sa riadi
@@ -125,20 +168,184 @@
 </div>
 <!-- #hlavicka:end -->
 
-<main id="obsah" tabindex="-1" data-page="reklama" data-nav-active="reklama">
+<main id="obsah" tabindex="-1" data-page="reklama" data-skript="reklama" data-nav-active="reklama">
 
-<section class="na-fialovej hero" aria-labelledby="reklama-h1">
+<!-- Úvod ------------------------------------------------------------- -->
+<section class="na-fialovej hero" aria-labelledby="reklama-h1" data-section="hero">
 <div class="obsah">
 <h1 id="reklama-h1" class="hero__nadpis">Správa reklamy</h1>
 <p class="hero__podtext hero__podtext--samostatny">Meta, Google alebo obe naraz. Každý mesiac uvidíte, koľko vás stál jeden dopyt a koľko jeden zákazník.</p>
 </div>
 </section>
 
-<!-- Zástupná stránka z kroku 1, slúži na test navigácie. Plány, podmienky
-     a formulár prídu v kroku 4. Dovtedy je stránka noindex. -->
-<section class="pripravujeme">
+<!-- Plány -------------------------------------------------------------- -->
+<section class="sekcia objavit" aria-labelledby="plany-nadpis" data-section="plany">
 <div class="obsah">
-<p class="pripravujeme__text">Plány a formulár pribudnú v kroku 4.</p>
+<div class="pas__hlavica">
+<h2 id="plany-nadpis">Mesačne, bez viazanosti</h2>
+<p class="pas__perex">Nie som platca DPH. Rozpočet na reklamu platíte priamo Mete alebo Googlu.</p>
+</div>
+
+<div class="plany">
+
+<article class="karta plan">
+<h3>Meta</h3>
+<p class="plan__kde">Facebook a Instagram</p>
+<p class="plan__komu">Hodí sa, keď vašu službu treba ukázať: salón, kozmetika, fitness.</p>
+<p class="plan__cena"><span data-price="pausal.meta">149 €</span> <span>mesačne</span></p>
+<ul>
+<li>Kampane na dopyty alebo rezervácie</li>
+<li>2 nové obrázky do reklamy mesačne z vašich fotiek</li>
+<li>Kontrola a úpravy každý týždeň</li>
+<li>Mesačný report s cenou za dopyt a za zákazníka</li>
+</ul>
+<p class="plan__tlacidlo"><button class="tlacidlo tlacidlo--obrysove" type="button" data-platforma="Meta">Chcem správu Mety</button></p>
+</article>
+
+<article class="karta plan">
+<h3>Google</h3>
+<p class="plan__kde">Vyhľadávanie Google</p>
+<p class="plan__komu">Hodí sa, keď ľudia vašu službu hľadajú: remeselníci, opravy, kliniky.</p>
+<p class="plan__cena"><span data-price="pausal.google">149 €</span> <span>mesačne</span></p>
+<ul>
+<li>Vyhľadávacia kampaň na vaše služby a oblasť</li>
+<li>Každý týždeň pridávam slová, na ktoré sa oplatí zobrazovať, a vyraďujem tie, ktoré len míňajú peniaze</li>
+<li>Píšem texty reklám a testujem, ktoré nosia viac dopytov</li>
+<li>Mesačný report s cenou za dopyt a za zákazníka</li>
+</ul>
+<p class="plan__tlacidlo"><button class="tlacidlo tlacidlo--obrysove" type="button" data-platforma="Google">Chcem správu Googlu</button></p>
+</article>
+
+<article class="karta plan plan--zvyrazneny">
+<h3>Meta a Google</h3>
+<p class="plan__kde">O 49 € menej ako zvlášť</p>
+<p class="plan__komu">Hodí sa, keď chcete oboje a vidieť, ktorá platforma sa vám oplatí viac.</p>
+<p class="plan__cena"><span data-price="pausal.obe">249 €</span> <span>mesačne</span></p>
+<ul>
+<li>Všetko zo správy Mety aj Googlu</li>
+<li>Jeden report, v ktorom vidíte, ktorá platforma priniesla viac zákazníkov</li>
+<li>Rozpočet presúvam tam, kde zákazník vyjde lacnejšie</li>
+</ul>
+<p class="plan__tlacidlo"><button class="tlacidlo tlacidlo--hlavne" type="button" data-platforma="Meta aj Google">Chcem obe platformy</button></p>
+</article>
+</div>
+
+<p class="pod-planmi">Spustenie stojí jednorazovo <span data-price="pausal.spustenie">149 €</span> za platformu a zahŕňa nastavenie kampane, publík a merania. V balíku Na kľúč je spustenie jednej platformy v cene.</p>
+<p class="pod-planmi">Odporúčaný rozpočet na reklamu je od 10 € denne, teda zhruba 300 € mesačne. Prvé 2 až 4 týždne sa reklama učí, výsledky preto hodnotíme po prvom mesiaci.</p>
+</div>
+</section>
+
+<!-- Podmienka merania --------------------------------------------------- -->
+<section class="sekcia sekcia--marhulova objavit" aria-labelledby="podmienka-nadpis" data-section="podmienka">
+<div class="obsah">
+<h2 id="podmienka-nadpis">Reklamu spravujem len tam, kde vidím, čo prináša.</h2>
+<p class="perex">Bez merania by som ladil reklamu na kliky a vy by ste platili za ľudí, ktorí nič nekúpia. Preto začíname webom, ktorý meria dopyty.</p>
+
+<div class="dvojkarty">
+<div class="karta karta--bez-okraja">
+<h3>Web, ktorý meria, ešte nemáte</h3>
+<p>Začnite balíkom Lead systém. Meta Pixel aj konverzie Google Ads sú v ňom v cene a reklamu potom môžeme zapnúť hneď v deň spustenia.</p>
+<p class="odkaz-pod"><a class="odkaz-silny" href="/cennik?balik=lead">Pozrieť balíky webu</a></p>
+</div>
+<div class="karta karta--bez-okraja">
+<h3>Web už máte</h3>
+<p>Pošlite mi odkaz a <span data-config="auditTime">do 2 pracovných dní</span> vám e-mailom napíšem, či stačí doplniť meranie, alebo sa oplatí nová predajná stránka.</p>
+<p class="odkaz-pod"><a class="odkaz-silny" href="/#kontrola">Poslať odkaz na web</a></p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Výsledok kliniky ----------------------------------------------------- -->
+<section class="pas-vysledok sekcia--marhulova-svetla objavit" aria-labelledby="dokaz-nadpis" data-section="ukazka">
+<div class="obsah">
+<div class="pas__text--siroky pas__text">
+<p class="oznacenie">Recovery IV Clinic, klinika infúznej terapie v Bratislave</p>
+<h2 id="dokaz-nadpis">Cena za dopyt z Mety klesla z 20 € na 11 €.</h2>
+<p>Ladenie reklamy ju znížilo na 15 €, nový web za prvý týždeň na 11 €.</p>
+</div>
+<a class="odkaz-silny" href="/ukazky/recovery-iv-clinic">Prečítať celý postup</a>
+</div>
+</section>
+
+<!-- Rozpočet a účty ------------------------------------------------------ -->
+<section class="sekcia objavit" aria-labelledby="podmienky-nadpis" data-section="podmienky">
+<div class="obsah">
+<h2 id="podmienky-nadpis">Rozpočet aj účty ostávajú u vás</h2>
+<div class="styri-dlazdice">
+<div class="dlazdica dlazdica--fialova">
+<h3>Rozpočet platíte platforme</h3>
+<p>Mete alebo Googlu platíte priamo svojou kartou. Ja fakturujem len správu.</p>
+</div>
+<div class="dlazdica dlazdica--fialova">
+<h3>Bez viazanosti</h3>
+<p>Platí sa mesačne vopred. Ukončíte k prvému dňu ďalšieho mesiaca.</p>
+</div>
+<div class="dlazdica dlazdica--fialova">
+<h3>Účty sú vaše</h3>
+<p>Reklamný účet aj pixel sú na vaše meno. Keď skončíme, všetko vám ostane.</p>
+</div>
+<div class="dlazdica dlazdica--fialova">
+<h3>Cena za zákazníka</h3>
+<p>Vypočítam ju z tabuľky dopytov, v ktorej si označíte, kto prišiel.</p>
+</div>
+</div>
+<p class="zaver-sekcie">Počet zákazníkov vopred nezaručujem, lebo závisí aj od vašej ponuky, ceny a sezóny. Garantujem, že pri každom uvidíte, koľko vás stál.</p>
+</div>
+</section>
+
+<!-- Formulár ------------------------------------------------------------- -->
+<section class="sekcia na-fialovej" id="napiste-mi" aria-labelledby="napiste-nadpis" data-section="formular">
+<div class="obsah pas pas--rozdeleny">
+<div class="pas__text--uzsi pas__text">
+<h2 class="vyzva__nadpis" id="napiste-nadpis">Napíšte mi o svojej firme</h2>
+<p class="hero__podtext">Napíšte, čo predávate a komu. <span data-config="replyTime">Do 24 hodín v pracovné dni</span> vám odpíšem, ktorá platforma dáva zmysel a s akým rozpočtom začať.</p>
+</div>
+
+<div class="formular-na-fialovej">
+<form id="formular-reklama" novalidate>
+<p class="formular__suhrn" data-suhrn role="status" aria-live="polite"></p>
+
+<div class="formular__polia">
+<label class="pole pole--na-fialovej">Meno a priezvisko
+<input type="text" name="meno" autocomplete="name" required>
+</label>
+<label class="pole pole--na-fialovej">E-mail
+<input type="email" name="email" autocomplete="email" required>
+</label>
+<label class="pole pole--na-fialovej"><span>Váš web <span class="pole__nepovinne">nepovinné</span></span>
+<input type="url" name="web" autocomplete="url">
+</label>
+<label class="pole pole--na-fialovej pole--cela-sirka">Čo predávate a komu
+<textarea name="sprava" rows="4" required></textarea>
+</label>
+<label class="pole pole--na-fialovej pole--cela-sirka">O ktorú reklamu máte záujem
+<select name="platforma" required>
+<option>Meta</option>
+<option>Google</option>
+<option>Meta aj Google</option>
+<option>Ešte neviem</option>
+</select>
+</label>
+</div>
+
+<div class="pole--past" aria-hidden="true">
+<label>Nevypĺňajte<input type="text" name="t_hp" tabindex="-1" autocomplete="off"></label>
+</div>
+
+<button class="tlacidlo tlacidlo--marhulove tlacidlo--vyzva formular__tlacidlo" type="submit">Poslať správu</button>
+<p class="formular__pod-tlacidlom">Odpoveď je zadarmo a k ničomu vás nezaväzuje.</p>
+
+<noscript>
+<p class="formular__pod-tlacidlom">Formulár potrebuje zapnutý JavaScript. Napíšte mi rovno na <a href="/" data-mailto data-config="email">e-mail</a>.</p>
+</noscript>
+</form>
+
+<div class="formular__hotovo" data-hotovo="ads" hidden>
+<h3>Správa prišla, ďakujem.</h3>
+<p>Odpíšem vám <span data-config="replyTime">do 24 hodín v pracovné dni</span>, ktorá platforma dáva pre vašu firmu zmysel a s akým rozpočtom začať.</p>
+</div>
+</div>
 </div>
 </section>
 

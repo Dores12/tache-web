@@ -4,3 +4,7 @@
 # CLAUDE.md sekcia 4 priamo hovorí, že táto veta je v poriadku:
 # ide o opis problému, nie o ponuku telefonátu.
 kontakt, ktorý nezdvihne telefón
+
+# Veta zo stránky Správa reklamy. Nie je to sľub výsledku, práve naopak:
+# počet zákazníkov výslovne nezaručuje. Znenie je z návrhu.
+Počet zákazníkov vopred nezaručujem

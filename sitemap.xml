@@ -13,4 +13,19 @@
     <lastmod>2026-10-26</lastmod>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://tache.netlify.app/reklama</loc>
+    <lastmod>2026-10-26</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tache.netlify.app/ukazky</loc>
+    <lastmod>2026-10-26</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tache.netlify.app/ukazky/recovery-iv-clinic</loc>
+    <lastmod>2026-10-26</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

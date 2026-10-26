@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<!-- #hlava:start -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="/assets/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/zaklad.css">
+<link rel="stylesheet" href="/assets/css/prvky.css">
+<link rel="stylesheet" href="/assets/css/stranky.css">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tache">
+<meta property="og:locale" content="sk_SK">
+<meta property="og:image" content="https://tache.netlify.app/assets/img/og-tache.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- #hlava:end -->
+<title>Obchodné podmienky | Tache</title>
+<meta name="description" content="Obchodné podmienky webu Tache.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://tache.netlify.app/obchodne-podmienky">
+<meta property="og:title" content="Obchodné podmienky">
+<meta property="og:description" content="Obchodné podmienky webu Tache.">
+<meta property="og:url" content="https://tache.netlify.app/obchodne-podmienky">
+<!-- #meranie:start -->
+<!-- Consent Mode v2: predvolene je všetko zamietnuté a uložená voľba sa
+     aplikuje ešte pred načítaním GTM. Nič tu nepridávaj, meranie sa riadi
+     cez dataLayer (CLAUDE.md sekcia 7.2). -->
+<script>
+(function () {
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    functionality_storage: 'granted',
+    security_storage: 'granted',
+    wait_for_update: 500
+  });
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
+
+  try {
+    var volba = JSON.parse(window.localStorage.getItem('tache_consent_v1') || 'null');
+    if (volba) {
+      var platneDo = new Date(volba.date);
+      platneDo.setMonth(platneDo.getMonth() + 12);
+      if (platneDo >= new Date()) {
+        gtag('consent', 'update', {
+          ad_storage: volba.marketing ? 'granted' : 'denied',
+          ad_user_data: volba.marketing ? 'granted' : 'denied',
+          ad_personalization: volba.marketing ? 'granted' : 'denied',
+          analytics_storage: volba.analytics ? 'granted' : 'denied'
+        });
+      }
+    }
+  } catch (e) { /* zakázané úložisko, platí predvolené zamietnutie */ }
+}());
+</script>
+<script src="/assets/js/config.js"></script>
+<script>
+(function () {
+  // Trieda js hovorí CSS, že skripty bežia. Bez nej sa obsah nikdy
+  // neskrýva, takže návštevník bez JavaScriptu vidí celú stránku.
+  document.documentElement.classList.add('js');
+
+  // O testovacom režime sa rozhoduje ešte pred prvým vykreslením, aby si
+  // CSS stihlo rezervovať miesto na žltý pruh a nevznikol posun obsahu.
+  if (!window.TACHE.config.formEndpoint) {
+    document.documentElement.classList.add('je-test');
+  }
+
+  var id = window.TACHE.config.gtmId;
+  if (!id) { return; }
+  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtm.js?id=' + id;
+  document.head.appendChild(s);
+}());
+</script>
+<!-- #meranie:end -->
+</head>
+<body>
+
+<!-- #hlavicka:start -->
+<a class="preskocit" href="#obsah">Preskočiť na obsah</a>
+<p id="oznamovac" class="len-pre-citacku" role="status" aria-live="polite"></p>
+<div class="hlavicka-pas na-fialovej">
+<div class="obsah">
+<header class="hlavicka">
+<a class="logo" href="/">Tache</a>
+<nav class="menu" aria-label="Hlavná navigácia">
+<div class="menu__odkazy">
+<a href="/cennik" data-nav="cennik">Balíky a ceny</a>
+<a href="/reklama" data-nav="reklama">Správa reklamy</a>
+<a href="/ukazky" data-nav="ukazky">Ukážky</a>
+<a href="/blog" data-nav="blog" data-if="blogEnabled" hidden>Blog</a>
+<a href="/#o-mne" data-nav="o-mne">O mne</a>
+</div>
+<a class="tlacidlo tlacidlo--marhulove" href="/cennik" data-track="package_cta" data-track-link_location="hlavicka">Vybrať balík</a>
+<button class="menu__prepinac" type="button" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="menu-panel">
+<svg aria-hidden="true" width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h16M3 11h16M3 16h16"></path></svg>
+</button>
+</nav>
+</header>
+<div class="menu-panel" id="menu-panel" data-otvorene="nie">
+<ul>
+<li><a href="/cennik" data-nav="cennik">Balíky a ceny</a></li>
+<li><a href="/reklama" data-nav="reklama">Správa reklamy</a></li>
+<li><a href="/ukazky" data-nav="ukazky">Ukážky</a></li>
+<li data-if="blogEnabled" hidden><a href="/blog" data-nav="blog">Blog</a></li>
+<li><a href="/#o-mne" data-nav="o-mne">O mne</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- #hlavicka:end -->
+
+<main id="obsah" tabindex="-1" data-page="obchodne-podmienky">
+
+<!-- Zástupná stránka. Text dodá Daniel, dovtedy je tu len nadpis a veta
+     podľa docs/ZADANIE.md. Kým tu text nie je, web sa nespúšťa a stránka
+     je noindex. Pri doplnení textu treba zmazať meta robots a pridať
+     stránku do sitemap.xml. -->
+<section class="pripravujeme">
+<div class="obsah">
+<h1>Obchodné podmienky</h1>
+<p class="pripravujeme__text">Pripravujeme.</p>
+</div>
+</section>
+
+</main>
+
+<!-- #paticka:start -->
+<footer class="pata">
+<div class="obsah">
+<div class="pata__obsah">
+<div class="pata__firma">
+<p class="pata__logo">Tache</p>
+<p class="pata__udaje" data-zivnost>Daniel Tache<br>Nie som platca DPH.</p>
+</div>
+<nav class="pata__blok" aria-label="Pätička">
+<a href="/cennik" data-nav="cennik">Balíky a ceny</a>
+<a href="/reklama" data-nav="reklama">Správa reklamy</a>
+<a href="/ukazky" data-nav="ukazky">Ukážky</a>
+<a href="/blog" data-nav="blog" data-if="blogEnabled" hidden>Blog</a>
+<a href="/#o-mne" data-nav="o-mne">O mne</a>
+</nav>
+<div class="pata__blok">
+<a class="pata__email" href="/" data-mailto data-config="email" data-track="email_click" data-track-link_location="paticka">e-mail</a>
+<a href="/obchodne-podmienky">Obchodné podmienky</a>
+<a href="/ochrana-osobnych-udajov">Ochrana osobných údajov</a>
+<a href="/cookies">Cookies</a>
+<button class="pata__tlacidlo" type="button" data-cookies-nastavenie>Nastavenie cookies</button>
+</div>
+</div>
+<p class="pata__copy">&copy; <span data-text="rok">2026</span> Tache</p>
+</div>
+</footer>
+<!-- #paticka:end -->
+
+<!-- #skripty:start -->
+<!-- Poradie je dôležité: consent.js používa track.js, source.js používa
+     consent.js, forms.js používa source.js a nav.js používa obal.js aj
+     track.js. Atribút defer poradie zachová. config.js je už v bloku
+     merania v hlavičke. -->
+<script src="/assets/js/packages.js" defer></script>
+<script src="/assets/js/obal.js" defer></script>
+<script src="/assets/js/track.js" defer></script>
+<script src="/assets/js/consent.js" defer></script>
+<script src="/assets/js/source.js" defer></script>
+<script src="/assets/js/forms.js" defer></script>
+<script src="/assets/js/nav.js" defer></script>
+<!-- #skripty:end -->
+
+</body>
+</html>
