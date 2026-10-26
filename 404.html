@@ -64,6 +64,10 @@
 <script src="/assets/js/config.js"></script>
 <script>
 (function () {
+  // Trieda js hovorí CSS, že skripty bežia. Bez nej sa obsah nikdy
+  // neskrýva, takže návštevník bez JavaScriptu vidí celú stránku.
+  document.documentElement.classList.add('js');
+
   // O testovacom režime sa rozhoduje ešte pred prvým vykreslením, aby si
   // CSS stihlo rezervovať miesto na žltý pruh a nevznikol posun obsahu.
   if (!window.TACHE.config.formEndpoint) {
@@ -162,13 +166,15 @@
 
 <!-- #skripty:start -->
 <!-- Poradie je dôležité: consent.js používa track.js, source.js používa
-     consent.js, nav.js používa obal.js aj track.js. Atribút defer poradie
-     zachová. config.js je už v bloku merania v hlavičke. -->
+     consent.js, forms.js používa source.js a nav.js používa obal.js aj
+     track.js. Atribút defer poradie zachová. config.js je už v bloku
+     merania v hlavičke. -->
 <script src="/assets/js/packages.js" defer></script>
 <script src="/assets/js/obal.js" defer></script>
 <script src="/assets/js/track.js" defer></script>
 <script src="/assets/js/consent.js" defer></script>
 <script src="/assets/js/source.js" defer></script>
+<script src="/assets/js/forms.js" defer></script>
 <script src="/assets/js/nav.js" defer></script>
 <!-- #skripty:end -->
 
