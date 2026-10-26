@@ -136,6 +136,18 @@ window.TACHE = window.TACHE || {};
       });
     });
 
+    /* Zakladateľské ceny. Pri 0 voľných miestach sa všetky zmienky o nich
+       odstránia a ukáže sa znenie pre bežné ceny, ktoré je v HTML skryté. */
+    var suMiesta = (cfg.founderSlotsLeft || 0) > 0;
+
+    root.querySelectorAll('[data-zakladatelska]').forEach(function (prvok) {
+      if (!suMiesta) { odstranit(prvok); }
+    });
+
+    root.querySelectorAll('[data-bez-zakladatelskej]').forEach(function (prvok) {
+      if (suMiesta) { odstranit(prvok); } else { prvok.removeAttribute('hidden'); }
+    });
+
     /* Prepínače sekcií. V HTML sú tieto prvky skryté atribútom hidden. */
     root.querySelectorAll('[data-if]').forEach(function (prvok) {
       if (cfg[prvok.getAttribute('data-if')]) { prvok.removeAttribute('hidden'); }

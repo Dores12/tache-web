@@ -9,6 +9,8 @@
    Skripty stránok sa hlásia do window.TACHE.pages a vystavujú init()
    a destroy(). Ktorý skript sa má načítať, hovorí atribút data-skript
    na prvku <main>, takže tu netreba udržiavať žiadny zoznam stránok.
+   Načítanie aj volanie init() je vždy na tomto súbore, aj pri prvom
+   načítaní stránky.
 
      <main data-page="cennik" data-skript="cennik" data-nav-active="cennik">
    ========================================================================== */
@@ -285,6 +287,14 @@ window.TACHE.pages = window.TACHE.pages || {};
   function spustit() {
     var main = document.querySelector('main');
     aktualnaStranka = main ? main.getAttribute('data-skript') : null;
+
+    /* Skript stránky načíta a naštartuje vždy nav.js, aj pri bežnom
+       načítaní. Skripty stránok sa preto nesmú štartovať samy, inak by sa
+       po prechode tam a späť pripojili dvakrát. */
+    nacitatSkript(aktualnaStranka).then(function () {
+      var stranka = aktualnaStranka && window.TACHE.pages[aktualnaStranka];
+      if (stranka && typeof stranka.init === 'function') { stranka.init(); }
+    });
 
     document.addEventListener('click', function (e) {
       var odkaz = e.target.closest('a[href]');

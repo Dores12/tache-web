@@ -160,10 +160,14 @@ table { border-collapse: collapse; }
 [hidden] { display: none !important; }
 
 /* --- Postupné objavenie sekcií ---------------------------------------
-   Pridáva ho track.js cez IntersectionObserver. Hlavný nadpis sa nikdy
-   neoneskoruje, preto hero túto triedu nedostane.
+   Triedu je-videt pridáva track.js cez IntersectionObserver. Hlavný nadpis
+   sa nikdy neoneskoruje, preto hero túto triedu nedostane.
+
+   Skrýva sa len pod .js, ktorú nasadzuje hlavička dokumentu. Keby bola
+   priehľadnosť v CSS natvrdo, návštevník s vypnutým JavaScriptom by videl
+   prázdnu stránku.
    -------------------------------------------------------------------- */
-.objavit {
+.js .objavit {
   opacity: 0;
   transform: translateY(20px);
   transition:
@@ -171,7 +175,7 @@ table { border-collapse: collapse; }
     transform var(--cas-objavenie) var(--krivka);
 }
 
-.objavit.je-videt {
+.js .objavit.je-videt {
   opacity: 1;
   transform: none;
 }
@@ -188,7 +192,7 @@ table { border-collapse: collapse; }
     transition-duration: 0.01ms !important;
   }
 
-  .objavit {
+  .js .objavit {
     opacity: 1;
     transform: none;
     transition: none;
