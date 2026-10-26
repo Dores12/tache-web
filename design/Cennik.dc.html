@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<title>Tache – balíky a ceny</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#6A00F4}a:hover{color:#5200C2}
+@media (max-width: 860px){.nav-odkazy{display:none}}
+</style>
+</helmet>
+<div style="background: #FFFFFF; color: #1E0B3A; font-family: 'Schibsted Grotesk', system-ui, sans-serif;">
+
+<section aria-labelledby="cennik-h1" style="background: #6A00F4; color: #FFD6A5;">
+<div style="max-width: 1440px; margin: 0 auto; padding: 0 clamp(20px, 5.5vw, 80px) 80px; box-sizing: border-box;">
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px 0;">
+<a href="Main.dc.html" style="font-weight: 700; font-size: 24px; letter-spacing: -0.02em; color: #FFD6A5; text-decoration: none;">Tache</a>
+<nav aria-label="Hlavná navigácia" style="display: flex; align-items: center; gap: 36px;">
+<div class="nav-odkazy" style="display: flex; align-items: center; gap: 36px;">
+<a href="Cennik.dc.html" aria-current="page" style="color: #FFD6A5; text-decoration: underline; text-underline-offset: 6px; font-weight: 600; font-size: 16px;">Balíky a ceny</a>
+<a href="Reklama.dc.html" style="color: #EBDDFF; text-decoration: none; font-weight: 500; font-size: 16px;">Správa reklamy</a>
+<a href="Main.dc.html#ukazky" style="color: #EBDDFF; text-decoration: none; font-weight: 500; font-size: 16px;">Ukážky</a>
+<a href="#blog" style="color: #EBDDFF; text-decoration: none; font-weight: 500; font-size: 16px;">Blog</a>
+<a href="Main.dc.html#o-mne" style="color: #EBDDFF; text-decoration: none; font-weight: 500; font-size: 16px;">O mne</a>
+</div>
+<a href="#konfigurator" style="display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 10px 18px; border-radius: 8px; background: #FFD6A5; color: #1E0B3A; text-decoration: none; font-weight: 600; font-size: 15px;">Vybrať balík</a>
+</nav>
+</header>
+<h1 id="cennik-h1" style="margin: 48px 0 0; font-size: clamp(44px, 6vw, 88px); line-height: 1; letter-spacing: -0.035em; font-weight: 700;">Balíky a ceny</h1>
+<p style="margin: 24px 0 0; max-width: 620px; font-size: 20px; line-height: 1.55; color: #EBDDFF;">Vyberte balík, pridajte doplnky a pošlite objednávku. Hneď potom vám e-mailom príde zálohová faktúra na 50 % s QR kódom pre aplikáciu banky. Nie som platca DPH.</p>
+<div style="margin-top: 40px; max-width: 760px; padding-top: 24px; border-top: 1px solid #9B5CF7;">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700; color: #FFD6A5;">Ktorý balík si vybrať</h2>
+<ul style="margin: 16px 0 0; padding: 0 0 0 20px; font-size: 18px; line-height: 1.5; color: #EBDDFF; display: flex; flex-direction: column; gap: 10px;">
+<li>Potrebujete stránku pre jednu službu a reklamu zatiaľ neplánujete: <strong style="color: #FFD6A5; font-weight: 600;">Štart</strong>.</li>
+<li>Chcete spustiť reklamu alebo už beží: <strong style="color: #FFD6A5; font-weight: 600;">Lead systém</strong>. Bez neho reklama nevie, kto sa ozval, a učí sa na klikoch.</li>
+<li>Nechcete riešiť ani web, ani reklamu: <strong style="color: #FFD6A5; font-weight: 600;">Na kľúč</strong>.</li>
+</ul>
+<p style="margin: 16px 0 0; font-size: 16px; line-height: 1.5; color: #EBDDFF;">Balík môžete neskôr rozšíriť a doplatíte len rozdiel v cene.</p>
+</div>
+</div>
+</section>
+
+<section id="konfigurator" aria-label="Objednávka" style="max-width: 1440px; margin: 0 auto; padding: 96px clamp(20px, 5.5vw, 80px) 120px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 56px 80px;">
+<div style="flex: 1 1 620px; max-width: 780px; display: flex; flex-direction: column; gap: 64px;">
+
+<div>
+<h2 style="margin: 0; font-size: 28px; line-height: 1.2; letter-spacing: -0.015em; font-weight: 700;">1. Vyberte balík</h2>
+<div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
+<sc-for list="{{packages}}" as="p" hint-placeholder-count="3">
+<button type="button" onClick="{{p.pick}}" aria-pressed="{{p.pressed}}" style="{{p.style}}">
+<sc-if value="{{p.recommended}}" hint-placeholder-val="{{false}}"><span style="display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #6A00F4;">Odporúčaný</span></sc-if>
+<span style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px;"><span style="font-weight: 700; font-size: 20px;">{{p.name}}</span><span style="font-weight: 700; font-size: 26px; letter-spacing: -0.01em;">{{p.founder}}</span></span>
+<span style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-top: 6px; font-size: 15px; line-height: 1.45; color: #5E4F6E;"><span>{{p.note}}</span><span style="white-space: nowrap; text-decoration: line-through;">{{p.regular}}</span></span>
+<span style="display: block; margin-top: 10px; font-size: 14px; font-weight: 600; color: #6A00F4;">{{p.days}}</span>
+</button>
+</sc-for>
+</div>
+<p style="margin: 14px 0 0; font-size: 14px; line-height: 1.5; color: #5E4F6E;">Zakladateľská cena platí pre prvých 5 klientov výmenou za referenciu. Zostávajú 4 miesta. Prečiarknutá je bežná cena.</p>
+</div>
+
+<div>
+<h2 style="margin: 0; font-size: 28px; line-height: 1.2; letter-spacing: -0.015em; font-weight: 700;">2. Pridajte doplnky</h2>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: #5E4F6E;">Nepovinné. Pri každom balíku vidíte len tie, ktoré k nemu dávajú zmysel.</p>
+<div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+<sc-for list="{{addons}}" as="a" hint-placeholder-count="4">
+<label style="{{a.style}}">
+<input type="checkbox" checked="{{a.checked}}" onChange="{{a.toggle}}" style="flex: 0 0 auto; width: 20px; height: 20px; margin: 0; accent-color: #6A00F4;">
+<span style="flex: 1 1 auto; font-size: 16px; line-height: 1.4;">{{a.name}}</span>
+<span style="flex: 0 0 auto; font-weight: 600; font-size: 16px;">{{a.price}}</span>
+</label>
+</sc-for>
+</div>
+<sc-if value="{{upsell}}" hint-placeholder-val="{{false}}">
+<div style="margin-top: 16px; padding: 18px 20px; border-radius: 10px; background: #F1E6FF; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px;">
+<p style="margin: 0; font-size: 16px; line-height: 1.5;">{{upsellText}}</p>
+<button type="button" onClick="{{upgrade}}" style="min-height: 44px; padding: 0 18px; border: 0; border-radius: 8px; background: #6A00F4; color: #FFFFFF; font-family: inherit; font-weight: 600; font-size: 15px; cursor: pointer;">{{upsellButton}}</button>
+</div>
+</sc-if>
+</div>
+
+<div>
+<h2 style="margin: 0; font-size: 28px; line-height: 1.2; letter-spacing: -0.015em; font-weight: 700;">3. Kam pošlem potvrdenie</h2>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: #5E4F6E;">Teraz nič neplatíte. Zálohovú faktúru s QR kódom vám pošlem e-mailom hneď po odoslaní.</p>
+<div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+<label style="display: flex; flex-direction: column; gap: 8px; font-weight: 600; font-size: 15px;">Meno a priezvisko<input type="text" autocomplete="name" style="min-height: 52px; box-sizing: border-box; padding: 0 16px; border: 1px solid #CDB9A3; border-radius: 8px; font-family: inherit; font-size: 16px; color: #1E0B3A;"></label>
+<label style="display: flex; flex-direction: column; gap: 8px; font-weight: 600; font-size: 15px;">E-mail<input type="email" autocomplete="email" style="min-height: 52px; box-sizing: border-box; padding: 0 16px; border: 1px solid #CDB9A3; border-radius: 8px; font-family: inherit; font-size: 16px; color: #1E0B3A;"></label>
+<label style="display: flex; flex-direction: column; gap: 8px; font-weight: 600; font-size: 15px;">Firma alebo IČO <span style="font-weight: 400; color: #5E4F6E;">nepovinné</span><input type="text" autocomplete="organization" style="min-height: 52px; box-sizing: border-box; padding: 0 16px; border: 1px solid #CDB9A3; border-radius: 8px; font-family: inherit; font-size: 16px; color: #1E0B3A;"></label>
+<label style="display: flex; flex-direction: column; gap: 8px; font-weight: 600; font-size: 15px;">Odvetvie<select style="min-height: 52px; box-sizing: border-box; padding: 0 12px; border: 1px solid #CDB9A3; border-radius: 8px; background: #FFFFFF; font-family: inherit; font-size: 16px; color: #1E0B3A;"><option>Salón alebo kozmetika</option><option>Klinika alebo zdravie</option><option>Fitness</option><option>Remeslo a služby</option><option>Iné</option></select></label>
+</div>
+<label style="display: flex; align-items: flex-start; gap: 12px; margin-top: 24px; font-size: 15px; line-height: 1.5;"><input type="checkbox" style="flex: 0 0 auto; width: 20px; height: 20px; margin: 2px 0 0; accent-color: #6A00F4;"><span>Súhlasím s <a href="#" style="color: #6A00F4; font-weight: 600;">obchodnými podmienkami</a>.</span></label>
+<p style="margin: 12px 0 0; font-size: 14px; line-height: 1.5; color: #5E4F6E;">Objednávate ako súkromná osoba bez IČO? Pri odoslaní potvrdíte, že s prácou môžem začať pred uplynutím 14-dňovej lehoty na odstúpenie.</p>
+<a href="Dakujem.dc.html" style="display: inline-flex; align-items: center; margin-top: 28px; min-height: 56px; box-sizing: border-box; padding: 0 28px; border-radius: 8px; background: #6A00F4; color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 17px;">Objednať balík {{pkgName}}</a>
+</div>
+
+</div>
+
+<aside aria-label="Súhrn objednávky" style="flex: 0 1 400px; box-sizing: border-box; padding: 32px 28px; border-radius: 12px; background: #FFF3E6;">
+<h2 style="margin: 0; font-size: 22px; font-weight: 700;">Vaša objednávka</h2>
+<div style="margin-top: 20px; display: flex; justify-content: space-between; gap: 16px; font-size: 16px;"><span>Balík {{pkgName}}</span><span style="font-weight: 600;">{{pkgPrice}}</span></div>
+<sc-for list="{{chosen}}" as="c" hint-placeholder-count="0">
+<div style="margin-top: 10px; display: flex; justify-content: space-between; gap: 16px; font-size: 15px; color: #5E4F6E;"><span>{{c.name}}</span><span>{{c.price}}</span></div>
+</sc-for>
+<div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #EADBC8; display: flex; justify-content: space-between; align-items: baseline; gap: 16px;"><span style="font-weight: 600; font-size: 17px;">Spolu</span><span style="font-weight: 700; font-size: 32px; letter-spacing: -0.01em;">{{total}}</span></div>
+<div style="margin-top: 10px; display: flex; justify-content: space-between; gap: 16px; font-size: 15px; color: #5E4F6E;"><span>Záloha 50 % po objednávke</span><span>{{deposit}}</span></div>
+<div style="margin-top: 4px; display: flex; justify-content: space-between; gap: 16px; font-size: 15px; color: #5E4F6E;"><span>Doplatok pred spustením</span><span>{{rest}}</span></div>
+<p style="margin: 20px 0 0; font-size: 15px; font-weight: 600; color: #6A00F4;">{{days}}</p>
+<p style="margin: 8px 0 0; font-size: 14px; line-height: 1.5; color: #5E4F6E;">Termín plynie od vyplnenia dotazníka a dodania podkladov. Rozpočet na reklamu platíte priamo platforme.</p>
+</aside>
+</section>
+
+<section aria-labelledby="obsah-nadpis" style="background: #F1E6FF;">
+<div style="max-width: 1440px; margin: 0 auto; padding: 120px clamp(20px, 5.5vw, 80px); box-sizing: border-box;">
+<h2 id="obsah-nadpis" style="margin: 0; font-size: clamp(32px, 4vw, 52px); line-height: 1.08; letter-spacing: -0.025em; font-weight: 700;">Čo presne dostanete</h2>
+<p style="margin: 20px 0 0; max-width: 680px; font-size: 18px; line-height: 1.55; color: #5E4F6E;">Každý balík je jedna predajná stránka, na ktorú posielate ľudí z reklamy, z Googlu alebo zo sociálnych sietí. Ďalšiu podstránku pridáte za 49 €.</p>
+<div style="margin-top: 56px; display: flex; flex-wrap: wrap; gap: 20px;">
+
+<article style="flex: 1 1 320px; box-sizing: border-box; padding: 32px 28px; border-radius: 12px; background: #FFFFFF;">
+<h3 style="margin: 0; font-size: 24px; font-weight: 700;">Štart</h3>
+<p style="margin: 10px 0 0; font-size: 16px; line-height: 1.5; color: #5E4F6E;">Hodí sa, ak potrebujete rýchlo stránku pre jednu službu a reklamu zatiaľ neplánujete.</p>
+<p style="margin: 28px 0 0; font-size: 14px; font-weight: 600; color: #6A00F4;">Web</p>
+<ul style="margin: 8px 0 0; padding: 0 0 0 18px; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+<li>1 predajná stránka so 6 sekciami v overenom poradí</li>
+<li>Vaše farby, logo a fotky</li>
+<li>Formulár s notifikáciou na váš e-mail</li>
+<li>Ďakovacia stránka, 404 a právne stránky</li>
+</ul>
+<p style="margin: 24px 0 0; font-size: 14px; font-weight: 600; color: #6A00F4;">Meranie</p>
+<ul style="margin: 8px 0 0; padding: 0 0 0 18px; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+<li>Meranie dopytov v Google Analytics (GA4 cez Tag Manager)</li>
+<li>Cookie lišta podľa GDPR (Consent Mode v2)</li>
+</ul>
+<p style="margin: 24px 0 0; font-size: 14px; font-weight: 600; color: #6A00F4;">Odovzdanie</p>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5;">Web na vašej doméne, účty na vaše meno, 2 kolá úprav a 14 dní podpory.</p>
+</article>
+
+<article style="flex: 1 1 320px; box-sizing: border-box; padding: 29px 28px 32px; border-radius: 12px; background: #FFFFFF; border-top: 3px solid #6A00F4;">
+<h3 style="margin: 0; font-size: 24px; font-weight: 700;">Lead systém</h3>
+<p style="margin: 10px 0 0; font-size: 16px; line-height: 1.5; color: #5E4F6E;">Hodí sa, ak chcete spustiť reklamu a mať každý dopyt v tabuľke aj so zdrojom.</p>
+<p style="margin: 28px 0 0; font-size: 14px; font-weight: 600; color: #6A00F4;">Web</p>
+<ul style="margin: 8px 0 0; padding: 0 0 0 18px; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+<li>1 predajná stránka do 8 sekcií</li>
+<li>Dizajn na mieru</li>
+<li>Formulár, ďakovacia stránka, 404 a právne stránky</li>
+</ul>
+<p style="margin: 24px 0 0; font-size: 14px; font-weight: 600; color: #6A00F4;">Meranie</p>
+<ul style="margin: 8px 0 0; padding: 0 0 0 18px; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+<li>Všetko zo Štartu</li>
+<li>Meta a Google vedia, kto sa ozval (Meta Pixel a konverzie Google Ads, overené pred odovzdaním)</li>
+<li>Dopyty v tabuľke, potvrdenie zákazníkovi, notifikácia vám</li>
+</ul>
+<p style="margin: 24px 0 0; font-size: 14px; font-weight: 600; color: #6A00F4;">Odovzdanie</p>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5;">Web na vašej doméne, účty na vaše meno, 3 kolá úprav a 30 dní podpory.</p>
+</article>
+
+<article style="flex: 1 1 320px; box-sizing: border-box; padding: 32px 28px; border-radius: 12px; background: #FFFFFF;">
+<h3 style="margin: 0; font-size: 24px; font-weight: 700;">Na kľúč</h3>
+<p style="margin: 10px 0 0; font-size: 16px; line-height: 1.5; color: #5E4F6E;">Hodí sa, ak chcete web aj reklamu od jedného človeka a prvý mesiac nič neriešiť.</p>
+<p style="margin: 28px 0 0; font-size: 14px; font-weight: 600; color: #6A00F4;">Web a meranie</p>
+<ul style="margin: 8px 0 0; padding: 0 0 0 18px; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+<li>Všetko z Lead systému</li>
+<li>Do Mety posielam, kto prišiel a zaplatil, aby sa reklama učila na zákazníkoch</li>
+</ul>
+<p style="margin: 24px 0 0; font-size: 14px; font-weight: 600; color: #6A00F4;">Reklama</p>
+<ul style="margin: 8px 0 0; padding: 0 0 0 18px; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+<li>Kampaň na Mete alebo Googli</li>
+<li>Texty a 3 obrázky do reklamy z vašich fotiek</li>
+<li>Prvý mesiac správy a report</li>
+</ul>
+<p style="margin: 24px 0 0; font-size: 14px; font-weight: 600; color: #6A00F4;">Odovzdanie</p>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5;">Web na vašej doméne, účty na vaše meno, 3 kolá úprav a 60 dní podpory.</p>
+</article>
+</div>
+
+<div style="margin-top: 72px; display: flex; flex-wrap: wrap; gap: 40px 64px;">
+<div style="flex: 1 1 400px; padding-top: 20px; border-top: 2px solid #1E0B3A;">
+<h3 style="margin: 0; font-size: 20px; line-height: 26px; font-weight: 700;">Od vás potrebujem</h3>
+<ul style="margin: 14px 0 0; padding: 0 0 0 18px; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+<li>vyplnený dotazník, asi 30 minút,</li>
+<li>logo a fotky, ak ich máte,</li>
+<li>doménu, alebo ju spolu kúpime na vaše meno,</li>
+<li>názor na návrh.</li>
+</ul>
+</div>
+<div style="flex: 1 1 400px; padding-top: 20px; border-top: 2px solid #1E0B3A;">
+<h3 style="margin: 0; font-size: 20px; line-height: 26px; font-weight: 700;">Čo nerobím</h3>
+<ul style="margin: 14px 0 0; padding: 0 0 0 18px; font-size: 16px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+<li>e-shopy,</li>
+<li>natáčanie a fotenie,</li>
+<li>logo a vizuálnu identitu (textové logo v rámci webu áno),</li>
+<li>platenie reklamného rozpočtu za vás.</li>
+</ul>
+<p style="margin: 12px 0 0; font-size: 15px; line-height: 1.5; color: #5E4F6E;">Napojenie na CRM a jazykové verzie urobím na dopyt.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="porovnanie-nadpis" style="background: #FFF3E6;">
+<div style="max-width: 1440px; margin: 0 auto; padding: 120px clamp(20px, 5.5vw, 80px); box-sizing: border-box;">
+<h2 id="porovnanie-nadpis" style="margin: 0; font-size: clamp(32px, 4vw, 52px); line-height: 1.08; letter-spacing: -0.025em; font-weight: 700;">Porovnanie balíkov</h2>
+<div style="margin-top: 48px; overflow-x: auto; border: 1px solid #EADBC8; border-radius: 12px; background: #FFFFFF;">
+<table style="width: 100%; min-width: 880px; border-collapse: collapse; font-size: 16px; line-height: 1.4;">
+<caption style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;">Porovnanie balíkov Štart, Lead systém a Na kľúč</caption>
+<thead>
+<tr>
+<th scope="col" style="width: 34%; padding: 24px 28px; text-align: left; font-weight: 500; font-size: 15px; color: #5E4F6E;">Čo dostanete</th>
+<th scope="col" style="padding: 24px; text-align: left; font-weight: 700; font-size: 18px;">Štart <span style="display: block; margin-top: 4px; font-weight: 500; font-size: 15px; color: #5E4F6E;">249 €</span></th>
+<th scope="col" style="padding: 21px 24px 24px; text-align: left; font-weight: 700; font-size: 18px; background: #FFF3E6; border-top: 3px solid #6A00F4;">Lead systém <span style="display: block; margin-top: 4px; font-weight: 500; font-size: 15px; color: #5E4F6E;">449 €</span></th>
+<th scope="col" style="padding: 24px; text-align: left; font-weight: 700; font-size: 18px;">Na kľúč <span style="display: block; margin-top: 4px; font-weight: 500; font-size: 15px; color: #5E4F6E;">790 €</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="rowgroup" style="padding: 28px 28px 10px; text-align: left; font-weight: 600; font-size: 14px; color: #5E4F6E; border-top: 1px solid #EADBC8;">Web</th>
+<td style="border-top: 1px solid #EADBC8;"></td>
+<td style="background: #FFF3E6; border-top: 1px solid #EADBC8;"></td>
+<td style="border-top: 1px solid #EADBC8;"></td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Predajná stránka, rýchla na mobile, so základným SEO</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Počet stránok</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">1 predajná stránka</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">1 predajná stránka</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">1 predajná stránka</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Sekcie na stránke</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">6, pevné poradie</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">do 8, na mieru</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">do 8, na mieru</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Ďakovacia stránka, 404 a právne stránky</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Ďalšia podstránka</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; color: #6E6380;">doplnok 49 €</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6; color: #6E6380;">doplnok 49 €</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; color: #6E6380;">doplnok 49 €</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Dizajn vo Figme</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">z overenej štruktúry, vaše farby a logo</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">na mieru</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">na mieru</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Texty a poradie sekcií píšem ja</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Spustenie na vašej doméne so zabezpečením (SSL)</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Formulár a notifikácia e-mailom</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="rowgroup" style="padding: 28px 28px 10px; text-align: left; font-weight: 600; font-size: 14px; color: #5E4F6E; border-top: 1px solid #EADBC8;">Meranie</th>
+<td style="border-top: 1px solid #EADBC8;"></td>
+<td style="background: #FFF3E6; border-top: 1px solid #EADBC8;"></td>
+<td style="border-top: 1px solid #EADBC8;"></td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Cookie lišta podľa GDPR (Consent Mode v2)</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Meranie dopytov (GA4 cez Tag Manager)</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Meta a Google vedia, kto sa ozval</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; color: #6E6380;">doplnok 79 €</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Dopyty v tabuľke a potvrdenie zákazníkovi</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; color: #6E6380;">doplnok 99 €</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">áno</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Do Mety posielam, kto prišiel a zaplatil</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; color: #6E6380;">nie</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6; color: #6E6380;">nie</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="rowgroup" style="padding: 28px 28px 10px; text-align: left; font-weight: 600; font-size: 14px; color: #5E4F6E; border-top: 1px solid #EADBC8;">Reklama</th>
+<td style="border-top: 1px solid #EADBC8;"></td>
+<td style="background: #FFF3E6; border-top: 1px solid #EADBC8;"></td>
+<td style="border-top: 1px solid #EADBC8;"></td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Spustenie reklamy</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; color: #6E6380;">nie</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6; color: #6E6380;">doplnok 149 €</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">Meta alebo Google</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Texty a 3 obrázky do reklamy</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; color: #6E6380;">nie</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6; color: #6E6380;">doplnok 99 €</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Prvý mesiac správy reklamy a report</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; color: #6E6380;">nie</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6; color: #6E6380;">nie</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">áno</td>
+</tr>
+<tr>
+<th scope="rowgroup" style="padding: 28px 28px 10px; text-align: left; font-weight: 600; font-size: 14px; color: #5E4F6E; border-top: 1px solid #EADBC8;">Spolupráca</th>
+<td style="border-top: 1px solid #EADBC8;"></td>
+<td style="background: #FFF3E6; border-top: 1px solid #EADBC8;"></td>
+<td style="border-top: 1px solid #EADBC8;"></td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Kolá úprav</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">2</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">3</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">3</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Podpora po spustení</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">14 dní</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">30 dní</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">60 dní</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Dodanie od vyplneného dotazníka</th>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">3 dni</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">7 dní</td>
+<td style="padding: 14px 24px; border-top: 1px solid #F5ECE1;">14 dní</td>
+</tr>
+<tr>
+<th scope="row" style="padding: 14px 28px 24px; text-align: left; font-weight: 400; border-top: 1px solid #F5ECE1;">Mesačný poplatok za hosting pri bežnej návštevnosti</th>
+<td style="padding: 14px 24px 24px; border-top: 1px solid #F5ECE1;">0 €</td>
+<td style="padding: 14px 24px 24px; border-top: 1px solid #F5ECE1; background: #FFF3E6;">0 €</td>
+<td style="padding: 14px 24px 24px; border-top: 1px solid #F5ECE1;">0 €</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="pausaly-nadpis">
+<div style="max-width: 1440px; margin: 0 auto; padding: 120px clamp(20px, 5.5vw, 80px); box-sizing: border-box; display: flex; flex-wrap: wrap; gap: 40px 96px;">
+<div style="flex: 0 1 380px;">
+<h2 id="pausaly-nadpis" style="margin: 0; font-size: clamp(32px, 4vw, 52px); line-height: 1.08; letter-spacing: -0.025em; font-weight: 700;">Po spustení nič povinné</h2>
+<p style="margin: 20px 0 0; font-size: 17px; line-height: 1.55; color: #5E4F6E;">Web funguje aj bez mesačnej správy a po skončení podpory sa nič samo nepredĺži. Ak ju budete chcieť, platí sa mesačne vopred, bez viazanosti, s výpoveďou k prvému dňu ďalšieho mesiaca.</p>
+</div>
+<div style="flex: 1 1 520px; display: flex; flex-wrap: wrap; gap: 40px;">
+<div style="flex: 1 1 260px; padding-top: 20px; border-top: 2px solid #6A00F4;">
+<h3 style="margin: 0; font-size: 20px; font-weight: 700;">Správa webu</h3>
+<p style="margin: 8px 0 0; font-size: 32px; font-weight: 700; letter-spacing: -0.01em;">29 € <span style="font-size: 16px; font-weight: 500; color: #5E4F6E;">mesačne</span></p>
+<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.55; color: #5E4F6E;">Hodina práce mesačne na úpravy textov, nový obsah, technickú kontrolu a nasadenie.</p>
+</div>
+<div style="flex: 1 1 260px; padding-top: 20px; border-top: 2px solid #6A00F4;">
+<h3 style="margin: 0; font-size: 20px; font-weight: 700;">Správa reklamy</h3>
+<p style="margin: 8px 0 0; font-size: 32px; font-weight: 700; letter-spacing: -0.01em;">od 149 € <span style="font-size: 16px; font-weight: 500; color: #5E4F6E;">mesačne</span></p>
+<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.55; color: #5E4F6E;">Meta alebo Google za 149 €, obe platformy za 249 € mesačne. Rozpočet na reklamu platíte priamo platforme.</p>
+<a href="Reklama.dc.html" style="display: inline-block; margin-top: 14px; color: #6A00F4; font-weight: 600; font-size: 16px; text-decoration: underline; text-underline-offset: 4px;">Čo obsahuje správa reklamy</a>
+</div>
+</div>
+</div>
+</section>
+
+<footer style="background: #1E0B3A; color: #EBDDFF;">
+<div style="max-width: 1440px; margin: 0 auto; padding: 64px clamp(20px, 5.5vw, 80px) 40px; box-sizing: border-box;">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px;">
+<div style="flex: 1 1 280px;">
+<p style="margin: 0; font-weight: 700; font-size: 24px; letter-spacing: -0.02em; color: #FFD6A5;">Tache</p>
+<p style="margin: 16px 0 0; font-size: 15px; line-height: 1.6;">Daniel Tache, [miesto podnikania]<br>IČO: [IČO]<br>Zapísaný v živnostenskom registri [okresný úrad]<br>Nie som platca DPH.</p>
+</div>
+<nav aria-label="Pätička" style="flex: 0 1 200px; display: flex; flex-direction: column; gap: 10px; font-size: 15px;">
+<a href="Cennik.dc.html" style="color: #EBDDFF;">Balíky a ceny</a>
+<a href="Reklama.dc.html" style="color: #EBDDFF;">Správa reklamy</a>
+<a href="Main.dc.html#ukazky" style="color: #EBDDFF;">Ukážky</a>
+<a href="#blog" style="color: #EBDDFF;">Blog</a>
+<a href="Main.dc.html#o-mne" style="color: #EBDDFF;">O mne</a>
+</nav>
+<div style="flex: 0 1 260px; display: flex; flex-direction: column; gap: 10px; font-size: 15px;">
+<a href="mailto:[e-mail]" style="color: #FFD6A5; font-weight: 600;">[e-mail na doméne]</a>
+<a href="#" style="color: #EBDDFF;">Obchodné podmienky</a>
+<a href="#" style="color: #EBDDFF;">Ochrana osobných údajov</a>
+<button type="button" style="align-self: flex-start; padding: 0; border: 0; background: transparent; color: #EBDDFF; font-family: inherit; font-size: 15px; text-decoration: underline; cursor: pointer;">Nastavenie cookies</button>
+</div>
+</div>
+<p style="margin: 48px 0 0; font-size: 14px; color: #B9A8D6;">© 2026 Tache</p>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":6500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var st = this.state || {};
+    var pkgId = st.pkg || 'lead';
+    var sel = st.addons || {};
+    var P = [
+      { id: 'start', name: 'Štart', regular: 249, founder: 149, days: '3 dní', note: 'Predajná stránka z overeného rozloženia. Uvidíte, koľko ľudí sa ozvalo a odkiaľ.' },
+      { id: 'lead', name: 'Lead systém', regular: 449, founder: 269, days: '7 dní', note: 'Dizajn na mieru, každý dopyt v tabuľke a reklama, ktorá vie, kto sa ozval.' },
+      { id: 'kluc', name: 'Na kľúč', regular: 790, founder: 479, days: '14 dní', note: 'Web, reklama a prvý mesiac jej správy od jedného človeka.' }
+    ];
+    var A = [
+      { id: 'pixel', name: 'Meranie pre reklamu na Mete a Googli', price: 79, only: 'start' },
+      { id: 'auto', name: 'Dopyty do tabuľky a potvrdenie zákazníkovi', price: 99, only: 'start' },
+      { id: 'dizajn', name: 'Dizajn na mieru', price: 99, only: 'start' },
+      { id: 'kampan', name: 'Spustenie reklamy na Mete alebo Googli', price: 149, only: 'lead' },
+      { id: 'kreativy', name: 'Texty a 3 obrázky do reklamy', price: 99, only: 'lead' },
+      { id: 'druha', name: 'Reklama aj na druhej platforme', price: 149, only: 'kluc' },
+      { id: 'podstranka', name: 'Ďalšia podstránka', price: 49, only: '' },
+      { id: 'kolo', name: 'Ďalšie kolo úprav', price: 39, only: '' },
+      { id: 'clanok', name: 'Článok na blog napísaný pre Google', price: 59, only: '' }
+    ];
+    function fmt(n) {
+      var r = Math.round(n * 100) / 100;
+      var s = (r % 1 === 0) ? String(r) : r.toFixed(2);
+      return s.replace('.', ',') + ' €';
+    }
+    var idx = 0;
+    for (var i = 0; i < P.length; i++) { if (P[i].id === pkgId) { idx = i; } }
+    var cur = P[idx];
+    var next = idx < P.length - 1 ? P[idx + 1] : null;
+    var avail = A.filter(function (a) { return a.only === '' || a.only === pkgId; });
+    var chosen = avail.filter(function (a) { return !!sel[a.id]; });
+    var addonsTotal = chosen.reduce(function (s, a) { return s + a.price; }, 0);
+    var upgradeSum = chosen.filter(function (a) { return a.only === pkgId; }).reduce(function (s, a) { return s + a.price; }, 0);
+    var total = cur.founder + addonsTotal;
+    var deposit = total / 2;
+    var diff = next ? next.founder - cur.founder : 0;
+    var upsell = !!next && upgradeSum > 0 && upgradeSum >= 0.7 * diff;
+    var base = 'display: block; width: 100%; text-align: left; box-sizing: border-box; border-radius: 12px; color: #1E0B3A; font-family: inherit; cursor: pointer;';
+    return {
+      packages: P.map(function (p) {
+        var on = p.id === pkgId;
+        return {
+          name: p.name,
+          recommended: p.id === 'lead',
+          founder: fmt(p.founder),
+          regular: fmt(p.regular),
+          note: p.note,
+          days: 'Hotové do ' + p.days,
+          pressed: on ? 'true' : 'false',
+          style: base + (on ? ' padding: 20px 22px; border: 2px solid #6A00F4; background: #FFF3E6;' : ' padding: 21px 23px; border: 1px solid #EADBC8; background: #FFFFFF;'),
+          pick: function () { self.setState({ pkg: p.id, addons: {} }); }
+        };
+      }),
+      addons: avail.map(function (a) {
+        var on = !!sel[a.id];
+        return {
+          name: a.name,
+          price: '+ ' + fmt(a.price),
+          checked: on,
+          style: 'display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 10px; cursor: pointer; border: 1px solid ' + (on ? '#6A00F4' : '#EADBC8') + '; background: ' + (on ? '#FFF3E6' : '#FFFFFF') + ';',
+          toggle: function () { var n = Object.assign({}, sel); n[a.id] = !n[a.id]; self.setState({ addons: n }); }
+        };
+      }),
+      chosen: chosen.map(function (a) { return { name: a.name, price: fmt(a.price) }; }),
+      pkgName: cur.name,
+      pkgPrice: fmt(cur.founder),
+      total: fmt(total),
+      deposit: fmt(deposit),
+      rest: fmt(total - deposit),
+      days: 'Hotové do ' + cur.days,
+      upsell: upsell,
+      upsellText: next ? 'Za ' + fmt(diff) + ' viac máte celý balík ' + next.name + ' a tieto doplnky sú v ňom v cene.' : '',
+      upsellButton: next ? 'Prepnúť na ' + next.name : '',
+      upgrade: function () { if (next) { self.setState({ pkg: next.id, addons: {} }); } }
+    };
+  }
+}
+</script>
+</body>
+</html>

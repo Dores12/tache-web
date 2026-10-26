@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editory
+.vscode/
+.idea/
+*.swp
+
+# Lokálne a dočasné súbory
+*.log
+.netlify/
+.cache/
+
+# Vstupy, ktoré sa nepublikujú
+_input/
