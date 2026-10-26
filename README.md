@@ -35,6 +35,7 @@ Iný port: `python3 tools/server.py 8787`.
 ```
 bash tools/kontrola-obalu.sh
 bash tools/kontrola-textov.sh
+python3 tools/kontrola-cien.py
 ```
 
 - **kontrola-obalu.sh** overí, že opakované bloky (`#hlava`, `#meranie`,
@@ -43,7 +44,11 @@ bash tools/kontrola-textov.sh
   `siteUrl` v configu.
 - **kontrola-textov.sh** nájde vzorce zakázané v sekcii 4 `CLAUDE.md`
   (telefón, „nie X, ale Y“, slovo lead mimo názvu balíka, sľuby výsledku,
-  dlhá pomlčka). Nálezy treba prejsť očami, nie každý je chyba.
+  dlhá pomlčka). Nálezy treba prejsť očami, nie každý je chyba. Čo už bolo
+  schválené, patrí do `tools/overene-texty.txt`.
+- **kontrola-cien.py** porovná `packages.js` so záložnými cenami pri
+  `data-price` a s cenami v štruktúrovaných dátach. Tie musia byť statické,
+  a tak sa ľahko rozídu so zdrojom cien.
 
 K tomu podľa `CLAUDE.md` screenshoty dotknutých stránok v 375 a 1440 px
 s cookie lištou aj bez nej a Lighthouse mobile.
@@ -62,6 +67,7 @@ assets/js/    config.js     všetko, čo sa mení (kontakty, GTM, prepínače)
               nav.js        výmena obsahu bez načítania stránky
               stranky/      skripty jednotlivých stránok, init() a destroy()
 assets/fonts/ Schibsted Grotesk, variabilný, latin a latin-ext, OFL
+              forms.js      spoločná logika všetkých formulárov
 tools/        lokálny server, kontroly, šablóna og obrázka
 docs/, design/, google-apps-script/   interné, na webe vracajú 404
 ```

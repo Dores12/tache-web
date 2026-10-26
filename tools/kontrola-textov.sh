@@ -59,9 +59,10 @@ echo
 
 hladaj 'Dvojica "nie X, ale Y"' 'nie [^<>]*, ale'
 hladaj 'Telefón (na webe nemá byť)' 'telefón|telefon|mobil: |zavola|zavolá|hovor[ťu]|telefonát'
-# Povolené je "Lead systém" a kód: id balíka 'lead', kľúč lead.founder,
+# Povolené je "Lead systém" a kód: id balíka 'lead' alebo "lead",
+# atribúty data-only="lead" a ?balik=lead, kľúč lead.founder,
 # názov eventu generate_lead.
-hladaj 'Slovo lead mimo názvu balíka' '\blead' "lead syst|'lead'|lead\.|generate_lead"
+hladaj 'Slovo lead mimo názvu balíka' '\blead' "lead syst|'lead'|\"lead\"|=lead|lead\.|generate_lead"
 hladaj 'Sľub výsledku' 'zaručene|zaručujem|garantujem počet|určite viac zákazníkov'
 hladaj 'Dlhá pomlčka' '—'
 hladaj 'Tykanie v texte pre zákazníka' '\b(objednaj|napíš mi|pozri si|vyber si)\b'
