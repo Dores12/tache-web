@@ -1,0 +1,168 @@
+/* ==========================================================================
+   Stránky – mriežky a sekcie. V kroku 1 je tu len to, čo potrebuje kostra
+   a stránka 404. Sekcie domova, cenníka, reklamy a dotazníka pribudnú
+   v ďalších krokoch.
+   ========================================================================== */
+
+/* --- Spoločné mriežky z návrhov -------------------------------------- */
+.trojica {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+}
+
+.dvojica {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+}
+
+.kroky {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 32px;
+  list-style: none;
+}
+
+@media (max-width: 860px) {
+  .trojica { grid-template-columns: 1fr; gap: 28px; }
+  .dvojica { grid-template-columns: 1fr; gap: 28px; }
+  .kroky { grid-template-columns: 1fr; gap: 28px; }
+}
+
+/* --- Hero na fialovom pozadí -----------------------------------------
+   Horný odstup je padding sekcie, nie margin nadpisu. Margin by sa zlúčil
+   cez sekciu von a medzi pásom hlavičky a hero by vznikol biely pruh.
+   -------------------------------------------------------------------- */
+.hero {
+  padding: 48px 0 72px;
+}
+
+.hero--domov {
+  padding-top: 56px;
+}
+
+.hero__nadpis {
+  max-width: 1180px;
+  color: var(--marhulova);
+}
+
+.hero--domov .hero__nadpis {
+  font-size: var(--h1-hero);
+  line-height: 0.98;
+}
+
+/* Perex a výzva vedľa seba, zarovnané na spodnú hranu. */
+.hero__spodok {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px 48px;
+  margin-top: 40px;
+}
+
+.hero__podtext {
+  flex: 1 1 360px;
+  max-width: 520px;
+  font-size: var(--text-velky);
+  line-height: 1.55;
+}
+
+/* Na podstránkach je perex sám pod nadpisom. */
+.hero__podtext--samostatny {
+  flex: none;
+  max-width: 640px;
+  margin-top: 24px;
+}
+
+.hero__vyzva {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.hero__vyzvy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+}
+
+.hero__poznamka {
+  font-size: var(--text-maly);
+  line-height: 1.5;
+}
+
+@media (max-width: 860px) {
+  .hero {
+    padding: 40px 0 56px;
+  }
+
+  .hero--domov {
+    padding-top: 40px;
+  }
+
+  .hero--domov .hero__nadpis {
+    font-size: 44px;
+    line-height: 1;
+  }
+
+  .hero__spodok {
+    margin-top: 24px;
+  }
+
+  /* Na mobile je hlavná výzva na celú šírku. */
+  .hero__vyzva {
+    align-items: stretch;
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .hero__vyzvy {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .hero__vyzvy .odkaz-vedla {
+    justify-content: center;
+  }
+
+  .hero__poznamka {
+    text-align: center;
+  }
+}
+
+/* --- Stránka 404 ----------------------------------------------------- */
+.nenajdene {
+  padding: 96px 0 var(--padding-sekcia);
+}
+
+.nenajdene__text {
+  margin-top: 24px;
+  max-width: 560px;
+  font-size: var(--text-velky);
+  line-height: 1.55;
+  color: var(--text-tlmeny);
+}
+
+.nenajdene__odkazy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 40px;
+}
+
+/* --- Zástupná stránka, kým nie sú texty ------------------------------ */
+.pripravujeme {
+  padding: 96px 0 var(--padding-sekcia);
+}
+
+.pripravujeme__text {
+  margin-top: 24px;
+  font-size: var(--text-velky);
+  color: var(--text-tlmeny);
+}

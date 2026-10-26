@@ -1,0 +1,552 @@
+/* ==========================================================================
+   Prvky – tlačidlá, polia, karty, hlavička, mobilné menu, pätička,
+   cookie lišta, pruh testovacieho režimu.
+   ========================================================================== */
+
+/* --- Tlačidlá ---------------------------------------------------------
+   Vždy aspoň 44 px vysoké, hlavná výzva 56 px. Rohy 8 px.
+   -------------------------------------------------------------------- */
+.tlacidlo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: var(--vyska-tlacidlo);
+  padding: 10px 18px;
+  border: 0;
+  border-radius: var(--roh-tlacidlo);
+  font-size: var(--text-maly);
+  font-weight: var(--vaha-polotucna);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--cas-prechod) var(--krivka),
+    color var(--cas-prechod) var(--krivka);
+}
+
+.tlacidlo--hlavne {
+  background: var(--fialova);
+  color: var(--biela);
+}
+
+.tlacidlo--hlavne:hover {
+  background: var(--fialova-hover);
+  color: var(--biela);
+}
+
+/* Na fialovom pozadí je hlavné tlačidlo marhuľové s atramentovým textom. */
+.tlacidlo--marhulove {
+  background: var(--marhulova);
+  color: var(--atrament);
+}
+
+.tlacidlo--marhulove:hover {
+  background: var(--marhulova-tmava);
+  color: var(--atrament);
+}
+
+.tlacidlo--obrysove {
+  background: transparent;
+  color: var(--atrament);
+  border: 1.5px solid var(--atrament);
+  padding: 9px 17px;
+}
+
+.tlacidlo--obrysove:hover {
+  background: var(--atrament);
+  color: var(--biela);
+}
+
+.tlacidlo--vyzva {
+  min-height: var(--vyska-tlacidlo-hlavne);
+  padding: 18px 28px;
+  font-size: var(--text);
+}
+
+.tlacidlo--cela-sirka {
+  width: 100%;
+}
+
+.tlacidlo[disabled],
+.tlacidlo[aria-disabled='true'] {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* Textový odkaz, ktorý stojí vedľa tlačidla. */
+.odkaz-vedla {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--vyska-tlacidlo);
+  font-size: var(--text);
+  font-weight: var(--vaha-stredna);
+  text-decoration: underline;
+}
+
+.na-fialovej .odkaz-vedla {
+  color: var(--marhulova);
+}
+
+/* --- Polia formulárov -------------------------------------------------
+   Písmo 16 px, aby mobil pri fokuse nezväčšoval stránku.
+   -------------------------------------------------------------------- */
+.pole {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: var(--text-maly);
+  font-weight: var(--vaha-polotucna);
+}
+
+.pole__nepovinne {
+  font-weight: var(--vaha-normal);
+  color: var(--text-tlmeny);
+}
+
+.pole input,
+.pole select,
+.pole textarea {
+  min-height: var(--vyska-pole);
+  padding: 0 16px;
+  border: 1px solid var(--okraj-pola);
+  border-radius: var(--roh-tlacidlo);
+  background: var(--biela);
+  font-size: 16px;
+  font-weight: var(--vaha-normal);
+  color: var(--atrament);
+}
+
+.pole textarea {
+  min-height: 104px;
+  padding: 14px 16px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.pole input[aria-invalid='true'],
+.pole select[aria-invalid='true'],
+.pole textarea[aria-invalid='true'] {
+  border-color: #B3261E;
+  border-width: 2px;
+}
+
+.pole__chyba {
+  font-size: var(--text-maly);
+  font-weight: var(--vaha-stredna);
+  color: #B3261E;
+}
+
+.pole--zaskrtavacie {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  font-weight: var(--vaha-normal);
+  line-height: 1.5;
+}
+
+.pole--zaskrtavacie input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  min-height: 0;
+  margin: 2px 0 0;
+  padding: 0;
+  accent-color: var(--fialova);
+}
+
+/* Honeypot: mimo obrazovky, nie display:none, aby ho roboty vyplnili. */
+.pole--past {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* --- Karty ------------------------------------------------------------ */
+.karta {
+  box-sizing: border-box;
+  padding: 32px 28px;
+  border: 1px solid var(--okraj);
+  border-radius: var(--roh-karta);
+  background: var(--biela);
+}
+
+.karta--odporucana {
+  padding-top: 29px;
+  border: 0;
+  border-top: 3px solid var(--fialova);
+  background: var(--marhulova-svetla);
+}
+
+/* --- Hlavička ---------------------------------------------------------
+   Rovnaká vo všetkých HTML súboroch medzi značkami #hlavicka.
+
+   V návrhoch je hlavička vnútri fialovej hero sekcie, ale nav.js vymieňa
+   obsah <main>, takže hlavička musí byť nad ním. Je preto samostatný
+   fialový pás a hero pod ním má rovnaké pozadie a nulový horný odstup.
+   Výsledok vyzerá ako jeden blok.
+   -------------------------------------------------------------------- */
+.hlavicka-pas {
+  position: relative;
+  z-index: var(--vrstva-hlavicka);
+}
+
+.hlavicka {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 0;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: var(--vaha-tucna);
+  letter-spacing: -0.02em;
+  color: var(--marhulova);
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.menu__odkazy {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.menu__odkazy a {
+  color: var(--na-fialovej);
+  font-size: 16px;
+  font-weight: var(--vaha-stredna);
+  text-decoration: none;
+}
+
+.menu__odkazy a:hover {
+  color: var(--marhulova);
+}
+
+.menu__odkazy a[aria-current='page'] {
+  color: var(--marhulova);
+  font-weight: var(--vaha-polotucna);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.menu__prepinac {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--roh-tlacidlo);
+  background: transparent;
+  color: var(--marhulova);
+  cursor: pointer;
+}
+
+/* --- Mobilné menu -----------------------------------------------------
+   Panel pod hlavičkou, otvára a zatvára ho tá istá ikona.
+   -------------------------------------------------------------------- */
+.menu-panel {
+  display: none;
+  padding: 8px 0 24px;
+}
+
+.menu-panel[data-otvorene='ano'] {
+  display: block;
+}
+
+.menu-panel ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-panel a {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 4px;
+  border-bottom: 1px solid var(--okraj-na-fialovej);
+  color: var(--na-fialovej);
+  font-size: 18px;
+  font-weight: var(--vaha-stredna);
+  text-decoration: none;
+}
+
+.menu-panel a[aria-current='page'] {
+  color: var(--marhulova);
+  font-weight: var(--vaha-polotucna);
+}
+
+@media (max-width: 860px) {
+  .hlavicka {
+    padding: 16px 0;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .menu {
+    gap: 8px;
+  }
+
+  .menu__odkazy {
+    display: none;
+  }
+
+  .menu__prepinac {
+    display: inline-flex;
+  }
+}
+
+/* --- Lišta s výzvou pri spodnom okraji, len na mobile -----------------
+   Zobrazí ju domov.js, keď tlačidlo v hero zmizne z obrazovky.
+   -------------------------------------------------------------------- */
+.lista-mobil {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--vrstva-lista-mobil);
+  display: none;
+  padding: 12px var(--padding-bok);
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  background: var(--biela);
+  border-top: 1px solid var(--okraj);
+  transform: translateY(100%);
+  transition: transform var(--cas-prechod) var(--krivka);
+}
+
+.lista-mobil[data-videt='ano'] {
+  transform: none;
+}
+
+@media (max-width: 860px) {
+  .lista-mobil {
+    display: block;
+  }
+}
+
+/* --- Pätička ---------------------------------------------------------- */
+.pata {
+  background: var(--atrament);
+  color: var(--na-fialovej);
+}
+
+.pata__obsah {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 64px 0 0;
+}
+
+.pata__firma {
+  flex: 1 1 280px;
+}
+
+.pata__logo {
+  font-size: 24px;
+  font-weight: var(--vaha-tucna);
+  letter-spacing: -0.02em;
+  color: var(--marhulova);
+}
+
+.pata__udaje {
+  margin-top: 16px;
+  font-size: var(--text-maly);
+  line-height: 1.6;
+}
+
+.pata__blok {
+  flex: 0 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--text-maly);
+}
+
+nav.pata__blok {
+  flex: 0 1 200px;
+}
+
+.pata a {
+  color: var(--na-fialovej);
+}
+
+.pata__email {
+  color: var(--marhulova);
+  font-weight: var(--vaha-polotucna);
+}
+
+.pata__email:hover {
+  color: var(--marhulova);
+}
+
+.pata__tlacidlo {
+  align-self: flex-start;
+  min-height: var(--vyska-tlacidlo);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--na-fialovej);
+  font-size: var(--text-maly);
+  text-align: left;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pata__copy {
+  margin: 48px 0 0;
+  padding-bottom: 40px;
+  font-size: var(--text-drobny);
+  color: var(--paticka-tlmeny);
+}
+
+/* Skrátená pätička pre /dakujem a /dotaznik. */
+.pata--kratka .pata__obsah {
+  align-items: center;
+  padding: 40px 0;
+  font-size: var(--text-maly);
+}
+
+.pata--kratka .pata__odkazy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+}
+
+/* --- Cookie lišta -----------------------------------------------------
+   Neblokuje obsah, sedí pri spodnom okraji.
+   -------------------------------------------------------------------- */
+.cookies {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--vrstva-cookies);
+  background: var(--biela);
+  border-top: 1px solid var(--okraj);
+  box-shadow: 0 -2px 16px rgba(30, 11, 58, 0.08);
+}
+
+.cookies__obsah {
+  max-width: var(--sirka-obsahu);
+  margin: 0 auto;
+  padding: 20px var(--padding-bok);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 40px;
+}
+
+.cookies__text {
+  flex: 1 1 420px;
+  font-size: var(--text-maly);
+  line-height: 1.5;
+  color: var(--text-tlmeny);
+}
+
+.cookies__tlacidla {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.cookies__podrobne {
+  width: 100%;
+  max-width: var(--sirka-obsahu);
+  margin: 0 auto;
+  padding: 0 var(--padding-bok) 20px;
+}
+
+.cookies__skupina {
+  padding: 16px 0;
+  border-top: 1px solid var(--okraj-jemny);
+}
+
+.cookies__skupina p {
+  margin-top: 4px;
+  font-size: var(--text-maly);
+  line-height: 1.5;
+  color: var(--text-tlmeny);
+}
+
+@media (max-width: 860px) {
+  .cookies__tlacidla {
+    width: 100%;
+  }
+
+  .cookies__tlacidla .tlacidlo {
+    flex: 1 1 140px;
+  }
+}
+
+/* --- Pruh testovacieho režimu ----------------------------------------
+   Vykreslí sa, len keď je formEndpoint v configu prázdny.
+
+   Je to prekrytie, nie prvok v toku. Keby bol v toku, vkladanie z JS by
+   posunulo obsah nadol a pokazilo CLS. Takto nemá na rozloženie vplyv
+   ani v testovacom režime, ani v produkcii, kde vôbec nevznikne.
+   -------------------------------------------------------------------- */
+/* Miesto na pruh sa rezervuje odstupom tela. Triedu je-test nasadzuje
+   hlavička dokumentu ešte pred vykreslením, takže sa nič neposúva. */
+.je-test body {
+  padding-top: 30px;
+}
+
+.pruh-test {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: var(--vrstva-test);
+  height: 30px;
+  margin: 0;
+  padding: 6px var(--padding-bok);
+  white-space: nowrap;
+  overflow: hidden;
+  background: #FFE9A8;
+  color: var(--atrament);
+  font-size: var(--text-drobny);
+  font-weight: var(--vaha-polotucna);
+  text-align: center;
+}
+
+/* --- Dotykové plochy --------------------------------------------------
+   CLAUDE.md žiada dotykové plochy aspoň 44 x 44 px. Textové odkazy
+   v hlavičke a pätičke sú podľa návrhu nižšie, preto sa zväčšujú len tam,
+   kde sa ovláda prstom. Myš na desktope presnosť má a návrh zostáva
+   nedotknutý. Mobilné menu má riadky 48 px už v základe.
+   -------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  .logo,
+  .menu__odkazy a,
+  .pata__blok a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .pata__blok {
+    gap: 0;
+  }
+}
+
+/* Logo je v hlavičke vysoké ako tlačidlo, aby sa dalo pohodlne trafiť. */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--vyska-tlacidlo);
+}

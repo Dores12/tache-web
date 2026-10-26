@@ -1,0 +1,87 @@
+/* ==========================================================================
+   Tokens – jediný zdroj farieb, typografie a odstupov.
+   Farby podľa CLAUDE.md sekcia 3. Nič z tohto súboru nemeň v iných súboroch,
+   iba tu.
+   ========================================================================== */
+
+:root {
+  /* --- Farby z tabuľky v CLAUDE.md ------------------------------------- */
+  --fialova: #6A00F4;
+  --fialova-hover: #5200C2;
+  --marhulova: #FFD6A5;
+  --atrament: #1E0B3A;
+  --text-tlmeny: #5E4F6E;
+  --text-tlmeny-2: #6E6380;
+  --na-fialovej: #EBDDFF;
+  --marhulova-svetla: #FFF3E6;
+  --fialova-svetla: #F1E6FF;
+  --okraj: #EADBC8;
+  --okraj-jemny: #F5ECE1;
+  --okraj-pola: #CDB9A3;
+  --hneda-akcent: #8A5F37;
+  --paticka-tlmeny: #B9A8D6;
+
+  /* --- Doplnkové odtiene, ktoré sú v návrhoch ------------------------- */
+  --biela: #FFFFFF;
+  --okraj-na-fialovej: #9B5CF7;   /* deliaca linka v hero na cenníku */
+  --fialova-jemna: #C7A4F7;       /* neaktívne čísla krokov, stredný stĺpec grafu */
+  --marhulova-tmava: #E3C9AE;     /* najvyšší stĺpec grafu, bodky prehliadača */
+  --marhulova-portret: #F2BC80;   /* miesto na portrét, kým nie je fotka */
+  --fialova-chip: #EFE7F7;        /* neutrálny stav v ilustračnej tabuľke */
+  --okraj-fialovy: #DCC8F5;       /* linka vo svetlo fialovej karte */
+
+  /* --- Písmo ----------------------------------------------------------- */
+  --pismo: 'Schibsted Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --h1-hero: clamp(44px, 7.2vw, 104px);
+  --h1-strana: clamp(44px, 6vw, 88px);
+  --h1-dakujem: clamp(40px, 5.5vw, 80px);
+  --h2: clamp(32px, 4vw, 52px);
+  --h2-vyzva: clamp(36px, 5vw, 72px);
+  --h2-mensi: clamp(28px, 3.2vw, 40px);
+  --h3: 22px;
+  --text-velky: 20px;
+  --text: 17px;
+  --text-maly: 15px;
+  --text-drobny: 14px;
+
+  --vaha-normal: 400;
+  --vaha-stredna: 500;
+  --vaha-polotucna: 600;
+  --vaha-tucna: 700;
+
+  /* --- Rozloženie ------------------------------------------------------ */
+  --sirka-obsahu: 1440px;
+  --padding-bok: clamp(20px, 5.5vw, 80px);
+  --padding-sekcia: 120px;
+  --padding-sekcia-mobil: 72px;
+
+  /* --- Rohy a plochy --------------------------------------------------- */
+  --roh-tlacidlo: 8px;
+  --roh-karta: 12px;
+  --roh-maly: 6px;
+  --vyska-tlacidlo: 44px;
+  --vyska-tlacidlo-hlavne: 56px;
+  --vyska-pole: 52px;
+
+  /* --- Animácie -------------------------------------------------------- */
+  --cas-prechod: 180ms;
+  --cas-objavenie: 500ms;
+  --krivka: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* --- Vrstvy ---------------------------------------------------------- */
+  --vrstva-hlavicka: 100;
+  --vrstva-menu: 200;
+  --vrstva-lista-mobil: 300;
+  --vrstva-cookies: 400;
+  --vrstva-test: 500;
+}
+
+@media (max-width: 860px) {
+  :root {
+    --padding-sekcia: var(--padding-sekcia-mobil);
+    --h3: 20px;
+    --text-velky: 18px;
+    --text: 16px;
+  }
+}
