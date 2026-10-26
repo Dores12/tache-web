@@ -28,6 +28,13 @@ window.TACHE = window.TACHE || {};
     'outlook.com', 'hotmail.com', 'icloud.com', 'seznam.cz', 'yahoo.com'
   ];
 
+  /* Skloňovanie: 1 pole, 2 až 4 polia, 5 a viac polí. */
+  function suhrnChyb(pocet) {
+    if (pocet === 1) { return 'Jedno pole ešte potrebuje opraviť.'; }
+    if (pocet < 5) { return 'Opravte prosím ' + pocet + ' polia.'; }
+    return 'Opravte prosím ' + pocet + ' polí.';
+  }
+
   function id() {
     if (window.crypto && window.crypto.randomUUID) {
       return window.crypto.randomUUID();
@@ -308,9 +315,7 @@ window.TACHE = window.TACHE || {};
       });
 
       if (chybne.length) {
-        ukazSuhrn(chybne.length === 1
-          ? 'Jedno pole ešte potrebuje opraviť.'
-          : 'Opravte prosím ' + chybne.length + ' polia.');
+        ukazSuhrn(suhrnChyb(chybne.length));
         chybne[0].focus();
         chyba('validation', chybne[0].name);
         return;

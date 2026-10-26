@@ -32,6 +32,10 @@ window.TACHE.pages = window.TACHE.pages || {};
   var aktualnaStranka = null;
   var oznamovac = null;
 
+  /* Poradové číslo navigácie. Keď sa počas sťahovania začne ďalšia,
+     výsledok tej staršej sa zahodí, aby obsah nezostal o krok pozadu. */
+  var poradie = 0;
+
   function obmedzitPohyb() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
@@ -237,16 +241,39 @@ window.TACHE.pages = window.TACHE.pages || {};
       window.TACHE.pages[aktualnaStranka].destroy();
     }
 
+    /* Výmena musí prebehnúť práve raz, nech sa s prechodom stane čokoľvek. */
+    var vymenene = false;
     function prehodit() {
+      if (vymenene) { return; }
+      vymenene = true;
       staryMain.replaceWith(novyMain);
       aktualizovatHlavicku(novy, url);
       window.TACHE.obal.aktivneMenu(novyMain.getAttribute('data-nav-active'));
       window.TACHE.obal.vyplnit(novyMain);
     }
 
-    var prechod = (document.startViewTransition && !obmedzitPohyb())
-      ? document.startViewTransition(prehodit).finished
-      : Promise.resolve(prehodit());
+    /* View Transitions sú len ozdoba. Prehliadač ich môže preskočiť
+       a svoju funkciu prehodit() spustí až pri najbližšom vykreslení,
+       ktoré na nevykresľovanej karte nemusí prísť vôbec. Obsah by tak
+       zostal o krok pozadu. Preto je tu poistka: ak sa do 250 ms nič
+       nestane, obsah sa vymení aj bez animácie. Funkcia prehodit() sa
+       vďaka príznaku vykoná práve raz. */
+    var prechod;
+    if (document.startViewTransition && !obmedzitPohyb()) {
+      var vt = document.startViewTransition(prehodit);
+
+      /* Pri preskočenom prechode sa ready odmietne. Nie je to chyba,
+         ale bez tohto by sa hlásila ako neodchytená. */
+      if (vt.ready && vt.ready.catch) { vt.ready.catch(function () {}); }
+
+      prechod = Promise.race([
+        vt.updateCallbackDone.catch(function () {}),
+        new Promise(function (hotovo) { window.setTimeout(hotovo, 250); })
+      ]).then(prehodit);
+    } else {
+      prehodit();
+      prechod = Promise.resolve();
+    }
 
     return prechod.then(function () {
       var nazovStranky = novyMain.getAttribute('data-skript');
@@ -270,8 +297,13 @@ window.TACHE.pages = window.TACHE.pages || {};
   }
 
   function prejst(url, hash, pridatDoHistorie) {
+    var moje = ++poradie;
+
     return stiahnut(url)
       .then(function (html) {
+        /* Medzitým sa začala novšia navigácia, túto zahodíme. */
+        if (moje !== poradie) { return; }
+
         if (pridatDoHistorie) {
           window.history.pushState({ tache: true }, '', url + (hash || ''));
         }
