@@ -1,9 +1,8 @@
 /* ==========================================================================
    Screenshoty cudzieho webu do WebP pre ukážku na /ukazky/recovery-iv-clinic.
 
-   Ovláda Chrome cez jeho ladiaci protokol. Node 22 má WebSocket zabudovaný,
-   takže netreba žiadnu knižnicu ani Playwright. Chrome vie fotiť priamo do
-   WebP, takže netreba ani prevod.
+   Ovláda Chrome cez jeho ladiaci protokol (klient je v tools/chrome.mjs).
+   Chrome vie fotiť priamo do WebP, takže netreba ani prevod.
 
    Postup podľa docs/ZADANIE.md: načítať stránku, v cookie lište kliknúť
    Odmietnuť, počkať na fotky a odfotiť hornú časť stránky na počítači
@@ -21,6 +20,7 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { Chrome, pockaj } from './chrome.mjs';
 
 const KOREN = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ADRESA = 'https://recoverybratislava.sk/';
@@ -30,56 +30,6 @@ const ZABERY = [
   { nazov: 'recovery-desktop', sirka: 1440, vyska: 900, mobil: false },
   { nazov: 'recovery-mobil', sirka: 390, vyska: 844, mobil: true }
 ];
-
-function pockaj(ms) {
-  return new Promise((r) => setTimeout(r, ms));
-}
-
-/* --- Tenký klient ladiaceho protokolu --------------------------------- */
-class Chrome {
-  constructor(ws) {
-    this.ws = ws;
-    this.id = 0;
-    this.cakajuce = new Map();
-    ws.addEventListener('message', (e) => {
-      const sprava = JSON.parse(e.data);
-      const cakajuci = this.cakajuce.get(sprava.id);
-      if (!cakajuci) { return; }
-      this.cakajuce.delete(sprava.id);
-      if (sprava.error) {
-        cakajuci.zamietni(new Error(sprava.error.message));
-      } else {
-        cakajuci.splni(sprava.result);
-      }
-    });
-  }
-
-  static async pripoj(url) {
-    const ws = new WebSocket(url);
-    await new Promise((splni, zamietni) => {
-      ws.addEventListener('open', splni, { once: true });
-      ws.addEventListener('error', () => zamietni(new Error('WebSocket zlyhal')), { once: true });
-    });
-    return new Chrome(ws);
-  }
-
-  posli(metoda, parametre = {}) {
-    const id = ++this.id;
-    return new Promise((splni, zamietni) => {
-      this.cakajuce.set(id, { splni, zamietni });
-      this.ws.send(JSON.stringify({ id, method: metoda, params: parametre }));
-    });
-  }
-
-  async hodnota(vyraz) {
-    const { result } = await this.posli('Runtime.evaluate', {
-      expression: vyraz,
-      returnByValue: true,
-      awaitPromise: true
-    });
-    return result.value;
-  }
-}
 
 /* --- Odmietnutie cookies ------------------------------------------------ */
 async function odmietniCookies(chrome) {
@@ -96,12 +46,7 @@ async function odmietniCookies(chrome) {
 }
 
 async function main() {
-  const odpoved = await fetch('http://127.0.0.1:9222/json/list');
-  const terce = await odpoved.json();
-  const stranka = terce.find((t) => t.type === 'page');
-  if (!stranka) { throw new Error('Chrome nemá otvorenú žiadnu kartu'); }
-
-  const chrome = await Chrome.pripoj(stranka.webSocketDebuggerUrl);
+  const chrome = await Chrome.pripoj();
   await chrome.posli('Page.enable');
   await chrome.posli('Runtime.enable');
 
@@ -143,7 +88,7 @@ async function main() {
   }
 
   await chrome.posli('Emulation.clearDeviceMetricsOverride');
-  chrome.ws.close();
+  chrome.zavri();
   console.log('hotovo');
 }
 
