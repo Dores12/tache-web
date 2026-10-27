@@ -8,3 +8,8 @@ kontakt, ktorý nezdvihne telefón
 # Veta zo stránky Správa reklamy. Nie je to sľub výsledku, práve naopak:
 # počet zákazníkov výslovne nezaručuje. Znenie je z návrhu.
 Počet zákazníkov vopred nezaručujem
+
+# Otázka v dotazníku. ZADANIE sekcia 4 to zvlášť zdôrazňuje: je to telefón
+# KLIENTOVEJ firmy pre jeho web, nie kontakt na Daniela. Na webe Tache
+# žiadne telefónne číslo nie je.
+'Telefón firmy pre web'

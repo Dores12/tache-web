@@ -5,8 +5,10 @@
 # Napríklad "kontakt, ktorý nezdvihne telefón" v sekcii Problém je v poriadku,
 # ponuka telefonátu nie.
 #
-# Prehľadáva HTML stránky a JS, kde sú texty pre návštevníka (cookie lišta,
-# hlásenia formulárov). Návrhy v design/ a dokumenty v docs/ sa preskakujú.
+# Prehľadáva HTML stránky, JS a súbory .gs backendu, teda všade, kde sú
+# texty pre návštevníka alebo klienta (cookie lišta, hlásenia formulárov,
+# e-maily). Návrhy v design/, dokumenty v docs/ a knižnice tretích strán
+# v assets/vendor/ sa preskakujú.
 #
 # Spustenie:  bash tools/kontrola-textov.sh
 # Vracia 1, keď niečo našiel.
@@ -17,7 +19,7 @@ cd "$(dirname "$0")/.."
 SUBORY=()
 while IFS= read -r subor; do
   SUBORY+=("$subor")
-done < <(find . \( -name '*.html' -o -name '*.js' \) \
+done < <(find . \( -name '*.html' -o -name '*.js' -o -name '*.gs' \) \
   -not -path './design/*' -not -path './docs/*' -not -path './.git/*' \
   -not -path './assets/vendor/*' -not -path './tools/*' | sort)
 

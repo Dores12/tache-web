@@ -73,6 +73,37 @@ def skontroluj_zalozne_texty(cennik):
     return chyby
 
 
+def skontroluj_apps_script(cennik):
+    """Kopia cennika v Apps Scripte sa musi zhodovat s packages.js."""
+    chyby = []
+    subor = os.path.join(KOREN, "google-apps-script/Baliky.gs")
+    if not os.path.exists(subor):
+        return chyby
+
+    zdroj = open(subor, encoding="utf-8").read()
+
+    for m in re.finditer(
+        r"\{ id: '([a-z]+)', name: '([^']+)', regular: (\d+), founder: (\d+),",
+        zdroj
+    ):
+        kluc, nazov, bezna, zakl = m.groups()
+        for pole, hodnota in ((".regular", bezna), (".founder", zakl)):
+            if cennik.get(kluc + pole) != int(hodnota):
+                chyby.append("Baliky.gs: %s%s je %s, v packages.js je %s"
+                             % (kluc, pole, hodnota, cennik.get(kluc + pole)))
+        if cennik.get("nazov." + kluc) != nazov:
+            chyby.append("Baliky.gs: nazov %s je %r, v packages.js je %r"
+                         % (kluc, nazov, cennik.get("nazov." + kluc)))
+
+    for m in re.finditer(r"\{ id: '([a-z]+)', name: '[^']+', price: (\d+),", zdroj):
+        kluc, hodnota = m.groups()
+        if cennik.get(kluc) != int(hodnota):
+            chyby.append("Baliky.gs: doplnok %s je %s, v packages.js je %s"
+                         % (kluc, hodnota, cennik.get(kluc)))
+
+    return chyby
+
+
 def skontroluj_jsonld(cennik):
     """Ceny v ponukach JSON-LD musia sediet s beznymi cenami balikov."""
     chyby = []
@@ -120,7 +151,8 @@ def main():
     print("  nacitanych hodnot: %d" % len([k for k in cennik
                                            if not k.startswith("nazov.")]))
 
-    chyby = skontroluj_zalozne_texty(cennik) + skontroluj_jsonld(cennik)
+    chyby = (skontroluj_zalozne_texty(cennik) + skontroluj_jsonld(cennik)
+             + skontroluj_apps_script(cennik))
 
     print()
     print("== Nezrovnalosti ==")
