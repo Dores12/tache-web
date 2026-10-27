@@ -128,6 +128,8 @@ globalThis.MailApp = {
 /* --- Načítanie zdrojov v poradí ako Apps Script ------------------------- */
 runInThisContext(readFileSync(KOREN + '/assets/vendor/lzma1/lzma1.js', 'utf8'));
 runInThisContext(readFileSync(KOREN + '/assets/vendor/qrcode-generator/qrcode.js', 'utf8'));
+/* Spoločný kodér, ktorý sa do Apps Scriptu kopíruje ako paybysquare.gs. */
+runInThisContext(readFileSync(KOREN + '/assets/js/paybysquare.js', 'utf8'));
 
 const subory = readdirSync(KOREN + '/google-apps-script').filter((f) => f.endsWith('.gs')).sort();
 for (const subor of subory) {

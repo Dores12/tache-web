@@ -18,7 +18,7 @@ Netlify ho vracia ako 404, na web sa nedostane.
 | `Tabulka.gs` | zápis do Sheetu, číslovanie, duplicity, zakladateľské miesta |
 | `Objednavka.gs` | spracovanie objednávky |
 | `Faktura.gs` | zálohová faktúra z Google Docs do PDF, aj generátor šablóny |
-| `QrKod.gs` | reťazec PAY by square a obrázok QR |
+| `QrKod.gs` | obrázok QR pre dokument, reťazec skladá `paybysquare.gs` |
 | `Emaily.gs` | všetky e-maily klientovi aj Danielovi |
 | `Spustace.gs` | denná kontrola a reakcia na zmenu stavu v tabuľke |
 | `Dotaznik.gs` | overenie tokenu a zostavenie zadania v markdowne |
@@ -29,6 +29,11 @@ K tomu dve knižnice z `assets/vendor/`, ktoré treba do projektu pridať tiež:
 |---|---|
 | `assets/vendor/lzma1/lzma1.js` | `lzma1.gs` |
 | `assets/vendor/qrcode-generator/qrcode.js` | `qrcode.gs` |
+| `assets/js/paybysquare.js` | `paybysquare.gs` |
+
+Posledný je spoločný so stránkou `/dakujem`, ktorá QR kód vykresľuje
+v prehliadači. Preto je v `assets/js/`, nie tu, a mení sa len na jednom
+mieste.
 
 ## Nastavenie krok za krokom
 
