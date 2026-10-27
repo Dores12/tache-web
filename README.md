@@ -14,6 +14,7 @@ npm závislosti za behu.
 | `CLAUDE.md` | Pravidlá práce, techniky, merania a textov. Platí pred zadaním. |
 | `docs/ZADANIE.md` | Čo postaviť a v akom poradí. |
 | `design/README.md` | Ako čítať návrhy v `design/*.dc.html`. |
+| `docs/MERANIE.md` | Čo nastaviť v GTM, GA4 a Meta Pixeli, a ako to overiť. |
 
 Pri rozpore platí poradie zo sekcie 0 v `CLAUDE.md`.
 
@@ -37,6 +38,7 @@ bash tools/kontrola-obalu.sh
 bash tools/kontrola-textov.sh
 python3 tools/kontrola-cien.py
 node tools/test-apps-script.mjs
+node tools/kontrola-merania.mjs
 ```
 
 - **kontrola-obalu.sh** overí, že opakované bloky (`#hlava`, `#meranie`,
@@ -54,6 +56,9 @@ node tools/test-apps-script.mjs
 - **test-apps-script.mjs** prejde celý backend so službami Google
   nahradenými napodobeninami: validáciu, spam, číslovanie objednávok,
   výpočet cien, duplicity, e-maily, dotazník, QR kód aj spúšťače.
+- **kontrola-merania.mjs** otvorí web v Chrome, vyvolá každú udalosť zo
+  sekcie 7.1 `CLAUDE.md` a porovná jej názov aj parametre. Potrebuje
+  bežiaci `tools/server.py`.
 
 K tomu podľa `CLAUDE.md` screenshoty dotknutých stránok v 375 a 1440 px
 s cookie lištou aj bez nej a Lighthouse mobile.
@@ -74,6 +79,7 @@ assets/js/    config.js     všetko, čo sa mení (kontakty, GTM, prepínače)
 assets/fonts/ Schibsted Grotesk, variabilný, latin a latin-ext, OFL
               forms.js      spoločná logika všetkých formulárov
 tools/        lokálny server, kontroly, šablóna og obrázka
+              chrome.mjs    spoločný klient pre screenshoty a meranie
 assets/vendor/ lzma1 a qrcode-generator, obe aj pre Apps Script
 google-apps-script/  backend, návod je v jeho README.md
 docs/, design/, google-apps-script/   interné, na webe vracajú 404
