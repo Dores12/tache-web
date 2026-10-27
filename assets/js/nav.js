@@ -329,6 +329,9 @@ window.TACHE.pages = window.TACHE.pages || {};
     });
 
     document.addEventListener('click', function (e) {
+      /* Keď klik už niekto spracoval, nemáme čo navigovať. */
+      if (e.defaultPrevented) { return; }
+
       var odkaz = e.target.closest('a[href]');
       if (!odkaz || !obsluzitSami(odkaz, e)) { return; }
 
