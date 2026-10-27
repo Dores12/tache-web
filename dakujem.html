@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<!-- #hlava:start -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="/assets/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/zaklad.css">
+<link rel="stylesheet" href="/assets/css/prvky.css">
+<link rel="stylesheet" href="/assets/css/stranky.css">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tache">
+<meta property="og:locale" content="sk_SK">
+<meta property="og:image" content="https://tache.netlify.app/assets/img/og-tache.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- #hlava:end -->
+<title>Ďakujem za objednávku | Tache</title>
+<meta name="description" content="Objednávka prišla. Tu sú platobné údaje aj QR kód na úhradu zálohy.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://tache.netlify.app/dakujem">
+<meta property="og:title" content="Ďakujem za objednávku">
+<meta property="og:description" content="Objednávka prišla.">
+<meta property="og:url" content="https://tache.netlify.app/dakujem">
+<!-- #meranie:start -->
+<!-- Consent Mode v2: predvolene je všetko zamietnuté a uložená voľba sa
+     aplikuje ešte pred načítaním GTM. Nič tu nepridávaj, meranie sa riadi
+     cez dataLayer (CLAUDE.md sekcia 7.2). -->
+<script>
+(function () {
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    functionality_storage: 'granted',
+    security_storage: 'granted',
+    wait_for_update: 500
+  });
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
+
+  try {
+    var volba = JSON.parse(window.localStorage.getItem('tache_consent_v1') || 'null');
+    if (volba) {
+      var platneDo = new Date(volba.date);
+      platneDo.setMonth(platneDo.getMonth() + 12);
+      if (platneDo >= new Date()) {
+        gtag('consent', 'update', {
+          ad_storage: volba.marketing ? 'granted' : 'denied',
+          ad_user_data: volba.marketing ? 'granted' : 'denied',
+          ad_personalization: volba.marketing ? 'granted' : 'denied',
+          analytics_storage: volba.analytics ? 'granted' : 'denied'
+        });
+      }
+    }
+  } catch (e) { /* zakázané úložisko, platí predvolené zamietnutie */ }
+}());
+</script>
+<script src="/assets/js/config.js"></script>
+<script>
+(function () {
+  // Trieda js hovorí CSS, že skripty bežia. Bez nej sa obsah nikdy
+  // neskrýva, takže návštevník bez JavaScriptu vidí celú stránku.
+  document.documentElement.classList.add('js');
+
+  // O testovacom režime sa rozhoduje ešte pred prvým vykreslením, aby si
+  // CSS stihlo rezervovať miesto na žltý pruh a nevznikol posun obsahu.
+  if (!window.TACHE.config.formEndpoint) {
+    document.documentElement.classList.add('je-test');
+  }
+
+  var id = window.TACHE.config.gtmId;
+  if (!id) { return; }
+  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtm.js?id=' + id;
+  document.head.appendChild(s);
+}());
+</script>
+<!-- #meranie:end -->
+</head>
+<body>
+
+<!-- #hlavicka-kratka:start -->
+<a class="preskocit" href="#obsah">Preskočiť na obsah</a>
+<p id="oznamovac" class="len-pre-citacku" role="status" aria-live="polite"></p>
+<div class="hlavicka-pas na-fialovej">
+<div class="obsah">
+<header class="hlavicka">
+<a class="logo" href="/">Tache</a>
+</header>
+</div>
+</div>
+<!-- #hlavicka-kratka:end -->
+
+<main id="obsah" tabindex="-1" data-page="dakujem" data-skript="dakujem">
+
+<!-- Úvod ------------------------------------------------------------- -->
+<section class="na-fialovej hero" aria-labelledby="dakujem-h1">
+<div class="obsah">
+<h1 id="dakujem-h1" class="hero__nadpis">Ďakujem, objednávka prišla.</h1>
+
+<p class="hero__podtext hero__podtext--samostatny" data-ak-objednavka hidden>Číslo objednávky je <strong data-cislo></strong>. Súhrn a zálohovú faktúru s QR kódom som vám poslal na <strong data-email></strong>. Zálohu môžete uhradiť aj hneď tu.</p>
+
+<p class="hero__podtext hero__podtext--samostatny" data-ak-bez-objednavky>Súhrn a zálohovú faktúru s QR kódom som vám poslal e-mailom. Ak do 10 minút nepríde, pozrite sa do priečinka Spam alebo mi napíšte.</p>
+</div>
+</section>
+
+<!-- Čo bude nasledovať a platba --------------------------------------- -->
+<section aria-label="Čo bude nasledovať">
+<div class="obsah dakujem">
+
+<div class="dakujem__hlavne">
+<h2>Čo bude nasledovať</h2>
+
+<ol class="nasleduje">
+<li>
+<span class="nasleduje__cislo" aria-hidden="true">1</span>
+<div>
+<p class="nasleduje__teraz">Teraz</p>
+<h3>Uhradíte zálohu</h3>
+<p>Naskenujte QR kód v aplikácii banky, suma aj variabilný symbol sa vyplnia samé. Ten istý kód je aj v zálohovej faktúre v e-maile.</p>
+</div>
+</li>
+<li>
+<span class="nasleduje__cislo" aria-hidden="true">2</span>
+<div>
+<h3>Pošlem vám dotazník</h3>
+<p>Hneď ako uvidím zálohu na účte, príde vám e-mailom osobný odkaz. Vyplnenie trvá asi 30 minút a rozpracované odpovede sa vám uložia.</p>
+</div>
+</li>
+<li>
+<span class="nasleduje__cislo" aria-hidden="true">3</span>
+<div>
+<h3>Začnem pracovať</h3>
+<p>Od vyplnenia dotazníka a dodania podkladov plynie termín. Pri balíku Lead systém je web hotový do 7 dní.</p>
+</div>
+</li>
+<li>
+<span class="nasleduje__cislo" aria-hidden="true">4</span>
+<div>
+<h3>Návrh, web a spustenie</h3>
+<p>Najprv uvidíte návrh ako obrázok. Potom web naprogramujem, overím meranie a po doplatku ho spustím na vašej doméne.</p>
+</div>
+</li>
+</ol>
+
+<div class="pripravit">
+<h2>Čo si môžete pripraviť už teraz</h2>
+<ul class="zoznam-odrazky">
+<li>logo, ak ho máte,</li>
+<li>fotky priestoru, vašej práce a ľudí, ktorí ju robia,</li>
+<li>zoznam služieb s cenami,</li>
+<li>dva alebo tri weby, ktoré sa vám páčia.</li>
+</ul>
+<p class="poznamka">Čím skôr budú podklady pokope, tým skôr začne plynúť termín.</p>
+</div>
+</div>
+
+<aside class="dakujem__bok" aria-label="Súhrn a platba">
+
+<div class="karta platba" data-ak-objednavka hidden>
+<h2>Zaplatiť zálohu teraz</h2>
+
+<div class="platba__qr platba__qr--prazdny" data-qr role="img" aria-label="Miesto na QR kód PAY by square">QR kód PAY by square</div>
+
+<dl class="platba__udaje">
+<dt>Suma</dt><dd class="je-suma" data-suma></dd>
+<dt>IBAN</dt><dd data-iban></dd>
+<dt>Variabilný symbol</dt><dd data-vs></dd>
+<dt>Správa</dt><dd data-sprava></dd>
+</dl>
+
+<p data-zakladatelska>Zakladateľskú cenu vám držím <span data-config="proformaDueDays">10</span> dní. Ak zálohu dovtedy nestihnete, po 5 dňoch vám pošlem pripomienku.</p>
+<p>Po prijatí zálohy vám pošlem faktúru.</p>
+</div>
+
+<div class="suhrn-dakujem" data-ak-objednavka hidden>
+<h2>Vaša objednávka</h2>
+<dl>
+<div class="suhrn-dakujem__riadok">
+<dt>Balík <span data-balik></span></dt>
+<dd data-cena-balika></dd>
+</div>
+<div data-doplnky></div>
+<div class="suhrn-dakujem__spolu">
+<dt>Spolu</dt>
+<dd data-spolu></dd>
+</div>
+<div class="suhrn-dakujem__platba">
+<dt>Záloha 50 %</dt>
+<dd data-zaloha></dd>
+</div>
+<div class="suhrn-dakujem__platba">
+<dt>Doplatok pred spustením</dt>
+<dd data-doplatok></dd>
+</div>
+</dl>
+</div>
+
+<div class="nepriselMail">
+<h2>E-mail neprišiel?</h2>
+<p>Pozrite sa do priečinka Spam alebo Promo akcie. Ak tam nie je ani o 10 minút, napíšte mi na <a class="odkaz-v-texte" href="/" data-mailto data-config="email" data-track="email_click" data-track-link_location="dakujem">e-mail</a> a pošlem ho znova.</p>
+</div>
+
+</aside>
+</div>
+</section>
+
+</main>
+
+<!-- #paticka-kratka:start -->
+<footer class="pata pata--kratka">
+<div class="obsah">
+<div class="pata__obsah">
+<p data-zivnost>Daniel Tache<br>Nie som platca DPH.</p>
+<div class="pata__odkazy">
+<a href="/obchodne-podmienky">Obchodné podmienky</a>
+<a href="/ochrana-osobnych-udajov">Ochrana osobných údajov</a>
+<a href="/">Späť na úvod</a>
+<button class="pata__tlacidlo" type="button" data-cookies-nastavenie>Nastavenie cookies</button>
+</div>
+</div>
+</div>
+</footer>
+<!-- #paticka-kratka:end -->
+
+<!-- #skripty:start -->
+<!-- Poradie je dôležité: consent.js používa track.js, source.js používa
+     consent.js, forms.js používa source.js a nav.js používa obal.js aj
+     track.js. Atribút defer poradie zachová. config.js je už v bloku
+     merania v hlavičke. -->
+<script src="/assets/js/packages.js" defer></script>
+<script src="/assets/js/obal.js" defer></script>
+<script src="/assets/js/track.js" defer></script>
+<script src="/assets/js/consent.js" defer></script>
+<script src="/assets/js/source.js" defer></script>
+<script src="/assets/js/forms.js" defer></script>
+<script src="/assets/js/nav.js" defer></script>
+<!-- #skripty:end -->
+
+</body>
+</html>
