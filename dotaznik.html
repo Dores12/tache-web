@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<!-- #hlava:start -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preload" href="/assets/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-ext.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/zaklad.css">
+<link rel="stylesheet" href="/assets/css/prvky.css">
+<link rel="stylesheet" href="/assets/css/stranky.css">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tache">
+<meta property="og:locale" content="sk_SK">
+<meta property="og:image" content="https://tache.netlify.app/assets/img/og-tache.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- #hlava:end -->
+<title>Vstupný dotazník | Tache</title>
+<meta name="description" content="Vstupný dotazník k objednávke. Odkaz je osobný a chodí e-mailom.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://tache.netlify.app/dotaznik">
+<meta property="og:title" content="Vstupný dotazník">
+<meta property="og:description" content="Vstupný dotazník k objednávke.">
+<meta property="og:url" content="https://tache.netlify.app/dotaznik">
+<script>
+/* Či je v adrese token, sa musí vedieť pred prvým vykreslením. Inak by sa
+   dotazník objavil až po overení a obsah by sa posunul. */
+(function () {
+  try {
+    if (new URLSearchParams(window.location.search).get('t')) {
+      document.documentElement.classList.add('ma-token');
+    }
+  } catch (e) { /* bez URLSearchParams ostane hláška o neplatnom odkaze */ }
+}());
+</script>
+<!-- #meranie:start -->
+<!-- Consent Mode v2: predvolene je všetko zamietnuté a uložená voľba sa
+     aplikuje ešte pred načítaním GTM. Nič tu nepridávaj, meranie sa riadi
+     cez dataLayer (CLAUDE.md sekcia 7.2). -->
+<script>
+(function () {
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+    functionality_storage: 'granted',
+    security_storage: 'granted',
+    wait_for_update: 500
+  });
+  gtag('set', 'ads_data_redaction', true);
+  gtag('set', 'url_passthrough', true);
+
+  try {
+    var volba = JSON.parse(window.localStorage.getItem('tache_consent_v1') || 'null');
+    if (volba) {
+      var platneDo = new Date(volba.date);
+      platneDo.setMonth(platneDo.getMonth() + 12);
+      if (platneDo >= new Date()) {
+        gtag('consent', 'update', {
+          ad_storage: volba.marketing ? 'granted' : 'denied',
+          ad_user_data: volba.marketing ? 'granted' : 'denied',
+          ad_personalization: volba.marketing ? 'granted' : 'denied',
+          analytics_storage: volba.analytics ? 'granted' : 'denied'
+        });
+      }
+    }
+  } catch (e) { /* zakázané úložisko, platí predvolené zamietnutie */ }
+}());
+</script>
+<script src="/assets/js/config.js"></script>
+<script>
+(function () {
+  // Trieda js hovorí CSS, že skripty bežia. Bez nej sa obsah nikdy
+  // neskrýva, takže návštevník bez JavaScriptu vidí celú stránku.
+  document.documentElement.classList.add('js');
+
+  // O testovacom režime sa rozhoduje ešte pred prvým vykreslením, aby si
+  // CSS stihlo rezervovať miesto na žltý pruh a nevznikol posun obsahu.
+  if (!window.TACHE.config.formEndpoint) {
+    document.documentElement.classList.add('je-test');
+  }
+
+  var id = window.TACHE.config.gtmId;
+  if (!id) { return; }
+  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtm.js?id=' + id;
+  document.head.appendChild(s);
+}());
+</script>
+<!-- #meranie:end -->
+</head>
+<body>
+
+<!-- #hlavicka-kratka:start -->
+<a class="preskocit" href="#obsah">Preskočiť na obsah</a>
+<p id="oznamovac" class="len-pre-citacku" role="status" aria-live="polite"></p>
+<div class="hlavicka-pas na-fialovej">
+<div class="obsah">
+<header class="hlavicka">
+<a class="logo" href="/">Tache</a>
+</header>
+</div>
+</div>
+<!-- #hlavicka-kratka:end -->
+
+<main id="obsah" tabindex="-1" data-page="dotaznik" data-skript="dotaznik">
+
+<div class="dotaznik-pas">
+<div class="obsah">
+<p class="dotaznik-pas__objednavka" data-ak-token>Dotazník k objednávke <strong data-cislo></strong></p>
+</div>
+</div>
+
+<!-- Bez platného tokenu sa dotazník neotvorí. -->
+<section class="obsah dotaznik-chyba" data-ak-bez-tokenu>
+<h1>Tento odkaz na dotazník neplatí.</h1>
+<p>Odkaz je osobný a chodí e-mailom po pripísaní zálohy. Skúste ho otvoriť priamo z e-mailu, alebo mi napíšte na <a class="odkaz-v-texte" href="/" data-mailto data-config="email">e-mail</a> a pošlem vám nový.</p>
+</section>
+
+<form class="obsah dotaznik" id="formular-dotaznik" data-ak-token novalidate>
+
+<nav class="kroky-zoznam" aria-label="Kroky dotazníka" data-otvorene="nie">
+<button class="kroky-zoznam__prepinac" type="button" aria-expanded="false" aria-controls="zoznam-krokov"><span data-nazov-kroku>Kroky dotazníka</span><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6l4 4 4-4"></path></svg></button>
+<div class="kroky-zoznam__obsah" id="zoznam-krokov">
+<ol>
+<li data-krok-polozka="1" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>1</span></span><button type="button" data-skok="1">Firma</button></li>
+<li data-krok-polozka="2" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>2</span></span><button type="button" data-skok="2">Ponuka</button></li>
+<li data-krok-polozka="3" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>3</span></span><button type="button" data-skok="3">Cieľ webu</button></li>
+<li data-krok-polozka="4" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>4</span></span><button type="button" data-skok="4">Zákazník</button></li>
+<li data-krok-polozka="5" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>5</span></span><button type="button" data-skok="5">Podklady</button></li>
+<li data-krok-polozka="6" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>6</span></span><button type="button" data-skok="6">Vzhľad</button></li>
+<li data-krok-polozka="7" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>7</span></span><button type="button" data-skok="7">Technika a účty</button></li>
+<li data-krok-polozka="8" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>8</span></span><button type="button" data-skok="8">Reklama</button></li>
+<li data-krok-polozka="9" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>9</span></span><button type="button" data-skok="9">Právne</button></li>
+</ol>
+<p class="kroky-zoznam__poznamka">Odpovede sa ukladajú na tomto zariadení. Môžete prestať a vrátiť sa cez rovnaký odkaz z e-mailu.</p>
+</div>
+</nav>
+
+<div class="dotaznik__krok">
+<p class="dotaznik__poradie">Krok <span data-cislo-kroku>1</span> z <span data-pocet-krokov>9</span></p>
+<div class="pruh-postupu" aria-hidden="true"><div class="pruh-postupu__vypln" data-postup></div></div>
+
+<!-- Prvý krok je viditeľný hneď. Keby ho odkrýval až skript,
+     spodná lišta s tlačidlami by sa posunula a pokazila CLS. -->
+<section data-krok="1" data-kluc="firma">
+<h1 tabindex="-1">Firma</h1>
+<p class="dotaznik__uvod">Začneme tým, čo o firme potrebuje vedieť každý návštevník webu.</p>
+<div class="skupina">
+<div class="skupina__polia">
+<label class="pole">Názov firmy
+<input type="text" name="firma_nazov">
+</label>
+<label class="pole">IČO
+<input type="text" name="firma_ico">
+</label>
+<label class="pole">Odvetvie
+<input type="text" name="firma_odvetvie">
+<span class="napoveda">Napríklad kaderníctvo, fyzioterapia, pokrývačstvo.</span>
+</label>
+<label class="pole">Adresa prevádzky
+<input type="text" name="firma_adresa">
+</label>
+<label class="pole">Telefón firmy pre web
+<input type="tel" name="firma_telefon">
+<span class="napoveda">Číslo vašej firmy, ktoré bude na vašom webe. Nie je to kontakt na mňa.</span>
+</label>
+<label class="pole">E-mail firmy
+<input type="email" name="firma_email">
+</label>
+<label class="pole">Otváracie hodiny
+<textarea name="firma_hodiny" rows="3"></textarea>
+</label>
+</div>
+</div>
+</section>
+
+<section data-krok="2" data-kluc="ponuka" hidden>
+<h1 tabindex="-1">Ponuka</h1>
+<p class="dotaznik__uvod">Čo predávate a za koľko. Z toho poskladám ponuku na webe.</p>
+<div class="skupina">
+<div class="skupina__polia">
+<label class="pole">Služby a ceny
+<textarea name="ponuka_sluzby" rows="3"></textarea>
+<span class="napoveda">Stačí zoznam, napríklad: Strih 25 €, Farbenie od 60 €.</span>
+</label>
+<label class="pole">Čo predávate najviac
+<textarea name="ponuka_najviac" rows="3"></textarea>
+</label>
+<label class="pole">Čím sa líšite od ostatných
+<textarea name="ponuka_odlisnost" rows="3"></textarea>
+<span class="napoveda">Čo viete vy a konkurencia nie, alebo čo robíte inak.</span>
+</label>
+<label class="pole">Aktuálna akcia
+<input type="text" name="ponuka_akcia">
+<span class="napoveda">Nepovinné. Ak žiadnu nemáte, nechajte prázdne.</span>
+</label>
+</div>
+</div>
+</section>
+
+<section data-krok="3" data-kluc="ciel" hidden>
+<h1 tabindex="-1">Cieľ webu</h1>
+<p class="dotaznik__uvod">Čo má človek na webe urobiť. Podľa toho postavím celú stránku.</p>
+<div class="skupina">
+<div class="skupina__polia">
+<label class="pole">Čo má návštevník spraviť
+<select name="ciel_akcia"><option value="">Vyberte</option><option>Vyplniť formulár</option><option>Zavolať do firmy</option><option>Rezervovať termín online</option><option>Napísať e-mail</option></select>
+</label>
+<label class="pole">Kto dopyt spracuje a ako rýchlo
+<textarea name="ciel_kto" rows="3"></textarea>
+<span class="napoveda">Komu príde e-mail a za ako dlho sa človeku ozvete.</span>
+</label>
+</div>
+</div>
+</section>
+
+<section data-krok="4" data-kluc="zakaznik" hidden>
+<h1 tabindex="-1">Zákazník</h1>
+<p class="dotaznik__uvod">Komu web hovorí. Texty píšem pre konkrétneho človeka, nie pre každého.</p>
+<div class="skupina">
+<div class="skupina__polia">
+<label class="pole">Kto u vás kupuje
+<textarea name="zakaznik_kto" rows="3"></textarea>
+</label>
+<label class="pole">Tri najčastejšie obavy alebo otázky
+<textarea name="zakaznik_obavy" rows="3"></textarea>
+<span class="napoveda">Čo sa vás ľudia pýtajú, kým sa rozhodnú.</span>
+</label>
+<label class="pole">Prečo kupujú práve u vás
+<textarea name="zakaznik_preco" rows="3"></textarea>
+</label>
+<label class="pole">Dvaja až traja konkurenti
+<textarea name="zakaznik_konkurenti" rows="3"></textarea>
+<span class="napoveda">Stačia odkazy na ich weby.</span>
+</label>
+</div>
+</div>
+</section>
+
+<section data-krok="5" data-kluc="podklady" hidden>
+<h1 tabindex="-1">Podklady</h1>
+<p class="dotaznik__uvod">Čo už máte. Čím viac toho je, tým menej vecí budeme dopĺňať neskôr.</p>
+<div class="skupina">
+<div class="skupina__polia">
+<label class="pole">Existujúce texty
+<textarea name="podklady_texty" rows="3"></textarea>
+<span class="napoveda">Odkaz na dokument alebo text rovno sem.</span>
+</label>
+<label class="pole">Odkaz na priečinok s fotkami a logom
+<input type="url" name="podklady_fotky">
+<span class="napoveda">Google Disk, Dropbox alebo čokoľvek, kde sa to dá stiahnuť.</span>
+</label>
+<label class="pole">Firemné farby
+<input type="text" name="podklady_farby">
+<span class="napoveda">Ak ich máte, napríklad #1E0B3A.</span>
+</label>
+<label class="pole">Recenzie s menom a súhlasom
+<textarea name="podklady_recenzie" rows="3"></textarea>
+<span class="napoveda">Na web dám len tie, pri ktorých mi človek dovolí uviesť meno.</span>
+</label>
+</div>
+</div>
+</section>
+
+<section data-krok="6" data-kluc="vzhlad" hidden>
+<h1 tabindex="-1">Vzhľad</h1>
+<p class="dotaznik__uvod">Podľa týchto odpovedí pripravím návrh. Odborné pojmy nepotrebujete, stačí napísať, čo sa vám páči.</p>
+<div class="skupina">
+<div class="skupina__polia">
+<label class="pole">Web 1
+<input type="url" name="vzhlad_web1">
+</label>
+<label class="pole">Web 2
+<input type="url" name="vzhlad_web2">
+</label>
+<label class="pole">Web 3
+<input type="url" name="vzhlad_web3">
+</label>
+<label class="pole">Čo sa vám na nich páči
+<textarea name="vzhlad_preco" rows="3"></textarea>
+<span class="napoveda">Nepovinné.</span>
+</label>
+</div>
+</div>
+<fieldset class="skupina">
+<legend>Ako na webe oslovujeme zákazníkov</legend>
+<div class="volby">
+<label class="volba" data-volba>
+<input type="radio" name="vzhlad_oslovenie" value="Vykanie">
+<span><span class="volba__nazov">Vykanie</span><span class="volba__priklad">Objednajte sa na termín, ktorý vám vyhovuje.</span></span>
+</label>
+<label class="volba" data-volba>
+<input type="radio" name="vzhlad_oslovenie" value="Tykanie">
+<span><span class="volba__nazov">Tykanie</span><span class="volba__priklad">Objednaj sa na termín, ktorý ti vyhovuje.</span></span>
+</label>
+</div>
+</fieldset>
+<fieldset class="skupina">
+<legend>Aká má byť nálada webu</legend>
+<p class="skupina__popis">Vyberte jednu. Farby sú len ilustračné, na webe použijem vaše.</p>
+<div class="volby volby--nalada">
+<label class="volba volba--nalada volba--pokojna" data-volba>
+<span class="nalada__pruh" aria-hidden="true"><span></span><span></span><span></span></span>
+<span class="nalada__hlavicka">
+<input type="radio" name="vzhlad_nalada" value="Pokojná">
+<span class="volba__nazov">Pokojná</span>
+</span>
+<span class="volba__priklad">Veľa vzduchu, tlmené farby, nič nekričí. Hodí sa na kliniky a prémiové služby.</span>
+</label>
+<label class="volba volba--nalada volba--priatelska" data-volba>
+<span class="nalada__pruh" aria-hidden="true"><span></span><span></span><span></span></span>
+<span class="nalada__hlavicka">
+<input type="radio" name="vzhlad_nalada" value="Priateľská">
+<span class="volba__nazov">Priateľská</span>
+</span>
+<span class="volba__priklad">Teplé farby, mäkké tvary, osobný tón. Hodí sa na salóny a služby pre ľudí z okolia.</span>
+</label>
+<label class="volba volba--nalada volba--vyrazna" data-volba>
+<span class="nalada__pruh" aria-hidden="true"><span></span><span></span><span></span></span>
+<span class="nalada__hlavicka">
+<input type="radio" name="vzhlad_nalada" value="Výrazná">
+<span class="volba__nazov">Výrazná</span>
+</span>
+<span class="volba__priklad">Kontrast, veľké nadpisy, jasná farba. Hodí sa na fitness a remeselníkov, ktorí chcú vyniknúť.</span>
+</label>
+</div>
+</fieldset>
+</section>
+
+<section data-krok="7" data-kluc="technika" hidden>
+<h1 tabindex="-1">Technika a účty</h1>
+<p class="dotaznik__uvod">Kam web pôjde a čo už existuje. Toto potrebujem na meranie a spustenie.</p>
+<div class="skupina">
+<div class="skupina__polia">
+<label class="pole">Doména a kde je zaregistrovaná
+<input type="text" name="technika_domena">
+<span class="napoveda">Napríklad mojasluzba.sk, registrovaná vo Websupporte.</span>
+</label>
+<label class="pole">Existujúci web
+<input type="url" name="technika_web">
+<span class="napoveda">Ak nejaký máte.</span>
+</label>
+<label class="pole">E-mail na doméne
+<input type="email" name="technika_email">
+</label>
+<label class="pole">Existujúce účty GA4, Tag Manager, Meta a Google Ads
+<textarea name="technika_ucty" rows="3"></textarea>
+<span class="napoveda">Ak neviete, napíšte neviem. Zistím to a prípadne založím nové.</span>
+</label>
+</div>
+</div>
+</section>
+
+<section data-krok="8" data-kluc="reklama" hidden>
+<h1 tabindex="-1">Reklama</h1>
+<p class="dotaznik__uvod">Tento krok vypĺňate, lebo máte v objednávke aj reklamu.</p>
+<div class="skupina">
+<div class="skupina__polia">
+<label class="pole">Platforma
+<select name="reklama_platforma"><option value="">Vyberte</option><option>Meta</option><option>Google</option><option>Meta aj Google</option><option>Ešte neviem</option></select>
+</label>
+<label class="pole">Mesačný rozpočet na reklamu
+<input type="text" name="reklama_rozpocet">
+<span class="napoveda">Odporúčam od 10 € denne, teda zhruba 300 € mesačne.</span>
+</label>
+<label class="pole">Oblasť, kde sa má reklama zobrazovať
+<input type="text" name="reklama_oblast">
+<span class="napoveda">Mesto, okres alebo okruh v kilometroch.</span>
+</label>
+<label class="pole">Ponuka do reklamy
+<textarea name="reklama_ponuka" rows="3"></textarea>
+<span class="napoveda">S čím chcete ľudí osloviť. Napríklad zľava pre nových zákazníkov.</span>
+</label>
+<label class="pole">Doterajšie skúsenosti s reklamou
+<textarea name="reklama_skusenosti" rows="3"></textarea>
+</label>
+</div>
+</div>
+</section>
+
+<section data-krok="9" data-kluc="pravne" hidden>
+<h1 tabindex="-1">Právne</h1>
+<p class="dotaznik__uvod">Posledný krok. Týka sa textov o ochrane údajov na vašom webe.</p>
+<div class="skupina">
+<div class="skupina__polia">
+<label class="pole">Kto je prevádzkovateľ osobných údajov
+<input type="text" name="pravne_prevadzkovatel">
+<span class="napoveda">Zvyčajne firma, ktorá dopyty dostáva.</span>
+</label>
+<label class="pole">Existujúce texty o ochrane údajov
+<textarea name="pravne_texty" rows="3"></textarea>
+<span class="napoveda">Ak nejaké máte, napríklad zo starého webu.</span>
+</label>
+</div>
+</div>
+</section>
+
+<div class="pole--past" aria-hidden="true">
+<label>Nevypĺňajte<input type="text" name="t_hp" tabindex="-1" autocomplete="off"></label>
+</div>
+<input type="hidden" name="token" data-token>
+
+<p class="formular__suhrn" data-suhrn role="status" aria-live="polite"></p>
+<div class="dotaznik__spodok">
+<button class="dotaznik__spat" type="button" data-spat hidden>Späť</button>
+<p class="dotaznik__ulozene" data-ulozene role="status" aria-live="polite"></p>
+<button class="tlacidlo tlacidlo--hlavne tlacidlo--vyzva" type="button" data-dalej>Uložiť a pokračovať</button>
+<button class="tlacidlo tlacidlo--hlavne tlacidlo--vyzva" type="submit" data-odoslat hidden>Odoslať dotazník</button>
+</div>
+
+<noscript>
+<p class="formular__pod-tlacidlom">Dotazník potrebuje zapnutý JavaScript. Napíšte mi na <a href="/" data-mailto data-config="email">e-mail</a> a pošlem vám otázky e-mailom.</p>
+</noscript>
+</div>
+</form>
+
+<div class="obsah formular__hotovo" data-hotovo="questionnaire" hidden>
+<h2 tabindex="-1">Dotazník mi prišiel, ďakujem.</h2>
+<p>Teraz si všetko prejdem a pustím sa do návrhu. Ak mi niečo nebude jasné, napíšem vám. Od tejto chvíle plynie termín dodania.</p>
+</div>
+
+</main>
+
+<!-- #paticka-kratka:start -->
+<footer class="pata pata--kratka">
+<div class="obsah">
+<div class="pata__obsah">
+<p data-zivnost>Daniel Tache<br>Nie som platca DPH.</p>
+<div class="pata__odkazy">
+<a href="/obchodne-podmienky">Obchodné podmienky</a>
+<a href="/ochrana-osobnych-udajov">Ochrana osobných údajov</a>
+<a href="/">Späť na úvod</a>
+<button class="pata__tlacidlo" type="button" data-cookies-nastavenie>Nastavenie cookies</button>
+</div>
+</div>
+</div>
+</footer>
+<!-- #paticka-kratka:end -->
+
+<!-- #skripty:start -->
+<!-- Poradie je dôležité: consent.js používa track.js, source.js používa
+     consent.js, forms.js používa source.js a nav.js používa obal.js aj
+     track.js. Atribút defer poradie zachová. config.js je už v bloku
+     merania v hlavičke. -->
+<script src="/assets/js/packages.js" defer></script>
+<script src="/assets/js/obal.js" defer></script>
+<script src="/assets/js/track.js" defer></script>
+<script src="/assets/js/consent.js" defer></script>
+<script src="/assets/js/source.js" defer></script>
+<script src="/assets/js/forms.js" defer></script>
+<script src="/assets/js/nav.js" defer></script>
+<!-- #skripty:end -->
+
+</body>
+</html>

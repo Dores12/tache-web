@@ -2294,3 +2294,430 @@
   flex-wrap: wrap;
   gap: 12px 28px;
 }
+
+/* ==========================================================================
+   DOTAZNÍK
+   Podľa design/Dotaznik-krok6.dc.html. Zoznam krokov vľavo, na mobile
+   zbalený nad formulárom, pruh postupu a dve tlačidlá dole.
+   ========================================================================== */
+
+.dotaznik-pas {
+  background: var(--fialova);
+  color: var(--marhulova);
+}
+
+.dotaznik-pas .obsah {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 32px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.dotaznik-pas__objednavka {
+  font-size: var(--text-maly);
+  color: var(--na-fialovej);
+}
+
+.dotaznik-pas__objednavka strong {
+  color: var(--marhulova);
+  font-weight: var(--vaha-polotucna);
+}
+
+.dotaznik {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 48px 80px;
+  padding: 64px 0 96px;
+}
+
+/* --- Zoznam krokov ------------------------------------------------------ */
+.kroky-zoznam {
+  flex: 1 1 240px;
+  max-width: 280px;
+}
+
+.kroky-zoznam ol {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 16px;
+}
+
+.kroky-zoznam li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--roh-tlacidlo);
+  color: var(--text-tlmeny-2);
+}
+
+.kroky-zoznam li[data-stav='hotovy'] {
+  color: var(--atrament);
+}
+
+.kroky-zoznam li[data-stav='aktualny'] {
+  background: var(--fialova-svetla);
+  color: var(--atrament);
+  font-weight: var(--vaha-polotucna);
+}
+
+.kroky-zoznam button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.kroky-zoznam li[data-stav='dalsi'] button {
+  cursor: default;
+}
+
+.krok-znak {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  border: 1px solid var(--okraj-pola);
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+li[data-stav='aktualny'] .krok-znak {
+  border: 2px solid var(--fialova);
+  color: var(--fialova);
+}
+
+li[data-stav='hotovy'] .krok-znak {
+  border: 0;
+  background: var(--fialova);
+  color: var(--biela);
+}
+
+.krok-znak svg {
+  display: none;
+}
+
+li[data-stav='hotovy'] .krok-znak svg {
+  display: block;
+}
+
+li[data-stav='hotovy'] .krok-znak span {
+  display: none;
+}
+
+.kroky-zoznam__poznamka {
+  margin-top: 24px;
+  padding: 0 12px;
+  font-size: var(--text-drobny);
+  line-height: 1.5;
+  color: var(--text-tlmeny);
+}
+
+/* Na mobile je zoznam zbalený nad formulárom. */
+.kroky-zoznam__prepinac {
+  display: none;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: var(--vyska-tlacidlo);
+  padding: 10px 14px;
+  border: 1px solid var(--okraj);
+  border-radius: var(--roh-tlacidlo);
+  background: var(--biela);
+  font-size: 16px;
+  font-weight: var(--vaha-polotucna);
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .dotaznik {
+    flex-direction: column;
+    gap: 24px;
+    padding: 32px 0 72px;
+  }
+
+  .kroky-zoznam {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: none;
+    order: -1;
+  }
+
+  .kroky-zoznam__prepinac {
+    display: flex;
+  }
+
+  .kroky-zoznam__obsah {
+    display: none;
+    margin-top: 12px;
+  }
+
+  .kroky-zoznam[data-otvorene='ano'] .kroky-zoznam__obsah {
+    display: block;
+  }
+}
+
+/* --- Formulár kroku ------------------------------------------------------ */
+.dotaznik__krok {
+  flex: 999 1 560px;
+  min-width: 0;
+  max-width: 820px;
+}
+
+.dotaznik__poradie {
+  font-size: var(--text-maly);
+  font-weight: var(--vaha-polotucna);
+  color: var(--fialova);
+}
+
+.pruh-postupu {
+  margin-top: 12px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--fialova-svetla);
+}
+
+.pruh-postupu__vypln {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--fialova);
+  transition: width var(--cas-prechod) var(--krivka);
+}
+
+.dotaznik__krok h1 {
+  margin-top: 32px;
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.dotaznik__uvod {
+  margin-top: 16px;
+  max-width: 620px;
+  font-size: var(--text-velky);
+  line-height: 1.55;
+  color: var(--text-tlmeny);
+}
+
+.skupina {
+  margin-top: 48px;
+  padding: 0;
+  border: 0;
+}
+
+.skupina legend {
+  padding: 0;
+  font-size: 22px;
+  font-weight: var(--vaha-tucna);
+}
+
+.skupina__popis {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-tlmeny);
+}
+
+.skupina__polia {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skupina + .skupina {
+  margin-top: 56px;
+}
+
+/* --- Voľby s kartami (oslovenie, nálada) ---------------------------------- */
+.volby {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.volba {
+  flex: 1 1 260px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 18px 20px;
+  border: 1px solid var(--okraj);
+  border-radius: var(--roh-karta);
+  background: var(--biela);
+  cursor: pointer;
+}
+
+.volba[data-vybrane='ano'] {
+  padding: 17px 19px;
+  border: 2px solid var(--fialova);
+  background: var(--marhulova-svetla);
+}
+
+.volba:focus-within {
+  outline: 3px solid var(--fialova);
+  outline-offset: 3px;
+}
+
+.volba input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+  accent-color: var(--fialova);
+}
+
+.volba__nazov {
+  display: block;
+  font-size: var(--text);
+  font-weight: var(--vaha-polotucna);
+}
+
+.volba__priklad {
+  display: block;
+  margin-top: 4px;
+  font-size: var(--text-maly);
+  color: var(--text-tlmeny);
+}
+
+/* Nálada má navyše ukážku farieb. Sú len ilustračné. */
+.volby--nalada {
+  gap: 16px;
+}
+
+.volba--nalada {
+  flex: 1 1 220px;
+  display: block;
+  padding: 16px;
+}
+
+.volba--nalada[data-vybrane='ano'] {
+  padding: 15px;
+}
+
+.nalada__pruh {
+  display: flex;
+  height: 72px;
+  border-radius: var(--roh-tlacidlo);
+  overflow: hidden;
+}
+
+.nalada__pruh span:nth-child(1) { flex: 3; }
+.nalada__pruh span:nth-child(2) { flex: 2; }
+.nalada__pruh span:nth-child(3) { flex: 1; }
+
+.volba--pokojna .nalada__pruh span:nth-child(1) { background: #F4EFE8; }
+.volba--pokojna .nalada__pruh span:nth-child(2) { background: #2F3B33; }
+.volba--pokojna .nalada__pruh span:nth-child(3) { background: #B9A27C; }
+
+.volba--priatelska .nalada__pruh span:nth-child(1) { background: #FFE3EC; }
+.volba--priatelska .nalada__pruh span:nth-child(2) { background: #FF7A59; }
+.volba--priatelska .nalada__pruh span:nth-child(3) { background: #2B2D42; }
+
+.volba--vyrazna .nalada__pruh span:nth-child(1) { background: #141414; }
+.volba--vyrazna .nalada__pruh span:nth-child(2) { background: #F2F2F2; }
+.volba--vyrazna .nalada__pruh span:nth-child(3) { background: #3D5AFE; }
+
+.nalada__hlavicka {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.nalada__hlavicka .volba__nazov {
+  font-size: 18px;
+  font-weight: var(--vaha-tucna);
+}
+
+.volba--nalada .volba__priklad {
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* --- Spodná lišta s tlačidlami -------------------------------------------- */
+.dotaznik__spodok {
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 1px solid var(--okraj);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dotaznik__spat {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  color: var(--atrament);
+  font-size: 16px;
+  font-weight: var(--vaha-polotucna);
+  text-decoration: underline;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.dotaznik__ulozene {
+  font-size: var(--text-drobny);
+  color: var(--text-tlmeny);
+}
+
+@media (max-width: 860px) {
+  .dotaznik__spodok {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .dotaznik__spodok .tlacidlo {
+    width: 100%;
+  }
+
+  .dotaznik__spat {
+    justify-content: center;
+  }
+}
+
+/* --- Čo sa zobrazí: dotazník alebo hláška ---------------------------------
+   Rozhoduje trieda ma-token na <html>, ktorú nasadzuje hlavička stránky
+   ešte pred vykreslením. Keby to robil až skript po overení tokenu,
+   obsah by sa posunul a pokazilo by to CLS.
+   -------------------------------------------------------------------- */
+html:not(.ma-token) [data-ak-token] {
+  display: none;
+}
+
+html.ma-token [data-ak-bez-tokenu] {
+  display: none;
+}
+
+/* --- Stránka bez platného odkazu ------------------------------------------ */
+.dotaznik-chyba {
+  padding: 96px 0 var(--padding-sekcia);
+  max-width: 640px;
+}
+
+.dotaznik-chyba p {
+  margin-top: 24px;
+  font-size: var(--text-velky);
+  line-height: 1.6;
+  color: var(--text-tlmeny);
+}
