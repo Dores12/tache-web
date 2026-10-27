@@ -361,6 +361,43 @@ skus('QR obrázok je GIF', () => {
   return obrazok.bajty.length + ' B';
 });
 
+console.log('\n== Dotazník: polia na stránke a v generátore zadania ==');
+
+skus('každé pole v dotaznik.html pozná aj Dotaznik.gs', () => {
+  const html = readFileSync(KOREN + '/dotaznik.html', 'utf8');
+
+  /* Polia zo stránky. Honeypot a token nepatria k otázkam. */
+  const MIMO = ['t_hp', 'token'];
+  const naStranke = new Set();
+  for (const m of html.matchAll(/name="([a-z0-9]+_[a-z0-9]+)"/g)) {
+    if (MIMO.indexOf(m[1]) === -1) { naStranke.add(m[1]); }
+  }
+  nechNastane(naStranke.size > 0, 'na stránke sa nenašlo žiadne pole');
+
+  /* Polia, ktoré očakáva generátor zadania. */
+  const vGeneratore = new Set();
+  KROKY_DOTAZNIKA.forEach((krok) => {
+    krok.otazky.forEach((otazka) => vGeneratore.add(krok.pole + '_' + otazka[0]));
+  });
+
+  const navyse = [...naStranke].filter((p) => !vGeneratore.has(p));
+  const chybaju = [...vGeneratore].filter((p) => !naStranke.has(p));
+
+  nechNastane(navyse.length === 0, 'stránka má polia, ktoré generátor nepozná: ' + navyse.join(', '));
+  nechNastane(chybaju.length === 0, 'generátor čaká polia, ktoré na stránke nie sú: ' + chybaju.join(', '));
+
+  return naStranke.size + ' polí v ' + KROKY_DOTAZNIKA.length + ' krokoch';
+});
+
+skus('poradie krokov na stránke sedí s generátorom', () => {
+  const html = readFileSync(KOREN + '/dotaznik.html', 'utf8');
+  const naStranke = [...html.matchAll(/data-krok="\d+" data-kluc="([a-z]+)"/g)].map((m) => m[1]);
+  const vGeneratore = KROKY_DOTAZNIKA.map((k) => k.pole);
+  nechNastane(naStranke.join(',') === vGeneratore.join(','),
+    'stránka: ' + naStranke.join(',') + ' | generátor: ' + vGeneratore.join(','));
+  return vGeneratore.join(', ');
+});
+
 console.log('\n== Spúšťače ==');
 
 skus('po 10 dňoch sa objednávka uzavrie a miesto uvoľní', () => {

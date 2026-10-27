@@ -9,7 +9,16 @@ kontakt, ktorý nezdvihne telefón
 # počet zákazníkov výslovne nezaručuje. Znenie je z návrhu.
 Počet zákazníkov vopred nezaručujem
 
-# Otázka v dotazníku. ZADANIE sekcia 4 to zvlášť zdôrazňuje: je to telefón
-# KLIENTOVEJ firmy pre jeho web, nie kontakt na Daniela. Na webe Tache
-# žiadne telefónne číslo nie je.
-'Telefón firmy pre web'
+# Otázky v dotazníku. ZADANIE sekcia 4 to zvlášť zdôrazňuje: ide o telefón
+# KLIENTOVEJ firmy pre jeho web, nie o kontakt na Daniela. Na webe Tache
+# žiadne telefónne číslo nie je a telefonát sa nikde neponúka.
+Telefón firmy pre web
+name="firma_telefon"
+
+# Voľba v otázke, čo má návštevník spraviť na KLIENTOVOM webe. Niektorí
+# klienti chcú, aby im ľudia zavolali. O komunikácii s Danielom to nehovorí.
+Zavolať do firmy
+
+# Ukážka tykania v otázke, ako má klient na SVOJOM webe oslovovať zákazníkov.
+# Znenie je z návrhu. Web Tache sám vyká, toto je len príklad pre klienta.
+<span class="volba__nazov">Tykanie</span>
