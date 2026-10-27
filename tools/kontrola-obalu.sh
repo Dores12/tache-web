@@ -16,7 +16,16 @@
 set -uo pipefail
 cd "$(dirname "$0")/.."
 
-BLOKY=(hlava meranie hlavicka paticka skripty)
+# Bloky, ktoré musia byť v každom súbore rovnaké.
+BLOKY=(hlava meranie hlavicka hlavicka-kratka paticka paticka-kratka skripty)
+
+# Stránky /dakujem a /dotaznik majú podľa zadania v hlavičke len logo
+# a skrátenú pätičku. Z každej dvojice musí mať stránka práve jeden blok.
+DVOJICE=("hlavicka hlavicka-kratka" "paticka paticka-kratka")
+
+# Bloky, ktoré musí mať každá stránka.
+POVINNE=(hlava meranie skripty)
+
 chyby=0
 
 vyber_blok() {
@@ -67,13 +76,27 @@ for subor in $(find . -name '*.html' -not -path './design/*' \
   -not -path './.git/*' -not -path './tools/*' -not -path './docs/*' \
   | sort); do
   chyba_v_subore=""
-  for blok in "${BLOKY[@]}"; do
+
+  for blok in "${POVINNE[@]}"; do
     if ! grep -q "<!-- #$blok:start -->" "$subor"; then
       chyba_v_subore="$chyba_v_subore $blok"
     fi
   done
+
+  for dvojica in "${DVOJICE[@]}"; do
+    pocet=0
+    for blok in $dvojica; do
+      if grep -q "<!-- #$blok:start -->" "$subor"; then
+        pocet=$((pocet + 1))
+      fi
+    done
+    if [ "$pocet" -ne 1 ]; then
+      chyba_v_subore="$chyba_v_subore (z dvojice $dvojica má $pocet)"
+    fi
+  done
+
   if [ -n "$chyba_v_subore" ]; then
-    echo "  $subor chýba:$chyba_v_subore"
+    echo "  $subor nesedí:$chyba_v_subore"
     chyby=$((chyby + 1))
   fi
 done
