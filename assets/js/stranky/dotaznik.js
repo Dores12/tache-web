@@ -247,7 +247,7 @@ window.TACHE.pages = window.TACHE.pages || {};
         var hotovo = document.querySelector('[data-hotovo="questionnaire"]');
         if (hotovo) {
           hotovo.hidden = false;
-          var nadpis = hotovo.querySelector('h2');
+          var nadpis = hotovo.querySelector('h1');
           if (nadpis) { nadpis.focus(); }
         }
         window.scrollTo(0, 0);

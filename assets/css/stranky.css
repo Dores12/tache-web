@@ -844,6 +844,9 @@
 
 .napoveda {
   font-size: var(--text-maly);
+  /* Popisok poľa je polotučný, nápoveda musí byť zreteľne ľahšia,
+     inak obe splynú do jedného bloku. */
+  font-weight: var(--vaha-normal);
   line-height: 1.5;
   color: var(--text-tlmeny);
 }
@@ -2709,6 +2712,29 @@ html.ma-token [data-ak-bez-tokenu] {
   display: none;
 }
 
+/* --- Potvrdenie po odoslaní -----------------------------------------------
+   Je to celá stránka, nie prúžok. Pätička sadne na spodok vďaka
+   rozloženiu tela v zaklad.css.
+   -------------------------------------------------------------------- */
+.hotovo-stranka {
+  padding: 96px 0 var(--padding-sekcia);
+}
+
+.hotovo-stranka h1 {
+  max-width: 900px;
+  font-size: var(--h1-dakujem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.hotovo-stranka__text {
+  margin-top: 24px;
+  max-width: 640px;
+  font-size: var(--text-velky);
+  line-height: 1.6;
+  color: var(--text-tlmeny);
+}
+
 /* --- Stránka bez platného odkazu ------------------------------------------ */
 .dotaznik-chyba {
   padding: 96px 0 var(--padding-sekcia);
@@ -2720,4 +2746,10 @@ html.ma-token [data-ak-bez-tokenu] {
   font-size: var(--text-velky);
   line-height: 1.6;
   color: var(--text-tlmeny);
+}
+
+/* Popisok a nápoveda nad poľom tvoria jednu hlavičku, preto medzi nimi
+   nemá byť rovnaká medzera ako pred samotným poľom. */
+.pole__popisok + .napoveda {
+  margin-top: -4px;
 }

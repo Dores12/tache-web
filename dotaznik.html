@@ -144,6 +144,7 @@
 <li data-krok-polozka="8" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>8</span></span><button type="button" data-skok="8">Reklama</button></li>
 <li data-krok-polozka="9" data-stav="dalsi"><span class="krok-znak" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5l2.5 2.5L11 4.5"></path></svg><span>9</span></span><button type="button" data-skok="9">Právne</button></li>
 </ol>
+<p class="kroky-zoznam__poznamka">Nič tu nie je povinné. Čo neviete, pokojne preskočte a opýtam sa na to neskôr.</p>
 <p class="kroky-zoznam__poznamka">Odpovede sa ukladajú na tomto zariadení. Môžete prestať a vrátiť sa cez rovnaký odkaz z e-mailu.</p>
 </div>
 </nav>
@@ -156,144 +157,164 @@
      spodná lišta s tlačidlami by sa posunula a pokazila CLS. -->
 <section data-krok="1" data-kluc="firma">
 <h1 tabindex="-1">Firma</h1>
-<p class="dotaznik__uvod">Začneme tým, čo o firme potrebuje vedieť každý návštevník webu.</p>
-<div class="skupina">
+<p class="dotaznik__uvod">Začneme údajmi, ktoré pôjdu na web a do pätičky.</p>
+<fieldset class="skupina">
+<legend>Základné údaje</legend>
+<p class="skupina__popis">Píšte to tak, ako to má byť na webe. Čo ešte nemáte, pokojne preskočte.</p>
 <div class="skupina__polia">
-<label class="pole">Názov firmy
+<label class="pole"><span class="pole__popisok">Názov firmy</span>
+<span class="napoveda">Presne v tvare, v akom ho chcete mať na webe.</span>
 <input type="text" name="firma_nazov">
 </label>
-<label class="pole">IČO
+<label class="pole"><span class="pole__popisok">IČO</span>
+<span class="napoveda">Nájdete ho na faktúre alebo v živnostenskom registri. Potrebujem ho do pätičky webu.</span>
 <input type="text" name="firma_ico">
 </label>
-<label class="pole">Odvetvie
-<input type="text" name="firma_odvetvie">
+<label class="pole"><span class="pole__popisok">Odvetvie</span>
 <span class="napoveda">Napríklad kaderníctvo, fyzioterapia, pokrývačstvo.</span>
+<input type="text" name="firma_odvetvie">
 </label>
-<label class="pole">Adresa prevádzky
+<label class="pole"><span class="pole__popisok">Adresa prevádzky</span>
+<span class="napoveda">Kam za vami ľudia chodia. Ak pracujete u zákazníka, napíšte oblasť, napríklad Prešov a okolie.</span>
 <input type="text" name="firma_adresa">
 </label>
-<label class="pole">Telefón firmy pre web
-<input type="tel" name="firma_telefon">
+<label class="pole"><span class="pole__popisok">Telefón firmy pre web</span>
 <span class="napoveda">Číslo vašej firmy, ktoré bude na vašom webe. Nie je to kontakt na mňa.</span>
+<input type="tel" name="firma_telefon">
 </label>
-<label class="pole">E-mail firmy
+<label class="pole"><span class="pole__popisok">E-mail firmy</span>
+<span class="napoveda">Adresa, na ktorú vám budú chodiť dopyty z webu.</span>
 <input type="email" name="firma_email">
 </label>
-<label class="pole">Otváracie hodiny
+<label class="pole"><span class="pole__popisok">Otváracie hodiny</span>
+<span class="napoveda">Stačí tak, ako to poviete zákazníkovi. Napríklad: Po až Pi 9.00 až 18.00, So 9.00 až 13.00, v nedeľu zatvorené.</span>
 <textarea name="firma_hodiny" rows="3"></textarea>
 </label>
 </div>
-</div>
+</fieldset>
 </section>
 
 <section data-krok="2" data-kluc="ponuka" hidden>
 <h1 tabindex="-1">Ponuka</h1>
-<p class="dotaznik__uvod">Čo predávate a za koľko. Z toho poskladám ponuku na webe.</p>
-<div class="skupina">
+<p class="dotaznik__uvod">Čo predávate a za koľko. Nemusí to byť pekne napísané, texty prepíšem ja.</p>
+<fieldset class="skupina">
+<legend>Služby a ceny</legend>
+<p class="skupina__popis">Toto je najdôležitejší krok. Z neho poskladám ponuku na webe.</p>
 <div class="skupina__polia">
-<label class="pole">Služby a ceny
+<label class="pole"><span class="pole__popisok">Služby a ceny</span>
+<span class="napoveda">Stačí zoznam, napríklad: Strih 25 €, Farbenie od 60 €, Konzultácia zadarmo. Ak ceny na web nechcete, napíšte to.</span>
 <textarea name="ponuka_sluzby" rows="3"></textarea>
-<span class="napoveda">Stačí zoznam, napríklad: Strih 25 €, Farbenie od 60 €.</span>
 </label>
-<label class="pole">Čo predávate najviac
+<label class="pole"><span class="pole__popisok">Čo predávate najviac</span>
+<span class="napoveda">Jedna alebo dve služby, z ktorých máte najväčšie tržby. Tie dám na webe najvyššie.</span>
 <textarea name="ponuka_najviac" rows="3"></textarea>
 </label>
-<label class="pole">Čím sa líšite od ostatných
+<label class="pole"><span class="pole__popisok">Čím sa líšite od ostatných</span>
+<span class="napoveda">Čo viete vy a konkurencia nie. Napríklad: jediná v okrese s týmto prístrojom, robím to 15 rokov, prídem aj cez víkend.</span>
 <textarea name="ponuka_odlisnost" rows="3"></textarea>
-<span class="napoveda">Čo viete vy a konkurencia nie, alebo čo robíte inak.</span>
 </label>
-<label class="pole">Aktuálna akcia
+<label class="pole"><span class="pole__popisok">Aktuálna akcia</span>
+<span class="napoveda">Napríklad zľava 20 % pre nových zákazníkov. Ak žiadnu nemáte, preskočte.</span>
 <input type="text" name="ponuka_akcia">
-<span class="napoveda">Nepovinné. Ak žiadnu nemáte, nechajte prázdne.</span>
 </label>
 </div>
-</div>
+</fieldset>
 </section>
 
 <section data-krok="3" data-kluc="ciel" hidden>
 <h1 tabindex="-1">Cieľ webu</h1>
 <p class="dotaznik__uvod">Čo má človek na webe urobiť. Podľa toho postavím celú stránku.</p>
-<div class="skupina">
+<fieldset class="skupina">
+<legend>Jeden hlavný cieľ</legend>
+<p class="skupina__popis">Stránka má mať jednu hlavnú vec, ku ktorej všetko smeruje. Ostatné možnosti na webe budú tiež, len menej výrazne.</p>
 <div class="skupina__polia">
-<label class="pole">Čo má návštevník spraviť
+<label class="pole"><span class="pole__popisok">Čo má návštevník spraviť</span>
 <select name="ciel_akcia"><option value="">Vyberte</option><option>Vyplniť formulár</option><option>Zavolať do firmy</option><option>Rezervovať termín online</option><option>Napísať e-mail</option></select>
 </label>
-<label class="pole">Kto dopyt spracuje a ako rýchlo
+<label class="pole"><span class="pole__popisok">Kto dopyt spracuje a ako rýchlo</span>
+<span class="napoveda">Napríklad: chodí mi to na e-mail a odpisujem do pár hodín. Potrebujem to vedieť, aby som na web nenapísal sľub, ktorý sa nedá dodržať.</span>
 <textarea name="ciel_kto" rows="3"></textarea>
-<span class="napoveda">Komu príde e-mail a za ako dlho sa človeku ozvete.</span>
 </label>
 </div>
-</div>
+</fieldset>
 </section>
 
 <section data-krok="4" data-kluc="zakaznik" hidden>
 <h1 tabindex="-1">Zákazník</h1>
-<p class="dotaznik__uvod">Komu web hovorí. Texty píšem pre konkrétneho človeka, nie pre každého.</p>
-<div class="skupina">
+<p class="dotaznik__uvod">Komu web hovorí. Texty píšem pre jedného konkrétneho človeka, nie pre každého.</p>
+<fieldset class="skupina">
+<legend>Koho oslovujeme</legend>
+<p class="skupina__popis">Čím presnejšie ho opíšete, tým lepšie budú texty fungovať. Pokojne píšte vlastnými slovami.</p>
 <div class="skupina__polia">
-<label class="pole">Kto u vás kupuje
+<label class="pole"><span class="pole__popisok">Kto u vás kupuje</span>
+<span class="napoveda">Vek, odkiaľ chodia, čo riešia. Napríklad: ženy 30 až 50 rokov z Prešova, chodia raz za šesť týždňov.</span>
 <textarea name="zakaznik_kto" rows="3"></textarea>
 </label>
-<label class="pole">Tri najčastejšie obavy alebo otázky
+<label class="pole"><span class="pole__popisok">Tri najčastejšie obavy alebo otázky</span>
+<span class="napoveda">Čo sa vás ľudia pýtajú, kým sa rozhodnú. Napríklad: bude to bolieť, ako dlho to vydrží, prečo je to drahšie ako inde. Tieto otázky dám na web aj s odpoveďami.</span>
 <textarea name="zakaznik_obavy" rows="3"></textarea>
-<span class="napoveda">Čo sa vás ľudia pýtajú, kým sa rozhodnú.</span>
 </label>
-<label class="pole">Prečo kupujú práve u vás
+<label class="pole"><span class="pole__popisok">Prečo kupujú práve u vás</span>
+<span class="napoveda">Čo vám zákazníci hovoria, keď sú spokojní.</span>
 <textarea name="zakaznik_preco" rows="3"></textarea>
 </label>
-<label class="pole">Dvaja až traja konkurenti
+<label class="pole"><span class="pole__popisok">Dvaja až traja konkurenti</span>
+<span class="napoveda">Stačia odkazy na ich weby. Pozriem sa, čo sľubujú oni, aby sme sa od nich odlíšili.</span>
 <textarea name="zakaznik_konkurenti" rows="3"></textarea>
-<span class="napoveda">Stačia odkazy na ich weby.</span>
 </label>
 </div>
-</div>
+</fieldset>
 </section>
 
 <section data-krok="5" data-kluc="podklady" hidden>
 <h1 tabindex="-1">Podklady</h1>
-<p class="dotaznik__uvod">Čo už máte. Čím viac toho je, tým menej vecí budeme dopĺňať neskôr.</p>
-<div class="skupina">
+<p class="dotaznik__uvod">Čo už máte po ruke. Nič z toho nemusí byť hotové.</p>
+<fieldset class="skupina">
+<legend>Materiály</legend>
+<p class="skupina__popis">Čím viac toho bude, tým menej budeme dopĺňať neskôr. Čo nemáte, doplníme počas práce.</p>
 <div class="skupina__polia">
-<label class="pole">Existujúce texty
+<label class="pole"><span class="pole__popisok">Existujúce texty</span>
+<span class="napoveda">Odkaz na dokument alebo text rovno sem. Ak nič nemáte, napíšte nemám, texty napíšem ja.</span>
 <textarea name="podklady_texty" rows="3"></textarea>
-<span class="napoveda">Odkaz na dokument alebo text rovno sem.</span>
 </label>
-<label class="pole">Odkaz na priečinok s fotkami a logom
+<label class="pole"><span class="pole__popisok">Odkaz na priečinok s fotkami a logom</span>
+<span class="napoveda">Google Disk, Dropbox alebo čokoľvek, odkiaľ sa to dá stiahnuť. Dajte tam radšej viac fotiek, vyberiem z nich.</span>
 <input type="url" name="podklady_fotky">
-<span class="napoveda">Google Disk, Dropbox alebo čokoľvek, kde sa to dá stiahnuť.</span>
 </label>
-<label class="pole">Firemné farby
+<label class="pole"><span class="pole__popisok">Firemné farby</span>
+<span class="napoveda">Ak ich máte, napríklad z loga. Stačí aj slovom, napríklad tmavozelená a béžová.</span>
 <input type="text" name="podklady_farby">
-<span class="napoveda">Ak ich máte, napríklad #1E0B3A.</span>
 </label>
-<label class="pole">Recenzie s menom a súhlasom
+<label class="pole"><span class="pole__popisok">Recenzie s menom a súhlasom</span>
+<span class="napoveda">Stačí odkaz na Google alebo Facebook. Na web dám len tie, pri ktorých mi človek dovolí uviesť meno.</span>
 <textarea name="podklady_recenzie" rows="3"></textarea>
-<span class="napoveda">Na web dám len tie, pri ktorých mi človek dovolí uviesť meno.</span>
 </label>
 </div>
-</div>
+</fieldset>
 </section>
 
 <section data-krok="6" data-kluc="vzhlad" hidden>
 <h1 tabindex="-1">Vzhľad</h1>
 <p class="dotaznik__uvod">Podľa týchto odpovedí pripravím návrh. Odborné pojmy nepotrebujete, stačí napísať, čo sa vám páči.</p>
-<div class="skupina">
+<fieldset class="skupina">
+<legend>Tri weby, ktoré sa vám páčia</legend>
+<p class="skupina__popis">Nemusia byť z vášho odboru. Pokojne aj web, kde ste niečo kúpili a dobre sa vám v ňom orientovalo.</p>
 <div class="skupina__polia">
-<label class="pole">Web 1
+<label class="pole"><span class="pole__popisok">Web 1</span>
 <input type="url" name="vzhlad_web1">
 </label>
-<label class="pole">Web 2
+<label class="pole"><span class="pole__popisok">Web 2</span>
 <input type="url" name="vzhlad_web2">
 </label>
-<label class="pole">Web 3
+<label class="pole"><span class="pole__popisok">Web 3</span>
 <input type="url" name="vzhlad_web3">
 </label>
-<label class="pole">Čo sa vám na nich páči
+<label class="pole"><span class="pole__popisok">Čo sa vám na nich páči</span>
+<span class="napoveda">Stačí pár slov, napríklad: pekné fotky, prehľadné, hneď som vedel, čo mám urobiť.</span>
 <textarea name="vzhlad_preco" rows="3"></textarea>
-<span class="napoveda">Nepovinné.</span>
 </label>
 </div>
-</div>
+</fieldset>
 <fieldset class="skupina">
 <legend>Ako na webe oslovujeme zákazníkov</legend>
 <div class="volby">
@@ -341,70 +362,78 @@
 
 <section data-krok="7" data-kluc="technika" hidden>
 <h1 tabindex="-1">Technika a účty</h1>
-<p class="dotaznik__uvod">Kam web pôjde a čo už existuje. Toto potrebujem na meranie a spustenie.</p>
-<div class="skupina">
+<p class="dotaznik__uvod">Kam web pôjde a čo už existuje. Toto potrebujem na spustenie a meranie.</p>
+<fieldset class="skupina">
+<legend>Doména a účty</legend>
+<p class="skupina__popis">Ak niečo neviete, napíšte neviem. Zistím to a prípadne založím nové. Nie je to nič, čo by ste museli riešiť vy.</p>
 <div class="skupina__polia">
-<label class="pole">Doména a kde je zaregistrovaná
+<label class="pole"><span class="pole__popisok">Doména a kde je zaregistrovaná</span>
+<span class="napoveda">Napríklad mojasluzba.sk vo Websupporte. Ak doménu ešte nemáte, napíšte to a kúpime ju na vaše meno.</span>
 <input type="text" name="technika_domena">
-<span class="napoveda">Napríklad mojasluzba.sk, registrovaná vo Websupporte.</span>
 </label>
-<label class="pole">Existujúci web
+<label class="pole"><span class="pole__popisok">Existujúci web</span>
+<span class="napoveda">Ak nejaký máte, aj keď s ním nie ste spokojní. Pozriem sa naň.</span>
 <input type="url" name="technika_web">
-<span class="napoveda">Ak nejaký máte.</span>
 </label>
-<label class="pole">E-mail na doméne
+<label class="pole"><span class="pole__popisok">E-mail na doméne</span>
+<span class="napoveda">Napríklad info@mojasluzba.sk. Ak máte len gmail, napíšte to a adresu na doméne založíme.</span>
 <input type="email" name="technika_email">
 </label>
-<label class="pole">Existujúce účty GA4, Tag Manager, Meta a Google Ads
+<label class="pole"><span class="pole__popisok">Existujúce účty GA4, Tag Manager, Meta a Google Ads</span>
+<span class="napoveda">Sú to účty na meranie návštevnosti a na reklamu. Ak neviete, či ich máte, napíšte neviem.</span>
 <textarea name="technika_ucty" rows="3"></textarea>
-<span class="napoveda">Ak neviete, napíšte neviem. Zistím to a prípadne založím nové.</span>
 </label>
 </div>
-</div>
+</fieldset>
 </section>
 
 <section data-krok="8" data-kluc="reklama" hidden>
 <h1 tabindex="-1">Reklama</h1>
 <p class="dotaznik__uvod">Tento krok vypĺňate, lebo máte v objednávke aj reklamu.</p>
-<div class="skupina">
+<fieldset class="skupina">
+<legend>Kde a za koľko</legend>
+<p class="skupina__popis">Rozpočet na reklamu platíte priamo Mete alebo Googlu, nie mne. Ja fakturujem len prácu.</p>
 <div class="skupina__polia">
-<label class="pole">Platforma
+<label class="pole"><span class="pole__popisok">Platforma</span>
 <select name="reklama_platforma"><option value="">Vyberte</option><option>Meta</option><option>Google</option><option>Meta aj Google</option><option>Ešte neviem</option></select>
 </label>
-<label class="pole">Mesačný rozpočet na reklamu
+<label class="pole"><span class="pole__popisok">Mesačný rozpočet na reklamu</span>
+<span class="napoveda">Odporúčam od 10 € denne, teda zhruba 300 € mesačne. Ak neviete, napíšte, koľko ste ochotní skúsiť.</span>
 <input type="text" name="reklama_rozpocet">
-<span class="napoveda">Odporúčam od 10 € denne, teda zhruba 300 € mesačne.</span>
 </label>
-<label class="pole">Oblasť, kde sa má reklama zobrazovať
+<label class="pole"><span class="pole__popisok">Oblasť, kde sa má reklama zobrazovať</span>
+<span class="napoveda">Mesto, okres alebo okruh v kilometroch. Napríklad Prešov a 20 km okolo.</span>
 <input type="text" name="reklama_oblast">
-<span class="napoveda">Mesto, okres alebo okruh v kilometroch.</span>
 </label>
-<label class="pole">Ponuka do reklamy
+<label class="pole"><span class="pole__popisok">Ponuka do reklamy</span>
+<span class="napoveda">S čím chcete ľudí osloviť. Napríklad prvá návšteva so zľavou 20 %, alebo konzultácia zadarmo.</span>
 <textarea name="reklama_ponuka" rows="3"></textarea>
-<span class="napoveda">S čím chcete ľudí osloviť. Napríklad zľava pre nových zákazníkov.</span>
 </label>
-<label class="pole">Doterajšie skúsenosti s reklamou
+<label class="pole"><span class="pole__popisok">Doterajšie skúsenosti s reklamou</span>
+<span class="napoveda">Čo ste už skúšali a ako to dopadlo. Aj zlá skúsenosť pomôže, aby sme ju nezopakovali.</span>
 <textarea name="reklama_skusenosti" rows="3"></textarea>
 </label>
 </div>
-</div>
+</fieldset>
 </section>
 
 <section data-krok="9" data-kluc="pravne" hidden>
 <h1 tabindex="-1">Právne</h1>
 <p class="dotaznik__uvod">Posledný krok. Týka sa textov o ochrane údajov na vašom webe.</p>
-<div class="skupina">
+<fieldset class="skupina">
+<legend>Ochrana údajov</legend>
+<p class="skupina__popis">Ak si nie ste istí, napíšte neviem. Pripravím návrh a vy ho dáte skontrolovať.</p>
 <div class="skupina__polia">
-<label class="pole">Kto je prevádzkovateľ osobných údajov
+<label class="pole"><span class="pole__popisok">Kto je prevádzkovateľ osobných údajov</span>
+<span class="napoveda">Zvyčajne tá firma, ktorá dopyty dostáva, teda vy. Ak podnikáte cez s. r. o., tak tá.</span>
 <input type="text" name="pravne_prevadzkovatel">
-<span class="napoveda">Zvyčajne firma, ktorá dopyty dostáva.</span>
 </label>
-<label class="pole">Existujúce texty o ochrane údajov
+<label class="pole"><span class="pole__popisok">Existujúce texty o ochrane údajov</span>
+<span class="napoveda">Ak nejaké máte, napríklad zo starého webu. Stačí odkaz.</span>
 <textarea name="pravne_texty" rows="3"></textarea>
-<span class="napoveda">Ak nejaké máte, napríklad zo starého webu.</span>
 </label>
 </div>
-</div>
+</fieldset>
 </section>
 
 <div class="pole--past" aria-hidden="true">
@@ -426,10 +455,13 @@
 </div>
 </form>
 
-<div class="obsah formular__hotovo" data-hotovo="questionnaire" hidden>
-<h2 tabindex="-1">Dotazník mi prišiel, ďakujem.</h2>
-<p>Teraz si všetko prejdem a pustím sa do návrhu. Ak mi niečo nebude jasné, napíšem vám. Od tejto chvíle plynie termín dodania.</p>
+<section class="hotovo-stranka" data-hotovo="questionnaire" hidden>
+<div class="obsah">
+<h1 tabindex="-1">Dotazník mi prišiel, ďakujem.</h1>
+<p class="hotovo-stranka__text">Teraz si všetko prejdem a pustím sa do návrhu. Ak mi niečo nebude jasné, napíšem vám. Od tejto chvíle plynie termín dodania.</p>
+<p class="hotovo-stranka__text">Toto okno už môžete zavrieť.</p>
 </div>
+</section>
 
 </main>
 
