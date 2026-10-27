@@ -42,8 +42,15 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Stránka je stĺpec na celú výšku okna, aby pätička na krátkych
+   stránkach sadla na spodok a nezostala uprostred bielej plochy.
+   Týka sa to právnych stránok, 404 aj potvrdení po odoslaní formulára. */
 body {
   margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
   background: var(--biela);
   color: var(--atrament);
   font-family: var(--pismo);
@@ -51,6 +58,14 @@ body {
   font-weight: var(--vaha-normal);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.pata {
+  flex-shrink: 0;
 }
 
 h1, h2, h3, h4 {
