@@ -15,6 +15,7 @@ Subor nie je sucastou webu, Netlify ho vracia ako 404.
 """
 
 import os
+import socket
 import sys
 import gzip
 import mimetypes
@@ -27,7 +28,7 @@ KOREN = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 # Rovnaky zoznam ako v netlify.toml.
 BLOKOVANE = (
     "/docs/", "/design/", "/google-apps-script/", "/tools/", "/_input/",
-    "/CLAUDE.md", "/README.md",
+    "/CLAUDE.md", "/README.md", "/spustit-web.command",
 )
 
 # Typy, ktore ma zmysel komprimovat. Netlify to robi automaticky.
@@ -171,10 +172,55 @@ class Handler(SimpleHTTPRequestHandler):
         self._posli(cesta.split("?")[0], s_telom=False)
 
 
+def niekto_pocuva(port):
+    """Odpoveda uz nieco na localhost a tomto porte?
+
+    Nestaci skusit sa naviazat. Iny projekt moze pocuvat cez IPv6, kym my
+    sa naviazeme cez IPv4, a potom na localhost raz odpovie jeden server
+    a raz druhy, podla toho, ako sa meno prelozi. To je horsie ako jasna
+    chyba, preto taky port preskakujeme.
+    """
+    for rodina, typ, protokol, _meno, adresa in socket.getaddrinfo(
+        "localhost", port, 0, socket.SOCK_STREAM
+    ):
+        skusobne = socket.socket(rodina, typ, protokol)
+        skusobne.settimeout(0.2)
+        try:
+            if skusobne.connect_ex(adresa) == 0:
+                return True
+        finally:
+            skusobne.close()
+    return False
+
+
+def najdi_server(port, pokusov=20):
+    """Vrati server na prvom porte, kde nic nepocuva."""
+    for posun in range(pokusov):
+        skusany = port + posun
+
+        if niekto_pocuva(skusany):
+            continue
+
+        try:
+            return ThreadingHTTPServer(("127.0.0.1", skusany), Handler), skusany
+        except OSError:
+            continue
+
+    raise SystemExit(
+        "Porty %d až %d sú obsadené. Spusti server s iným číslom, "
+        "napríklad: python3 tools/server.py 9000" % (port, port + pokusov - 1)
+    )
+
+
 def main():
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
-    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
-    print("Tache beží na http://localhost:%d  (koniec: Ctrl+C)" % port)
+    server, skutocny = najdi_server(port)
+
+    if skutocny != port:
+        print("Port %d je obsadený iným programom, beriem %d."
+              % (port, skutocny))
+
+    print("Tache beží na http://localhost:%d  (koniec: Ctrl+C)" % skutocny)
     try:
         server.serve_forever()
     except KeyboardInterrupt:

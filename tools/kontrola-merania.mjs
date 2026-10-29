@@ -16,12 +16,19 @@
    Spustenie:
      python3 tools/server.py 8787 &
      node tools/kontrola-merania.mjs
+   Prípadne s inou adresou, keď server beží na inom porte:
+     node tools/kontrola-merania.mjs http://localhost:8788
    ========================================================================== */
 
 import { spawn } from 'node:child_process';
 import { Chrome, pockaj, PREHLIADAC } from './chrome.mjs';
 
-const ZAKLAD = 'http://localhost:8787';
+/* Adresa webu. Keď je 8787 obsadený iným projektom, server.py si vezme
+   ďalší voľný port a vypíše ho. Vtedy ho treba odovzdať aj sem:
+     node tools/kontrola-merania.mjs http://localhost:8788 */
+const ZAKLAD = process.argv[2] || 'http://localhost:8787';
+
+/* Vlastný ladiaci port Chromu, nesúvisí s portom webu. */
 const PORT = 9333;
 
 /* --- Očakávané udalosti podľa CLAUDE.md sekcia 7.1 --------------------- */
@@ -375,6 +382,19 @@ async function main() {
   ], { stdio: 'ignore' });
 
   try {
+    /* Na porte môže sedieť úplne iný projekt. Radšej sa uistíme, že
+       odpovedá náš web, než aby sme merali cudziu stránku. */
+    const skuska = await fetch(ZAKLAD + '/assets/js/packages.js')
+      .then((o) => (o.ok ? o.text() : ''))
+      .catch(() => '');
+
+    if (!skuska.includes('window.TACHE.data')) {
+      throw new Error(
+        `Na ${ZAKLAD} neodpovedá web Tache. Spusti python3 tools/server.py `
+        + 'a adresu, ktorú vypíše, odovzdaj tomuto skriptu ako parameter.'
+      );
+    }
+
     await pockaj(2500);
     chrome = await Chrome.pripoj(PORT);
 
