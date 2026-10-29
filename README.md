@@ -20,16 +20,32 @@ Pri rozpore platí poradie zo sekcie 0 v `CLAUDE.md`.
 
 ## Spustenie lokálne
 
+Dvakrát klikni na **`spustit-web.command`** v tomto priečinku. Otvorí sa
+okno Terminálu, server sa spustí a prehliadač sa otvorí sám. Okno nechaj
+otvorené, zatvorením sa web vypne.
+
+Z príkazového riadka to isté spraví:
+
 ```
 python3 tools/server.py
 ```
 
-Web beží na http://localhost:8080. Server sa chová ako Netlify: adresy sú
-bez prípony (`/cennik` servíruje `cennik.html`), interné cesty vracajú 404,
-textové odpovede komprimuje a posiela rovnaké hlavičky ako `netlify.toml`.
-Vďaka tomu lokálny Lighthouse ukazuje čísla blízke produkcii.
+### index.html sa dvojklikom otvoriť nedá
 
-Iný port: `python3 tools/server.py 8787`.
+Teda dá, ale uvidíš holý text bez dizajnu. Stránky sa na seba odkazujú
+adresami ako `/cennik` a štýly hľadajú v `/assets`. To sú adresy **na
+webe**, nie cesty v priečinku. Pri otvorení súboru z Findera ich prehliadač
+hľadá v koreni disku a nenájde nič. Preto je tu ten server.
+
+### Čo server robí
+
+Chová sa ako Netlify: adresy bez prípony (`/cennik` servíruje
+`cennik.html`), interné cesty vracajú 404, textové odpovede komprimuje
+a posiela rovnaké hlavičky ako `netlify.toml`. Vďaka tomu lokálny
+Lighthouse ukazuje čísla blízke produkcii.
+
+Predvolený port je 8787. Keď ho drží iný projekt, server si vezme ďalší
+voľný a vypíše, na ktorom beží. Vlastný port: `python3 tools/server.py 9000`.
 
 ## Kontroly pred commitom
 
@@ -58,7 +74,8 @@ node tools/kontrola-merania.mjs
   výpočet cien, duplicity, e-maily, dotazník, QR kód aj spúšťače.
 - **kontrola-merania.mjs** otvorí web v Chrome, vyvolá každú udalosť zo
   sekcie 7.1 `CLAUDE.md` a porovná jej názov aj parametre. Potrebuje
-  bežiaci `tools/server.py`.
+  bežiaci `tools/server.py`. Keď server beží na inom porte, odovzdaj mu
+  adresu: `node tools/kontrola-merania.mjs http://localhost:8788`.
 
 K tomu podľa `CLAUDE.md` screenshoty dotknutých stránok v 375 a 1440 px
 s cookie lištou aj bez nej a Lighthouse mobile.
@@ -78,6 +95,7 @@ assets/js/    config.js     všetko, čo sa mení (kontakty, GTM, prepínače)
               stranky/      skripty jednotlivých stránok, init() a destroy()
 assets/fonts/ Schibsted Grotesk, variabilný, latin a latin-ext, OFL
               forms.js      spoločná logika všetkých formulárov
+spustit-web.command  spustí web na dvojklik, na web sa nenasadzuje
 tools/        lokálny server, kontroly, šablóna og obrázka
               chrome.mjs    spoločný klient pre screenshoty a meranie
 assets/vendor/ lzma1 a qrcode-generator, obe aj pre Apps Script
